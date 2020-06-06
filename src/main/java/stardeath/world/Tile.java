@@ -1,5 +1,7 @@
 package stardeath.world;
 
-public class Tile {
+import stardeath.Entity;
+
+public abstract class Tile implements Entity {
 
 }

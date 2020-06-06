@@ -1,5 +1,5 @@
 package stardeath.participants.entities;
 
-public class ForceUser extends Human {
+public abstract class ForceUser extends Human {
 
 }
