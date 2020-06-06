@@ -2,15 +2,16 @@ package stardeath;
 
 import java.util.ArrayList;
 import java.util.List;
+import stardeath.controller.ChooseMove;
 import stardeath.participants.Participant;
-import stardeath.participants.ParticipantVisitor;
+import stardeath.participants.actions.Action;
 import stardeath.participants.entities.Wookie;
 import stardeath.participants.entities.empire.FlameTrooper;
+import stardeath.rendering.Renderer;
 import stardeath.world.Tile;
-import stardeath.world.TileVisitor;
 import stardeath.world.tiles.Wall;
 
-public class Controller<Renderer extends TileVisitor & ParticipantVisitor> {
+public class Controller {
 
   private final Renderer renderer;
   private final List<Tile> level = new ArrayList<>();
@@ -24,15 +25,24 @@ public class Controller<Renderer extends TileVisitor & ParticipantVisitor> {
   }
 
   public void step() {
+    ChooseMove move = new ChooseMove(level);
+    for (Participant participant : players) {
+      Action chosen = participant.accept(move);
+      chosen.execute(participant);
+    }
   }
 
   public void draw() {
+    renderer.clear();
+
     for (Tile tile : level) {
       tile.accept(renderer);
     }
     for (Participant participant : players) {
       participant.accept(renderer);
     }
-    System.out.println(renderer.toString());
+
+    // Draw the contents.
+    renderer.render();
   }
 }

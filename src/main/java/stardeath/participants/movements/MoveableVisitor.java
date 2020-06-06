@@ -1,8 +1,10 @@
 package stardeath.participants.movements;
 
+import stardeath.participants.actions.Action;
+
 public interface MoveableVisitor {
 
-  void visitJumper(Jumper jumper);
+  Action visitJumper(Jumper jumper);
 
-  void visitWalker(Walker walker);
+  Action visitWalker(Walker walker);
 }

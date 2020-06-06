@@ -1,6 +1,6 @@
 package stardeath;
 
-import stardeath.rendering.Renderer;
+import stardeath.rendering.OutputStreamRenderer;
 
 /**
  * The main entry point of our application.
@@ -9,7 +9,7 @@ public class Main {
 
   public static void main(String[] args) throws InterruptedException {
 
-    Controller<Renderer> controller = new Controller<>(new Renderer());
+    Controller controller = new Controller(new OutputStreamRenderer(System.out));
 
     while (true) {
       Thread.sleep(1000);
