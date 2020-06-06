@@ -1,14 +1,12 @@
 package stardeath;
 
-public interface Entity {
+public abstract class Entity {
 
-  default int getX() {
+  public int getX() {
     return 0;
   }
 
-  default int getY() {
+  public int getY() {
     return 0;
   }
-
-  void accept(EntityVisitor visitor);
 }

@@ -1,14 +1,15 @@
 package stardeath.rendering;
 
 import java.util.Arrays;
-import stardeath.EntityVisitor;
+import stardeath.participants.ParticipantVisitor;
 import stardeath.participants.entities.Soldier;
 import stardeath.participants.entities.Wookie;
+import stardeath.world.TileVisitor;
 import stardeath.world.tiles.Elevator;
 import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Wall;
 
-public class Renderer implements EntityVisitor {
+public class Renderer implements ParticipantVisitor, TileVisitor {
 
   private char[][] grid = new char[10][10];
 
@@ -19,27 +20,27 @@ public class Renderer implements EntityVisitor {
   }
 
   @Override
-  public void visitEntity(Soldier soldier) {
+  public void visitParticipant(Soldier soldier) {
     grid[soldier.getX()][soldier.getY()] = 'S';
   }
 
   @Override
-  public void visitEntity(Wookie wookie) {
+  public void visitParticipant(Wookie wookie) {
     grid[wookie.getX()][wookie.getY()] = 'W';
   }
 
   @Override
-  public void visitEntity(Regular regular) {
+  public void visitTile(Regular regular) {
     grid[regular.getX()][regular.getY()] = 'r';
   }
 
   @Override
-  public void visitEntity(Elevator elevator) {
+  public void visitTile(Elevator elevator) {
     grid[elevator.getX()][elevator.getY()] = 'e';
   }
 
   @Override
-  public void visitEntity(Wall wall) {
+  public void visitTile(Wall wall) {
     grid[wall.getX()][wall.getY()] = 'w';
   }
 
