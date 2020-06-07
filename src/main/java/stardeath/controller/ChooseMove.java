@@ -5,11 +5,11 @@ import java.util.Random;
 import stardeath.participants.actions.Action;
 import stardeath.participants.actions.Move;
 import stardeath.participants.movements.Jumper;
-import stardeath.participants.movements.MoveableVisitor;
+import stardeath.participants.movements.MovementVisitor;
 import stardeath.participants.movements.Walker;
 import stardeath.world.Tile;
 
-public class ChooseMove implements MoveableVisitor {
+public class ChooseMove extends MovementVisitor {
 
   private static Random sRandom = new Random();
   private final List<Tile> level;
@@ -24,7 +24,7 @@ public class ChooseMove implements MoveableVisitor {
 
   @Override
   public Action visitJumper(Jumper jumper) {
-    return new Move(random(4), random(4));
+    return new Move(random(jumper.getRange()), random(jumper.getRange()));
   }
 
   @Override

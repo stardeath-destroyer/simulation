@@ -5,6 +5,7 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import stardeath.participants.entities.Soldier;
 import stardeath.participants.entities.Wookie;
+import stardeath.participants.entities.empire.JumpTrooper;
 import stardeath.world.tiles.Elevator;
 import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Wall;
@@ -19,6 +20,11 @@ public class OutputStreamRenderer implements Renderer {
     for (int i = 0; i < 10; i++) {
       Arrays.fill(grid[i], ' ');
     }
+  }
+
+  @Override
+  public void visitParticipant(JumpTrooper trooper) {
+    grid[trooper.getX()][trooper.getY()] = 'J';
   }
 
   @Override

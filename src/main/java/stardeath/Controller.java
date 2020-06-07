@@ -7,6 +7,7 @@ import stardeath.participants.Participant;
 import stardeath.participants.actions.Action;
 import stardeath.participants.entities.Wookie;
 import stardeath.participants.entities.empire.FlameTrooper;
+import stardeath.participants.entities.empire.JumpTrooper;
 import stardeath.rendering.Renderer;
 import stardeath.world.Tile;
 import stardeath.world.tiles.Wall;
@@ -21,14 +22,14 @@ public class Controller {
     this.renderer = renderer;
     players.add(new Wookie());
     players.add(new FlameTrooper());
+    players.add(new JumpTrooper());
     level.add(new Wall());
   }
 
   public void step() {
     ChooseMove move = new ChooseMove(level);
     for (Participant participant : players) {
-      Action chosen = participant.accept(move);
-      chosen.execute(participant);
+      participant.accept(move);
     }
   }
 
