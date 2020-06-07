@@ -5,6 +5,7 @@ import java.util.List;
 import stardeath.controller.ChooseMove;
 import stardeath.participants.Participant;
 import stardeath.participants.actions.Action;
+import stardeath.participants.actions.ExecuteActions;
 import stardeath.participants.entities.Wookie;
 import stardeath.participants.entities.empire.FlameTrooper;
 import stardeath.participants.entities.empire.JumpTrooper;
@@ -30,6 +31,10 @@ public class Controller {
     ChooseMove move = new ChooseMove(level);
     for (Participant participant : players) {
       participant.accept(move);
+    }
+    ExecuteActions execute = new ExecuteActions();
+    for (Participant participant : players) {
+      participant.accept(execute);
     }
   }
 

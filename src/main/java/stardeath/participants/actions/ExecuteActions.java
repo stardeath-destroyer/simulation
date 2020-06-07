@@ -1,4 +1,4 @@
-package stardeath.participants.movements;
+package stardeath.participants.actions;
 
 import stardeath.participants.Participant;
 import stardeath.participants.ParticipantVisitor;
@@ -6,24 +6,27 @@ import stardeath.participants.entities.Soldier;
 import stardeath.participants.entities.Wookie;
 import stardeath.participants.entities.empire.JumpTrooper;
 
-public abstract class MovementVisitor implements ParticipantVisitor {
+public class ExecuteActions implements ParticipantVisitor {
 
-  public abstract <J extends Participant & Jumper> void visitJumper(J participant);
-  public abstract <W extends Participant & Walker> void visitWalker(W participant);
+  private void visit(Participant participant) {
+    for (Action action : participant.getActions()) {
+      action.execute(participant);
+    }
+    participant.clearActions();
+  }
 
   @Override
   public void visitParticipant(JumpTrooper trooper) {
-    visitJumper(trooper);
-    visitWalker(trooper);
+    visit(trooper);
   }
 
   @Override
   public void visitParticipant(Soldier soldier) {
-    visitWalker(soldier);
+    visit(soldier);
   }
 
   @Override
   public void visitParticipant(Wookie wookie) {
-    visitWalker(wookie);
+    visit(wookie);
   }
 }
