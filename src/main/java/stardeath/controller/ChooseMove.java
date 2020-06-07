@@ -1,20 +1,19 @@
 package stardeath.controller;
 
-import java.util.List;
 import java.util.Random;
 import stardeath.participants.Participant;
 import stardeath.participants.actions.Move;
 import stardeath.participants.movements.Jumper;
 import stardeath.participants.movements.MovementVisitor;
 import stardeath.participants.movements.Walker;
-import stardeath.world.Tile;
+import stardeath.world.Floor;
 
 public class ChooseMove extends MovementVisitor {
 
   private static Random sRandom = new Random();
-  private final List<Tile> level;
+  private final Floor level;
 
-  public ChooseMove(List<Tile> level) {
+  public ChooseMove(Floor level) {
     this.level = level;
   }
 

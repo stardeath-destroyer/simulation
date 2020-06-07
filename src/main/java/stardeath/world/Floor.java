@@ -1,8 +1,21 @@
 package stardeath.world;
 
-public class Floor {
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public final class Floor {
 
   private Floor previous;
   private Floor next;
-  private Tile[][] tiles;
+  private final List<Tile> tiles;
+
+  public Floor(Tile... tiles) {
+    this.tiles = Stream.of(tiles).collect(Collectors.toList());
+  }
+
+  public final List<Tile> getTiles() {
+    return Collections.unmodifiableList(tiles);
+  }
 }
