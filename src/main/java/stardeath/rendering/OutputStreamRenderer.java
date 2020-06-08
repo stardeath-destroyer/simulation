@@ -11,9 +11,8 @@ import stardeath.world.tiles.Armory;
 import stardeath.world.tiles.Dump;
 import stardeath.world.tiles.Elevator;
 import stardeath.world.tiles.Hole;
-import stardeath.world.tiles.HorizontalWall;
 import stardeath.world.tiles.Regular;
-import stardeath.world.tiles.VerticalWall;
+import stardeath.world.tiles.Wall;
 
 public class OutputStreamRenderer implements Renderer {
 
@@ -63,19 +62,14 @@ public class OutputStreamRenderer implements Renderer {
   }
 
   @Override
-  public void visitTile(VerticalWall wall) {
-    setGrid(wall, '|');
-  }
-
-  @Override
   public void visitTile(Regular regular) {
     setGrid(regular, '.');
   }
 
 
   @Override
-  public void visitTile(HorizontalWall wall) {
-    setGrid(wall, '-');
+  public void visitTile(Wall wall) {
+    setGrid(wall, 'x');
   }
 
   @Override

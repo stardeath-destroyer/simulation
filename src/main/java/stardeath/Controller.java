@@ -5,9 +5,6 @@ import java.util.List;
 import stardeath.controller.ChooseMove;
 import stardeath.participants.Participant;
 import stardeath.participants.actions.ExecuteActions;
-import stardeath.participants.entities.Wookie;
-import stardeath.participants.entities.empire.FlameTrooper;
-import stardeath.participants.entities.empire.JumpTrooper;
 import stardeath.rendering.Renderer;
 import stardeath.world.Floor;
 import stardeath.world.Tile;
@@ -21,9 +18,6 @@ public class Controller {
   public Controller(Renderer renderer, Floor floor) {
     this.renderer = renderer;
     this.floor = floor;
-    players.add(new Wookie(1, 2));
-    players.add(new FlameTrooper(3, 4));
-    players.add(new JumpTrooper(1, 4));
   }
 
   public void step() {
