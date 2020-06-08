@@ -7,7 +7,6 @@ import stardeath.participants.Participant;
 import stardeath.participants.actions.ExecuteActions;
 import stardeath.rendering.Renderer;
 import stardeath.world.Floor;
-import stardeath.world.Tile;
 
 public class Controller {
 
@@ -32,16 +31,8 @@ public class Controller {
   }
 
   public void draw() {
-    renderer.clear();
-
-    for (Tile tile : floor.getTiles()) {
-      tile.accept(renderer);
-    }
-    for (Participant participant : players) {
-      participant.accept(renderer);
-    }
 
     // Draw the contents.
-    renderer.render();
+    renderer.render(floor);
   }
 }
