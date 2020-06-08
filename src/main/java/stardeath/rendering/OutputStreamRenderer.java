@@ -8,7 +8,9 @@ import stardeath.participants.entities.Soldier;
 import stardeath.participants.entities.Wookie;
 import stardeath.participants.entities.empire.JumpTrooper;
 import stardeath.world.tiles.Elevator;
+import stardeath.world.tiles.HorizontalWall;
 import stardeath.world.tiles.Regular;
+import stardeath.world.tiles.VerticalWall;
 import stardeath.world.tiles.Wall;
 
 public class OutputStreamRenderer implements Renderer {
@@ -49,8 +51,13 @@ public class OutputStreamRenderer implements Renderer {
   }
 
   @Override
-  public void visitTile(Wall wall) {
+  public void visitTile(VerticalWall wall) {
     setGrid(wall, '|');
+  }
+
+  @Override
+  public void visitTile(HorizontalWall wall) {
+    setGrid(wall, '-');
   }
 
   @Override

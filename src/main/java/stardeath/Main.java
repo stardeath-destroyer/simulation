@@ -3,6 +3,8 @@ package stardeath;
 import stardeath.rendering.OutputStreamRenderer;
 import stardeath.world.Floor;
 import stardeath.world.Tile;
+import stardeath.world.tiles.HorizontalWall;
+import stardeath.world.tiles.VerticalWall;
 import stardeath.world.tiles.Wall;
 
 /**
@@ -12,9 +14,15 @@ public class Main {
 
   public static void main(String[] args) throws InterruptedException {
     Floor firstFloor = new Floor(
-        new Wall(0, 0),
-        new Wall(1, 0),
-        new Wall(2, 0)
+        new VerticalWall(0, 0),
+        new VerticalWall(1, 0),
+        new VerticalWall(2, 0),
+        new VerticalWall(3, 0),
+        new VerticalWall(4, 0),
+        new HorizontalWall(0, 1),
+        new HorizontalWall(0, 2),
+        new HorizontalWall(0, 3),
+        new HorizontalWall(0, 4)
     );
     Controller controller = new Controller(new OutputStreamRenderer(System.out), firstFloor);
 

@@ -1,7 +1,9 @@
 package stardeath.world;
 
 import stardeath.world.tiles.Elevator;
+import stardeath.world.tiles.HorizontalWall;
 import stardeath.world.tiles.Regular;
+import stardeath.world.tiles.VerticalWall;
 import stardeath.world.tiles.Wall;
 
 public interface TileVisitor {
@@ -10,5 +12,7 @@ public interface TileVisitor {
 
   void visitTile(Elevator elevator);
 
-  void visitTile(Wall wall);
+  void visitTile(VerticalWall wall);
+
+  void visitTile(HorizontalWall wall);
 }
