@@ -21,9 +21,9 @@ public class Controller {
   public Controller(Renderer renderer, Floor floor) {
     this.renderer = renderer;
     this.floor = floor;
-    players.add(new Wookie());
-    players.add(new FlameTrooper());
-    players.add(new JumpTrooper());
+    players.add(new Wookie(1, 2));
+    players.add(new FlameTrooper(3, 4));
+    players.add(new JumpTrooper(1, 4));
   }
 
   public void step() {

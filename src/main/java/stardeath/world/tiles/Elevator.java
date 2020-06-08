@@ -5,6 +5,10 @@ import stardeath.world.TileVisitor;
 
 public class Elevator extends Tile {
 
+  public Elevator(int x, int y) {
+    super(x, y);
+  }
+
   @Override
   public void accept(TileVisitor visitor) {
     visitor.visitTile(this);

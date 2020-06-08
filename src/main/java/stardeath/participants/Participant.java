@@ -13,6 +13,10 @@ public abstract class Participant extends Entity implements Walker {
   private final List<Action> actions = new ArrayList<>();
   private Faction memberOf;
 
+  public Participant(int x, int y) {
+    super(x, y);
+  }
+
   public final void addAction(Action action) {
     actions.add(action);
   }
