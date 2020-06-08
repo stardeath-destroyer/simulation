@@ -6,6 +6,10 @@ import stardeath.participants.attacks.SplashAttacker;
 
 public class Wookie extends Participant implements SplashAttacker {
 
+  public Wookie(int x, int y) {
+    super(x, y);
+  }
+
   @Override
   public void accept(ParticipantVisitor visitor) {
     visitor.visitParticipant(this);

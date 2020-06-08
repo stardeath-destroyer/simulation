@@ -1,11 +1,8 @@
 package stardeath.rendering;
 
-import stardeath.participants.ParticipantVisitor;
-import stardeath.world.TileVisitor;
+import stardeath.world.Floor;
 
-public interface Renderer extends TileVisitor, ParticipantVisitor {
+public interface Renderer {
 
-  void clear();
-
-  void render();
+  void render(Floor floor);
 }

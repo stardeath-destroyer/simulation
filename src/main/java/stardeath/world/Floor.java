@@ -18,4 +18,10 @@ public final class Floor {
   public final List<Tile> getTiles() {
     return Collections.unmodifiableList(tiles);
   }
+
+  public void visit(TileVisitor visitor) {
+    for (Tile tile : tiles) {
+      tile.accept(visitor);
+    }
+  }
 }

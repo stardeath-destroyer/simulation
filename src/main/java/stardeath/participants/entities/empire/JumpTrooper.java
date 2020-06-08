@@ -5,6 +5,10 @@ import stardeath.participants.movements.Jumper;
 
 public class JumpTrooper extends Trooper implements Jumper {
 
+  public JumpTrooper(int x, int y) {
+    super(x, y);
+  }
+
   @Override
   public int getRange() {
     return 15;

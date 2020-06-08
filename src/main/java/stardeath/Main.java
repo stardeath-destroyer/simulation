@@ -1,16 +1,27 @@
 package stardeath;
 
+import java.io.IOException;
+import java.io.InputStream;
 import stardeath.rendering.OutputStreamRenderer;
 import stardeath.world.Floor;
+import stardeath.world.Tile;
+import stardeath.world.io.Decoding;
 
 /**
  * The main entry point of our application.
  */
 public class Main {
 
-  public static void main(String[] args) throws InterruptedException {
+  public static void main(String[] args) throws InterruptedException, IOException {
 
-    Controller controller = new Controller(new OutputStreamRenderer(System.out), new Floor());
+    InputStream stream = Main.class
+        .getClassLoader()
+        .getResourceAsStream("test.floor");
+
+    Floor firstFloor = new Floor(
+        Decoding.readTiles(stream).stream().toArray(Tile[]::new)
+    );
+    Controller controller = new Controller(new OutputStreamRenderer(System.out), firstFloor);
 
     while (true) {
       Thread.sleep(1000);
