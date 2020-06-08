@@ -10,6 +10,7 @@ import stardeath.participants.entities.empire.JumpTrooper;
 import stardeath.world.tiles.Armory;
 import stardeath.world.tiles.Dump;
 import stardeath.world.tiles.Elevator;
+import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.HorizontalWall;
 import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.VerticalWall;
@@ -54,6 +55,11 @@ public class OutputStreamRenderer implements Renderer {
   @Override
   public void visitTile(Elevator elevator) {
     setGrid(elevator, '_');
+  }
+
+  @Override
+  public void visitTile(Hole hole) {
+    setGrid(hole, ' ');
   }
 
   @Override
