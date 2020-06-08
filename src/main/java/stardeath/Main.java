@@ -8,6 +8,7 @@ import stardeath.world.tiles.Dump;
 import stardeath.world.tiles.Elevator;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.HorizontalWall;
+import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.VerticalWall;
 import stardeath.world.tiles.Wall;
 
@@ -27,6 +28,10 @@ public class Main {
         new Dump(2,1),
         new Elevator(9,9),
         new Hole(7,7),
+        new Regular(5,5),
+        new Regular(5,6),
+        new Regular(6,5),
+        new Regular(6,6),
         new HorizontalWall(0, 1),
         new HorizontalWall(0, 2),
         new HorizontalWall(0, 3),
