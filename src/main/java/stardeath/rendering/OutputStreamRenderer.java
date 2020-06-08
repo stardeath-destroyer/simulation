@@ -7,6 +7,7 @@ import stardeath.Entity;
 import stardeath.participants.entities.Soldier;
 import stardeath.participants.entities.Wookie;
 import stardeath.participants.entities.empire.JumpTrooper;
+import stardeath.world.tiles.Armory;
 import stardeath.world.tiles.Elevator;
 import stardeath.world.tiles.HorizontalWall;
 import stardeath.world.tiles.Regular;
@@ -38,6 +39,11 @@ public class OutputStreamRenderer implements Renderer {
   @Override
   public void visitParticipant(Wookie wookie) {
     setGrid(wookie, 'W');
+  }
+
+  @Override
+  public void visitTile(Armory armory) {
+    setGrid(armory, 'a');
   }
 
   @Override
