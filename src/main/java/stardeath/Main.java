@@ -10,7 +10,8 @@ public class Main {
 
   public static void main(String[] args) throws InterruptedException {
 
-    Controller controller = new Controller(new OutputStreamRenderer(System.out), new Floor());
+    Floor firstFloor = new Floor();
+    Controller controller = new Controller(new OutputStreamRenderer(System.out), firstFloor);
 
     while (true) {
       Thread.sleep(1000);

@@ -3,11 +3,10 @@ package stardeath.rendering;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
-import stardeath.participants.Participant;
+import stardeath.Entity;
 import stardeath.participants.entities.Soldier;
 import stardeath.participants.entities.Wookie;
 import stardeath.participants.entities.empire.JumpTrooper;
-import stardeath.world.Tile;
 import stardeath.world.tiles.Elevator;
 import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Wall;
@@ -73,22 +72,12 @@ public class OutputStreamRenderer implements Renderer {
     stream.println("--");
     stream.println(builder.toString());
   }
-
   /**
-   * Small helper method to set the grid given a participant and a character to represent it
-   * @param p The participant to represent
-   * @param c The character to represent the participant with
+   * Small helper method to set the grid given an Entity and a character to represent it
+   * @param entity The Entity to represent
+   * @param c The character to represent the entity with
    */
-  private void setGrid(Participant p, char c) {
-    grid[p.getX()][p.getY()] = c;
-  }
-
-  /**
-   * Small helper method to set the grid given a Tile and a character to represent it
-   * @param t The Tile to represent
-   * @param c The character to represent the tile with
-   */
-  private void setGrid(Tile t, char c) {
-    grid[t.getX()][t.getY()] = c;
+  private void setGrid(Entity entity, char c) {
+    grid[entity.getX()][entity.getY()] = c;
   }
 }
