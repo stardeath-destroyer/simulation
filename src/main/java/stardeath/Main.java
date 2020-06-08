@@ -5,6 +5,7 @@ import stardeath.world.Floor;
 import stardeath.world.Tile;
 import stardeath.world.tiles.Armory;
 import stardeath.world.tiles.Dump;
+import stardeath.world.tiles.Elevator;
 import stardeath.world.tiles.HorizontalWall;
 import stardeath.world.tiles.VerticalWall;
 import stardeath.world.tiles.Wall;
@@ -23,6 +24,7 @@ public class Main {
         new VerticalWall(4, 0),
         new Armory(1,1),
         new Dump(2,1),
+        new Elevator(9,9),
         new HorizontalWall(0, 1),
         new HorizontalWall(0, 2),
         new HorizontalWall(0, 3),

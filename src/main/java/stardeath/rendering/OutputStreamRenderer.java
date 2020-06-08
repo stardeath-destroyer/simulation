@@ -52,19 +52,20 @@ public class OutputStreamRenderer implements Renderer {
   }
 
   @Override
-  public void visitTile(Regular regular) {
-    setGrid(regular, '.');
-  }
-
-  @Override
   public void visitTile(Elevator elevator) {
-    setGrid(elevator, 'e');
+    setGrid(elevator, '_');
   }
 
   @Override
   public void visitTile(VerticalWall wall) {
     setGrid(wall, '|');
   }
+
+  @Override
+  public void visitTile(Regular regular) {
+    setGrid(regular, '.');
+  }
+
 
   @Override
   public void visitTile(HorizontalWall wall) {
