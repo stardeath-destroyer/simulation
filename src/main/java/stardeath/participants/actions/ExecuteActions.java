@@ -5,6 +5,7 @@ import stardeath.participants.ParticipantVisitor;
 import stardeath.participants.entities.Soldier;
 import stardeath.participants.entities.Wookie;
 import stardeath.participants.entities.empire.JumpTrooper;
+import stardeath.participants.player.Player;
 
 public class ExecuteActions implements ParticipantVisitor {
 
@@ -13,6 +14,11 @@ public class ExecuteActions implements ParticipantVisitor {
       action.execute(participant);
     }
     participant.clearActions();
+  }
+
+  @Override
+  public void visitParticipant(Player player) {
+    visit(player);
   }
 
   @Override

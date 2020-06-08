@@ -1,11 +1,15 @@
 package stardeath.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Random;
 import stardeath.participants.Participant;
 import stardeath.participants.actions.Move;
 import stardeath.participants.movements.Jumper;
 import stardeath.participants.movements.MovementVisitor;
 import stardeath.participants.movements.Walker;
+import stardeath.participants.player.Player;
 import stardeath.world.Floor;
 
 public class ChooseMove extends MovementVisitor {
@@ -29,5 +33,35 @@ public class ChooseMove extends MovementVisitor {
   @Override
   public <W extends Participant & Walker> void visitWalker(W walker) {
     walker.addAction(new Move(random(1), random(1)));
+  }
+
+  @Override
+  public <P extends Player> void visitPlayer(P player) {
+    System.out.print("Enter your move (w, a, s, d) : ");
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    try {
+      while (true) {
+        switch (reader.readLine()) {
+          case "w":
+            player.addAction(new Move(0, -1));
+            return;
+          case "a":
+            player.addAction(new Move(-1, 0));
+            return;
+          case "s":
+            player.addAction(new Move(0, 1));
+            return;
+          case "d":
+            player.addAction(new Move(1, 0));
+            return;
+          default:
+            System.out.print("Wrong command. Please enter a valid move (w, a, s, d) : ");
+            System.out.flush();
+            break;
+        }
+      }
+    } catch (IOException any) {
+      // Too bad.
+    }
   }
 }

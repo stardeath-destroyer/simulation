@@ -2,6 +2,13 @@ package stardeath.rendering;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Collection;
+import stardeath.participants.Participant;
+import stardeath.participants.ParticipantVisitor;
+import stardeath.participants.entities.Soldier;
+import stardeath.participants.entities.Wookie;
+import stardeath.participants.entities.empire.JumpTrooper;
+import stardeath.participants.player.Player;
 import stardeath.world.Floor;
 import stardeath.world.Tile;
 import stardeath.world.TileVisitor;
@@ -21,7 +28,7 @@ public class OutputStreamRenderer implements Renderer {
   }
 
   @Override
-  public void render(Floor floor) {
+  public void render(Floor floor, Collection<Participant> participants) {
     int maxX = 0, maxY = 0;
     for (Tile tile : floor.getTiles()) {
       maxX = Math.max(maxX, tile.getX() + 1);
@@ -30,10 +37,26 @@ public class OutputStreamRenderer implements Renderer {
 
     char[][] elements = new char[maxY][maxX];
 
+    renderFloor(elements, floor);
+    renderParticipants(elements, participants);
+
+    try {
+      for (char[] line : elements) {
+        for (char tile : line) {
+          stream.write(tile);
+        }
+        stream.write('\n');
+      }
+    } catch (IOException any) {
+      // Too bad.
+    }
+  }
+
+  private void renderFloor(char[][] buffer, Floor floor) {
     floor.visit(new TileVisitor() {
 
       private void setGrid(Tile tile, char symbol) {
-        elements[tile.getY()][tile.getX()] = symbol;
+        buffer[tile.getY()][tile.getX()] = symbol;
       }
 
       @Override
@@ -66,16 +89,34 @@ public class OutputStreamRenderer implements Renderer {
         setGrid(wall, 'x');
       }
     });
+  }
+  private void renderParticipants(char[][] buffer, Collection<Participant> participants) {
+    ParticipantVisitor visitor = new ParticipantVisitor() {
 
-    try {
-      for (char[] line : elements) {
-        for (char tile : line) {
-          stream.write(tile);
-        }
-        stream.write('\n');
+      private void setGrid(Participant participant, char symbol) {
+        buffer[participant.getY()][participant.getX()] = symbol;
       }
-    } catch (IOException any) {
-      // Too bad.
-    }
+
+      @Override
+      public void visitParticipant(Player player) {
+        setGrid(player, 'P');
+      }
+
+      @Override
+      public void visitParticipant(JumpTrooper trooper) {
+        setGrid(trooper, 'T');
+      }
+
+      @Override
+      public void visitParticipant(Soldier soldier) {
+        setGrid(soldier, 'S');
+      }
+
+      @Override
+      public void visitParticipant(Wookie wookie) {
+        setGrid(wookie, 'W');
+      }
+    };
+    participants.forEach(p -> p.accept(visitor));
   }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import stardeath.controller.ChooseMove;
 import stardeath.participants.Participant;
 import stardeath.participants.actions.ExecuteActions;
+import stardeath.participants.player.Player;
 import stardeath.rendering.Renderer;
 import stardeath.world.Floor;
 
@@ -17,6 +18,8 @@ public class Controller {
   public Controller(Renderer renderer, Floor floor) {
     this.renderer = renderer;
     this.floor = floor;
+
+    players.add(new Player(0, 0));
   }
 
   public void step() {
@@ -33,6 +36,6 @@ public class Controller {
   public void draw() {
 
     // Draw the contents.
-    renderer.render(floor);
+    renderer.render(floor, players);
   }
 }
