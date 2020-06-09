@@ -41,6 +41,7 @@ public class ChooseMove extends MovementVisitor {
     switch (interactions.requestMovement()) {
       case UP:
         player.addAction(new Move(0, -1));
+        break;
       case LEFT:
         player.addAction(new Move(-1, 0));
         break;
