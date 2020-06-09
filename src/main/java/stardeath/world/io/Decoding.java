@@ -7,6 +7,7 @@ import java.util.List;
 import stardeath.world.Tile;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.Regular;
+import stardeath.world.tiles.Start;
 import stardeath.world.tiles.Wall;
 
 public class Decoding {
@@ -20,6 +21,8 @@ public class Decoding {
         return new Hole(x, y);
       case 'o':
         return new Regular(x, y);
+      case 'X':
+        return new Start(x, y);
       case 'w':
         return new Wall(x, y);
       default:

@@ -2,6 +2,7 @@ package stardeath;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import stardeath.controller.ChooseMove;
 import stardeath.interactions.MovementInteractions;
 import stardeath.interactions.Renderer;
@@ -9,6 +10,7 @@ import stardeath.participants.Participant;
 import stardeath.participants.actions.ExecuteActions;
 import stardeath.participants.player.Player;
 import stardeath.world.Floor;
+import stardeath.world.tiles.Start;
 
 public class Controller {
 
@@ -23,7 +25,10 @@ public class Controller {
     this.movements = factory.movement();
     this.floor = floor;
 
-    players.add(new Player(0, 0));
+    List<Start> startingTiles = this.floor.getStartTiles();
+    Start startingTile = startingTiles.get(new Random().nextInt(startingTiles.size()));
+
+    players.add(new Player(startingTile.getX(), startingTile.getY()));
   }
 
   public void step() {

@@ -12,7 +12,7 @@ import stardeath.world.io.Decoding;
  */
 public class Main {
 
-  public static void main(String[] args) throws InterruptedException, IOException {
+  public static void main(String[] args) throws IOException {
 
     InputStream stream = Main.class
         .getClassLoader()
@@ -23,6 +23,7 @@ public class Main {
     );
     Controller controller = new Controller(new Lanterna(), firstFloor);
 
+    controller.draw();
     while (true) {
       controller.step();
       controller.draw();

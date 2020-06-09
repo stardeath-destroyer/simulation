@@ -9,6 +9,7 @@ import stardeath.world.tiles.Dump;
 import stardeath.world.tiles.Elevator;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.Regular;
+import stardeath.world.tiles.Start;
 import stardeath.world.tiles.Wall;
 
 public class RenderFloor implements TileVisitor {
@@ -49,6 +50,11 @@ public class RenderFloor implements TileVisitor {
   @Override
   public void visitTile(Hole hole) {
     setGrid(hole, ' ');
+  }
+
+  @Override
+  public void visitTile(Start start) {
+    // Ignored.
   }
 
   @Override
