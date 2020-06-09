@@ -21,6 +21,7 @@ public class Lanterna implements UIFactory {
 
     // Create and display a terminal screen.
     this.screen = new TerminalScreen(terminal);
+    this.screen.setCursorPosition(null);
   }
 
   @Override

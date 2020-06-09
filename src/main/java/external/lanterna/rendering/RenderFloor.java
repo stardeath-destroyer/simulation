@@ -1,6 +1,7 @@
 package external.lanterna.rendering;
 
 import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.TextColor.ANSI;
 import com.googlecode.lanterna.screen.Screen;
 import stardeath.world.Tile;
 import stardeath.world.TileVisitor;
@@ -21,35 +22,35 @@ public class RenderFloor implements TileVisitor {
     this.screen = screen;
   }
 
-  private void setGrid(Tile tile, char symbol) {
+  private void setGrid(Tile tile, TextCharacter c) {
     if (tile.isDiscovered()) {
-      screen.setCharacter(tile.getX(), tile.getY(), new TextCharacter(symbol));
+      screen.setCharacter(tile.getX(), tile.getY(), c);
     }
   }
 
   @Override
   public void visitTile(Armory armory) {
-    setGrid(armory, 'A');
+    setGrid(armory, new TextCharacter('A'));
   }
 
   @Override
   public void visitTile(Dump dump) {
-    setGrid(dump, 'D');
+    setGrid(dump, new TextCharacter('D'));
   }
 
   @Override
   public void visitTile(Regular regular) {
-    setGrid(regular, '.');
+    setGrid(regular, new TextCharacter('.'));
   }
 
   @Override
   public void visitTile(Elevator elevator) {
-    setGrid(elevator, '_');
+    setGrid(elevator, new TextCharacter('_'));
   }
 
   @Override
   public void visitTile(Hole hole) {
-    setGrid(hole, ' ');
+    setGrid(hole, new TextCharacter(' '));
   }
 
   @Override
@@ -59,6 +60,6 @@ public class RenderFloor implements TileVisitor {
 
   @Override
   public void visitTile(Wall wall) {
-    setGrid(wall, 'x');
+    setGrid(wall, new TextCharacter(' ', ANSI.DEFAULT, ANSI.WHITE));
   }
 }

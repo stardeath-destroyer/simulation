@@ -1,5 +1,6 @@
 package external.lanterna.rendering;
 
+import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.screen.Screen;
 import stardeath.participants.Participant;
@@ -17,27 +18,27 @@ public class RenderParticipants implements ParticipantVisitor {
     this.screen = screen;
   }
 
-  private void setGrid(Participant participant, char symbol) {
-    screen.setCharacter(participant.getX(), participant.getY(), new TextCharacter(symbol));
+  private void setGrid(Participant participant, TextCharacter c) {
+    screen.setCharacter(participant.getX(), participant.getY(), c);
   }
 
   @Override
   public void visitParticipant(Player player) {
-    setGrid(player, 'P');
+    setGrid(player, new TextCharacter('P'));
   }
 
   @Override
   public void visitParticipant(JumpTrooper trooper) {
-    setGrid(trooper, 'T');
+    setGrid(trooper, new TextCharacter('T'));
   }
 
   @Override
   public void visitParticipant(Soldier soldier) {
-    setGrid(soldier, 'S');
+    setGrid(soldier, new TextCharacter('S'));
   }
 
   @Override
   public void visitParticipant(Wookie wookie) {
-    setGrid(wookie, 'W');
+    setGrid(wookie, new TextCharacter('W'));
   }
 }
