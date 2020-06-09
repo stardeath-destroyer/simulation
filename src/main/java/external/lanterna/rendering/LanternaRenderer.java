@@ -2,10 +2,9 @@ package external.lanterna.rendering;
 
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextCharacter;
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.TextColor.ANSI;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.Terminal;
+import external.lanterna.rendering.lighting.LightingShader;
 import java.io.IOException;
 import java.util.Collection;
 import stardeath.interactions.Renderer;
@@ -29,41 +28,20 @@ public class LanternaRenderer implements Renderer {
   @Override
   public void render(Floor floor, Collection<Participant> players) {
 
-    TextCharacter[][] buffer = new TextCharacter[floor.getWidth() + 1][floor.getHeight() + 1];
-
-    RenderFloor renderFloor = new RenderFloor(buffer);
-    RenderParticipants renderParticipants = new RenderParticipants(buffer);
+    RenderingVisitor render = new RenderingVisitor(floor.getWidth() + 1, floor.getHeight() + 1);
+    LightingShader shader = new LightingShader(floor.getWidth() + 1, floor.getHeight() + 1);
 
     // Visit the floor and the participants.
-    floor.visit(renderFloor);
-    players.forEach(p -> p.accept(renderParticipants));
+    floor.visit(render);
+    players.forEach(p -> p.accept(render));
+
+    // Calculate the lighting.
+    // TODO : For ray tracing, we may want to visit the shader with all the tiles and keep track
+    //        of the opaque ones.
+    render.getPlayer().ifPresent(shader::withPlayer);
 
     // We MUST have at least one player.
-    Player player = renderParticipants.getPlayer().orElseThrow();
-
-    // Gray out the tiles that are not close to the player.
-    floor.getTiles().stream()
-        .filter(tile -> tile.distanceTo(player.getX(), player.getY()) > player.getVisibilityRange())
-        .forEach(tile -> {
-          TextCharacter character = buffer[tile.getX()][tile.getY()];
-          if (character != null) {
-            TextColor foreground = character.getForegroundColor();
-            TextColor background = character.getBackgroundColor();
-
-            // TODO : We might want to support changing the foreground and the background colors
-            //        simultaneously.
-            if (background != ANSI.DEFAULT) {
-              background = new TextColor.Indexed(235);
-            } else {
-              foreground = new TextColor.Indexed(235);
-            }
-
-            buffer[tile.getX()][tile.getY()] =
-                buffer[tile.getX()][tile.getY()]
-                    .withForegroundColor(foreground)
-                    .withBackgroundColor(background);
-          }
-        });
+    Player player = render.getPlayer().orElseThrow();
 
     // Offset the screen appropriately.
     int offsetX = player.getX() - currentSize.getColumns() / 2;
@@ -76,14 +54,18 @@ public class LanternaRenderer implements Renderer {
           int bx = offsetX + x;
           int by = offsetY + y;
 
-          boolean insideBuffer = bx >= 0 && by >= 0
-              && bx < buffer.length && by < buffer[bx].length;
+          boolean insideBuffer = bx >= 0 && by >= 0 &&
+              bx < floor.getWidth() + 1 && by < floor.getHeight() + 1;
 
-          TextCharacter retrieved = insideBuffer && buffer[bx][by] != null
-              ? buffer[bx][by]
-              : TextCharacter.DEFAULT_CHARACTER;
-
-          screen.setCharacter(x, y, retrieved);
+          if (insideBuffer && render.getDrawn()[bx][by]) {
+            screen.setCharacter(x, y, new TextCharacter(
+                render.getCharacters()[bx][by],
+                render.getForeground()[bx][by].lighted(shader.getLighting()[bx][by]),
+                render.getBackground()[bx][by].lighted(shader.getLighting()[bx][by])
+            ));
+          } else {
+            screen.setCharacter(x, y, TextCharacter.DEFAULT_CHARACTER);
+          }
         }
       }
 
