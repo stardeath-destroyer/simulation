@@ -1,4 +1,4 @@
-package stardeath.rendering;
+package stardeath;
 
 import java.util.Collection;
 import stardeath.participants.Participant;

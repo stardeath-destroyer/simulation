@@ -6,7 +6,6 @@ import stardeath.controller.ChooseMove;
 import stardeath.participants.Participant;
 import stardeath.participants.actions.ExecuteActions;
 import stardeath.participants.player.Player;
-import stardeath.rendering.Renderer;
 import stardeath.world.Floor;
 
 public class Controller {

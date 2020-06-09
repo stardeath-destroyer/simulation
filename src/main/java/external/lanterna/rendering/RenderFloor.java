@@ -1,4 +1,4 @@
-package stardeath.rendering.lanterna;
+package external.lanterna.rendering;
 
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.screen.Screen;

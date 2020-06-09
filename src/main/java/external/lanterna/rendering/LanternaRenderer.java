@@ -1,4 +1,4 @@
-package stardeath.rendering.lanterna;
+package external.lanterna.rendering;
 
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
@@ -6,8 +6,8 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 import java.util.Collection;
+import stardeath.Renderer;
 import stardeath.participants.Participant;
-import stardeath.rendering.Renderer;
 import stardeath.world.Floor;
 
 public class LanternaRenderer implements Renderer {

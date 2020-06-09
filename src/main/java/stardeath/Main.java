@@ -2,7 +2,7 @@ package stardeath;
 
 import java.io.IOException;
 import java.io.InputStream;
-import stardeath.rendering.lanterna.LanternaRenderer;
+import external.lanterna.rendering.LanternaRenderer;
 import stardeath.world.Floor;
 import stardeath.world.Tile;
 import stardeath.world.io.Decoding;
