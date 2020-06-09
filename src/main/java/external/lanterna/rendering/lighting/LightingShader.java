@@ -46,7 +46,16 @@ public class LightingShader {
     for (int i = 0; i < visible.length; i++) {
       for (int j = 0; j < visible[i].length; j++) {
         if (visible[i][j]) {
-          lighting[i][j] = LightingLevel.Brightest;
+          int distance = distanceTo(player.getX(), player.getY(), i, j);
+          if (distance > 10) {
+            lighting[i][j] = LightingLevel.Dark;
+          } else if (distance > 7) {
+            lighting[i][j] = LightingLevel.Medium;
+          } else if (distance > 5) {
+            lighting[i][j] = LightingLevel.Bright;
+          } else {
+            lighting[i][j] = LightingLevel.Brightest;
+          }
         }
       }
     }

@@ -9,17 +9,42 @@ import external.lanterna.rendering.lighting.LightingLevel;
  * information as to how it should be rendered with different lighting levels.
  */
 public enum Material {
-  Iron(new TextColor.Indexed(237), ANSI.WHITE),
+  Iron(
+      new TextColor.Indexed(235),
+      new TextColor.Indexed(240),
+      new TextColor.Indexed(245),
+      new TextColor.Indexed(250),
+      new TextColor.Indexed(255)
+  ),
   Player(ANSI.GREEN, ANSI.GREEN),
   WookieWool(new TextColor.Indexed(235), new TextColor.Indexed(130)),
   Void(ANSI.BLACK, ANSI.BLACK);
 
   private final TextColor darkest;
+  private final TextColor dark;
+  private final TextColor medium;
+  private final TextColor light;
   private final TextColor lightest;
 
-  /* private */ Material(TextColor darkest, TextColor lightest) {
+  /* private */ Material(
+      TextColor darkest,
+      TextColor dark,
+      TextColor medium,
+      TextColor light,
+      TextColor lightest
+  ) {
     this.darkest = darkest;
+    this.dark = dark;
+    this.medium = medium;
+    this.light = light;
     this.lightest = lightest;
+  }
+
+  /* private */ Material(
+      TextColor invisible,
+      TextColor visible
+  ) {
+    this(invisible, visible, visible, visible, visible);
   }
 
   /**
@@ -33,6 +58,12 @@ public enum Material {
     switch (level) {
       case Darkest:
         return darkest;
+      case Dark:
+        return dark;
+      case Medium:
+        return medium;
+      case Bright:
+        return light;
       case Brightest:
         return lightest;
       default:
