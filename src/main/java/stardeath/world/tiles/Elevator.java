@@ -6,7 +6,7 @@ import stardeath.world.TileVisitor;
 public class Elevator extends Tile {
 
   public Elevator(int x, int y) {
-    super(x, y);
+    super(x, y, true);
   }
 
   @Override

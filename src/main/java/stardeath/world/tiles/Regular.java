@@ -6,7 +6,7 @@ import stardeath.world.TileVisitor;
 public class Regular extends Tile {
 
   public Regular(int x, int y) {
-    super(x, y);
+    super(x, y, false);
   }
 
   @Override

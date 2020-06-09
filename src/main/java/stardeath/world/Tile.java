@@ -5,10 +5,12 @@ import stardeath.Entity;
 public abstract class Tile extends Entity {
 
   private boolean discovered;
+  private final boolean opaque;
 
-  protected Tile(int x, int y) {
+  protected Tile(int x, int y, boolean opaque) {
     super(x, y);
     this.discovered = false;
+    this.opaque = opaque;
   }
 
   public final void unveil() {
@@ -17,6 +19,10 @@ public abstract class Tile extends Entity {
 
   public final boolean isDiscovered() {
     return discovered;
+  }
+
+  public final boolean isOpaque() {
+    return opaque;
   }
 
   public int distanceTo(int x, int y) {
