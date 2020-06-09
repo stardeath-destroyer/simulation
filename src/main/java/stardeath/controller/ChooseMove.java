@@ -66,6 +66,6 @@ public class ChooseMove extends MovementVisitor {
     } catch (IOException any) {
       // Too bad.
     }
-    player.addAction(new Unveil(level, player.getVisibilityRange()));
+    player.addAction(new Unveil(level));
   }
 }

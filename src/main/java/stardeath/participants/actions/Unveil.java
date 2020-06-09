@@ -1,23 +1,23 @@
 package stardeath.participants.actions;
 
 import stardeath.participants.Participant;
+import stardeath.participants.player.Player;
 import stardeath.world.Floor;
 import stardeath.world.Tile;
 
 public class Unveil implements Action {
 
   private final Floor floor;
-  private final int range;
 
-  public Unveil(Floor floor, int range) {
+  public Unveil(Floor floor) {
     this.floor = floor;
-    this.range = range;
   }
 
   @Override
   public void execute(Participant participant) {
+    Player player = (Player) participant;
     floor.getTiles().stream()
-        .filter(tile -> tile.distanceTo(participant.getX(), participant.getY()) < this.range)
+        .filter(tile -> tile.distanceTo(player.getX(), player.getY()) < player.getVisibilityRange())
         .forEach(Tile::unveil);
   }
 }
