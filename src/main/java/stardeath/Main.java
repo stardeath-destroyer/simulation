@@ -2,7 +2,7 @@ package stardeath;
 
 import java.io.IOException;
 import java.io.InputStream;
-import stardeath.rendering.OutputStreamRenderer;
+import stardeath.rendering.lanterna.LanternaRenderer;
 import stardeath.world.Floor;
 import stardeath.world.Tile;
 import stardeath.world.io.Decoding;
@@ -21,7 +21,7 @@ public class Main {
     Floor firstFloor = new Floor(
         Decoding.readTiles(stream).stream().toArray(Tile[]::new)
     );
-    Controller controller = new Controller(new OutputStreamRenderer(System.out), firstFloor);
+    Controller controller = new Controller(new LanternaRenderer(), firstFloor);
 
     while (true) {
       Thread.sleep(1000);
