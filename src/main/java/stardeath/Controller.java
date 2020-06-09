@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import stardeath.controller.ChooseMove;
+import stardeath.controller.UnveilVisitor;
 import stardeath.interactions.MovementInteractions;
 import stardeath.interactions.Renderer;
 import stardeath.participants.Participant;
@@ -29,17 +30,31 @@ public class Controller {
     Start startingTile = startingTiles.get(new Random().nextInt(startingTiles.size()));
 
     players.add(new Player(startingTile.getX(), startingTile.getY()));
+
+    discover();
+    turn();
+    draw();
+  }
+
+  private void discover() {
+    UnveilVisitor visitor = new UnveilVisitor(floor);
+    players.forEach(p -> p.accept(visitor));
+  }
+
+  private void move() {
+    ChooseMove move = new ChooseMove(floor, movements);
+    players.forEach(p -> p.accept(move));
+  }
+
+  private void turn() {
+    ExecuteActions execute = new ExecuteActions();
+    players.forEach(p -> p.accept(execute));
   }
 
   public void step() {
-    ChooseMove move = new ChooseMove(floor, movements);
-    for (Participant participant : players) {
-      participant.accept(move);
-    }
-    ExecuteActions execute = new ExecuteActions();
-    for (Participant participant : players) {
-      participant.accept(execute);
-    }
+    discover();
+    move();
+    turn();
   }
 
   public void draw() {

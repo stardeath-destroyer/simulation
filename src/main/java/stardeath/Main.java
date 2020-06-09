@@ -23,7 +23,6 @@ public class Main {
     );
     Controller controller = new Controller(new Lanterna(), firstFloor);
 
-    controller.draw();
     while (true) {
       controller.step();
       controller.draw();

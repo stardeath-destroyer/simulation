@@ -4,7 +4,6 @@ import java.util.Random;
 import stardeath.interactions.MovementInteractions;
 import stardeath.participants.Participant;
 import stardeath.participants.actions.Move;
-import stardeath.participants.actions.Unveil;
 import stardeath.participants.movements.Jumper;
 import stardeath.participants.movements.MovementVisitor;
 import stardeath.participants.movements.Walker;
@@ -52,7 +51,5 @@ public class ChooseMove extends MovementVisitor {
         player.addAction(new Move(1, 0));
         break;
     }
-
-    player.addAction(new Unveil(level));
   }
 }
