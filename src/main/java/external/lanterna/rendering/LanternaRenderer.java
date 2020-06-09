@@ -41,29 +41,22 @@ public class LanternaRenderer implements Renderer {
         .orElse(0) - size.getRows() / 2;
 
     try {
-
       for (int x = 0; x < size.getColumns(); x++) {
         for (int y = 0; y < size.getRows(); y++) {
-          boolean condition = (offsetX >= 0 && offsetY >= 0 && offsetX < floor.getWidth() && offsetY < floor.getHeight());
-          TextCharacter retrieved = condition
-              ? buffer[x + offsetX][y + offsetY]
-              : TextCharacter.DEFAULT_CHARACTER;
-          screen.setCharacter(x, y, retrieved);
+          int bx = offsetX + x ;
+          int by = offsetY + y;
 
-          if (!condition)
-            System.out.println("x " + x + " y " + y + " ox " + offsetX + " oy " + offsetY);
+          boolean insideBuffer = bx >= 0 && by >= 0
+              && bx < buffer.length && by < buffer[bx].length;
+
+          TextCharacter retrieved = insideBuffer && buffer[bx][by] != null
+              ? buffer[bx][by]
+              : TextCharacter.DEFAULT_CHARACTER;
+
+          screen.setCharacter(x, y, retrieved);
         }
       }
 
-      // for (int i = 0; i < buffer.length; i++) {
-      //   for (int j = 0; j < buffer[i].length; j++) {
-      //     if (buffer[i][j] == null) {
-      //       screen.setCharacter(i, j, TextCharacter.DEFAULT_CHARACTER);
-      //     } else {
-      //       screen.setCharacter(i, j, buffer[i][j]);
-      //     }
-      //   }
-      // }
       screen.refresh();
     } catch (IOException exception) {
       exception.printStackTrace();
