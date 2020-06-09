@@ -1,9 +1,6 @@
 package external.lanterna.rendering;
 
 import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.screen.TerminalScreen;
-import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 import java.util.Collection;
 import stardeath.interactions.Renderer;
@@ -16,12 +13,8 @@ public class LanternaRenderer implements Renderer {
   private final RenderFloor renderFloor;
   private final RenderParticipants renderParticipants;
 
-  public LanternaRenderer() throws IOException {
-    DefaultTerminalFactory factory = new DefaultTerminalFactory();
-    Terminal terminal = factory.createTerminal();
-
-    // Create and display a terminal screen.
-    this.screen = new TerminalScreen(terminal);
+  public LanternaRenderer(Screen screen) throws IOException {
+    this.screen = screen;
     this.screen.startScreen();
     this.renderFloor = new RenderFloor(screen);
     this.renderParticipants = new RenderParticipants(screen);
