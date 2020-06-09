@@ -1,17 +1,30 @@
 package external.lanterna.rendering.lighting;
 
+import external.lanterna.rendering.lighting.raycasting.RayCasting;
 import java.util.Arrays;
+import java.util.Collection;
 import stardeath.participants.player.Player;
+import stardeath.world.Tile;
 
 public class LightingShader {
 
   private final LightingLevel[][] lighting;
+  private final boolean[][] opaque;
+  private final int width;
+  private final int height;
 
-  public LightingShader(int width, int height) {
+  public LightingShader(int width, int height, Collection<Tile> tiles) {
+    this.width = width;
+    this.height = height;
+
     this.lighting = new LightingLevel[width][height];
+    this.opaque = new boolean[width][height];
+
     for (LightingLevel[] levels : lighting) {
       Arrays.fill(levels, LightingLevel.Darkest);
     }
+
+    tiles.forEach(t -> opaque[t.getX()][t.getY()] = t.isOpaque());
   }
 
   private static int distanceTo(int fromX, int fromY, int toX, int toY) {
@@ -21,9 +34,18 @@ public class LightingShader {
   }
 
   public void withPlayer(Player player) {
-    for (int i = 0; i < lighting.length; i++) {
-      for (int j = 0; j < lighting[i].length; j++) {
-        if (distanceTo(player.getX(), player.getY(), i, j) < player.getVisibilityRange()) {
+
+    // TODO : Write directly in the brightness buffer.
+    boolean[][] visible = RayCasting.compute(width, height, player, (x, y) -> {
+      if (x >= 0 && y >= 0 && x < width && y < height) {
+        return opaque[x][y];
+      }
+      return false;
+    });
+
+    for (int i = 0; i < visible.length; i++) {
+      for (int j = 0; j < visible[i].length; j++) {
+        if (visible[i][j]) {
           lighting[i][j] = LightingLevel.Brightest;
         }
       }

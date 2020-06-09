@@ -29,15 +29,13 @@ public class LanternaRenderer implements Renderer {
   public void render(Floor floor, Collection<Participant> players) {
 
     RenderingVisitor render = new RenderingVisitor(floor.getWidth() + 1, floor.getHeight() + 1);
-    LightingShader shader = new LightingShader(floor.getWidth() + 1, floor.getHeight() + 1);
+    LightingShader shader = new LightingShader(floor.getWidth() + 1, floor.getHeight() + 1, floor.getTiles());
 
     // Visit the floor and the participants.
     floor.visit(render);
     players.forEach(p -> p.accept(render));
 
     // Calculate the lighting.
-    // TODO : For ray tracing, we may want to visit the shader with all the tiles and keep track
-    //        of the opaque ones.
     render.getPlayer().ifPresent(shader::withPlayer);
 
     // We MUST have at least one player.
