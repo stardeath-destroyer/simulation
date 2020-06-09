@@ -17,9 +17,9 @@ public class Decoding {
 
   private static Tile from(char character, int x, int y) {
     switch (character) {
-      case '.':
+      case 'H':
         return new Hole(x, y);
-      case 'o':
+      case '.':
         return new Regular(x, y);
       case 'X':
         return new Start(x, y);

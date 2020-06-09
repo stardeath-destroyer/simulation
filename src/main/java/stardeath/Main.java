@@ -14,9 +14,15 @@ public class Main {
 
   public static void main(String[] args) throws IOException {
 
+    String level = "visibility.floor";
+
+    if (args.length >= 1) {
+      level = args[0];
+    }
+
     InputStream stream = Main.class
         .getClassLoader()
-        .getResourceAsStream("test.floor");
+        .getResourceAsStream(level);
 
     Floor firstFloor = new Floor(
         Decoding.readTiles(stream).stream().toArray(Tile[]::new)
