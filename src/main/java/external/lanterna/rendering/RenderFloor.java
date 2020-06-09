@@ -2,7 +2,6 @@ package external.lanterna.rendering;
 
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor.ANSI;
-import com.googlecode.lanterna.screen.Screen;
 import stardeath.world.Tile;
 import stardeath.world.TileVisitor;
 import stardeath.world.tiles.Armory;
