@@ -15,7 +15,7 @@ import stardeath.world.Floor;
 
 public class ChooseMove extends MovementVisitor {
 
-  private static Random sRandom = new Random();
+  private static final Random sRandom = new Random();
   private final Floor level;
 
   public ChooseMove(Floor level) {
