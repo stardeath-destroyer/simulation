@@ -15,16 +15,15 @@ import stardeath.world.tiles.Wall;
 
 public class RenderFloor implements TileVisitor {
 
-  private final Screen screen;
+  private final TextCharacter[][] buffer;
 
-
-  public RenderFloor(Screen screen) {
-    this.screen = screen;
+  public RenderFloor(TextCharacter[][] buffer) {
+    this.buffer = buffer;
   }
 
   private void setGrid(Tile tile, TextCharacter c) {
     if (tile.isDiscovered()) {
-      screen.setCharacter(tile.getX(), tile.getY(), c);
+      buffer[tile.getX()][tile.getY()] = c;
     }
   }
 

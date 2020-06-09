@@ -1,8 +1,6 @@
 package external.lanterna.rendering;
 
-import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextCharacter;
-import com.googlecode.lanterna.screen.Screen;
 import stardeath.participants.Participant;
 import stardeath.participants.ParticipantVisitor;
 import stardeath.participants.entities.Soldier;
@@ -12,14 +10,14 @@ import stardeath.participants.player.Player;
 
 public class RenderParticipants implements ParticipantVisitor {
 
-  private final Screen screen;
+  private final TextCharacter[][] buffer;
 
-  public RenderParticipants(Screen screen) {
-    this.screen = screen;
+  public RenderParticipants(TextCharacter[][] buffer) {
+    this.buffer = buffer;
   }
 
   private void setGrid(Participant participant, TextCharacter c) {
-    screen.setCharacter(participant.getX(), participant.getY(), c);
+    buffer[participant.getX()][participant.getY()] = c;
   }
 
   @Override

@@ -9,12 +9,26 @@ import stardeath.world.tiles.Start;
 
 public final class Floor {
 
+  private final List<Tile> tiles;
   private Floor previous;
   private Floor next;
-  private final List<Tile> tiles;
+  private int width;
+  private int height;
 
   public Floor(Tile... tiles) {
     this.tiles = Stream.of(tiles).collect(Collectors.toList());
+    this.tiles.forEach(tile -> {
+      width = Math.max(tile.getX(), width);
+      height = Math.max(tile.getY(), height);
+    });
+  }
+
+  public final int getWidth() {
+    return width;
+  }
+
+  public final int getHeight() {
+    return height;
   }
 
   public final List<Tile> getTiles() {
