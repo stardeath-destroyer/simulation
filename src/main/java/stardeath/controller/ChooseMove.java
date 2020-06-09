@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.Random;
 import stardeath.participants.Participant;
 import stardeath.participants.actions.Move;
+import stardeath.participants.actions.Unveil;
 import stardeath.participants.movements.Jumper;
 import stardeath.participants.movements.MovementVisitor;
 import stardeath.participants.movements.Walker;
@@ -40,28 +41,31 @@ public class ChooseMove extends MovementVisitor {
     System.out.print("Enter your move (w, a, s, d) : ");
     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     try {
-      while (true) {
+      boolean keepGoing = true;
+      while (keepGoing) {
+        keepGoing = false;
         switch (reader.readLine()) {
           case "w":
             player.addAction(new Move(0, -1));
-            return;
+            break;
           case "a":
             player.addAction(new Move(-1, 0));
-            return;
+            break;
           case "s":
             player.addAction(new Move(0, 1));
-            return;
+            break;
           case "d":
             player.addAction(new Move(1, 0));
-            return;
+            break;
           default:
+            keepGoing = true;
             System.out.print("Wrong command. Please enter a valid move (w, a, s, d) : ");
             System.out.flush();
-            break;
         }
       }
     } catch (IOException any) {
       // Too bad.
     }
+    player.addAction(new Unveil(level, player.getVisibilityRange()));
   }
 }

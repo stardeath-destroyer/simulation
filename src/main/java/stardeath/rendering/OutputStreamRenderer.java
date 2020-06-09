@@ -56,7 +56,9 @@ public class OutputStreamRenderer implements Renderer {
     floor.visit(new TileVisitor() {
 
       private void setGrid(Tile tile, char symbol) {
-        buffer[tile.getY()][tile.getX()] = symbol;
+        if (tile.isDiscovered()) {
+          buffer[tile.getY()][tile.getX()] = symbol;
+        }
       }
 
       @Override
@@ -90,6 +92,7 @@ public class OutputStreamRenderer implements Renderer {
       }
     });
   }
+
   private void renderParticipants(char[][] buffer, Collection<Participant> participants) {
     ParticipantVisitor visitor = new ParticipantVisitor() {
 
