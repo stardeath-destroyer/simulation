@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import stardeath.world.Floor;
 import stardeath.world.Tile;
-import stardeath.world.io.Decoding;
+import external.io.Decoding;
 
 /**
  * The main entry point of our application.

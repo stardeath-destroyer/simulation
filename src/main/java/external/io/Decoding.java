@@ -1,4 +1,4 @@
-package stardeath.world.io;
+package external.io;
 
 import java.io.IOException;
 import java.io.InputStream;
