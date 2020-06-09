@@ -7,6 +7,7 @@ import stardeath.controller.ChooseMove;
 import stardeath.controller.UnveilVisitor;
 import stardeath.interactions.MovementInteractions;
 import stardeath.interactions.Renderer;
+import stardeath.interactions.Renderer.OnRenderRequestListener;
 import stardeath.participants.Participant;
 import stardeath.participants.actions.ExecuteActions;
 import stardeath.participants.entities.Wookie;
@@ -27,6 +28,9 @@ public class Controller {
     this.renderer = factory.renderer();
     this.movements = factory.movement();
     this.floor = floor;
+    
+    // Register this Controller's ability to render things NOW to the Renderer.
+    this.renderer.registerRenderRequestListener(this::draw);
 
     List<Start> startingTiles = this.floor.getStartTiles();
     Start startingTile = startingTiles.get(new Random().nextInt(startingTiles.size()));

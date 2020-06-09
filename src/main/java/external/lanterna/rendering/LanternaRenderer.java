@@ -6,7 +6,9 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.Terminal;
 import external.lanterna.rendering.lighting.LightingShader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import stardeath.interactions.Renderer;
 import stardeath.participants.Participant;
 import stardeath.participants.player.Player;
@@ -16,20 +18,28 @@ public class LanternaRenderer implements Renderer {
 
   private final Screen screen;
   private TerminalSize currentSize;
+  private final List<OnRenderRequestListener> listeners = new ArrayList<>();
 
   public LanternaRenderer(Terminal terminal, Screen screen) throws IOException {
     this.screen = screen;
     this.screen.startScreen();
     this.currentSize = terminal.getTerminalSize();
 
-    terminal.addResizeListener((t, size) -> LanternaRenderer.this.currentSize = size);
+    terminal.addResizeListener((t, size) -> {
+      LanternaRenderer.this.currentSize = size;
+      screen.doResizeIfNecessary();
+      for (OnRenderRequestListener listener : listeners) {
+        listener.requestRender();
+      }
+    });
   }
 
   @Override
   public void render(Floor floor, Collection<Participant> players) {
 
     RenderingVisitor render = new RenderingVisitor(floor.getWidth() + 1, floor.getHeight() + 1);
-    LightingShader shader = new LightingShader(floor.getWidth() + 1, floor.getHeight() + 1, floor.getTiles());
+    LightingShader shader = new LightingShader(floor.getWidth() + 1, floor.getHeight() + 1,
+        floor.getTiles());
 
     // Visit the floor and the participants.
     floor.visit(render);
@@ -70,6 +80,20 @@ public class LanternaRenderer implements Renderer {
       screen.refresh();
     } catch (IOException exception) {
       exception.printStackTrace();
+    }
+  }
+
+  @Override
+  public void registerRenderRequestListener(OnRenderRequestListener listener) {
+    if (!listeners.contains(listener)) {
+      listeners.add(listener);
+    }
+  }
+
+  @Override
+  public void unregisterRenderRequestListener(OnRenderRequestListener listener) {
+    if (listeners.contains(listener)) {
+      listeners.add(listener);
     }
   }
 }
