@@ -4,7 +4,7 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
-import external.cli.interactions.InputStreamMovementInteractions;
+import external.lanterna.interactions.LanternaMovementInteractions;
 import external.lanterna.rendering.LanternaRenderer;
 import java.io.IOException;
 import stardeath.UIFactory;
@@ -25,7 +25,7 @@ public class Lanterna implements UIFactory {
 
   @Override
   public MovementInteractions movement() {
-    return new InputStreamMovementInteractions(System.in);
+    return new LanternaMovementInteractions(screen);
   }
 
   @Override
