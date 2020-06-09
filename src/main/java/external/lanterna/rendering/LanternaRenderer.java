@@ -3,6 +3,7 @@ package external.lanterna.rendering;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.screen.Screen;
+import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 import java.util.Collection;
 import stardeath.interactions.Renderer;
@@ -12,11 +13,15 @@ import stardeath.world.Floor;
 
 public class LanternaRenderer implements Renderer {
 
+  private TerminalSize currentSize;
   private final Screen screen;
 
-  public LanternaRenderer(Screen screen) throws IOException {
+  public LanternaRenderer(Terminal terminal, Screen screen) throws IOException {
     this.screen = screen;
     this.screen.startScreen();
+    this.currentSize = terminal.getTerminalSize();
+
+    terminal.addResizeListener((t, size) -> LanternaRenderer.this.currentSize = size);
   }
 
   @Override
@@ -30,19 +35,17 @@ public class LanternaRenderer implements Renderer {
     floor.visit(renderFloor);
     players.forEach(p -> p.accept(renderParticipants));
 
-    TerminalSize size = screen.getTerminalSize();
-
     int offsetX = renderParticipants.getPlayer()
         .map(Player::getX)
-        .orElse(0) - size.getColumns() / 2;
+        .orElse(0) - currentSize.getColumns() / 2;
 
     int offsetY = renderParticipants.getPlayer()
         .map(Player::getY)
-        .orElse(0) - size.getRows() / 2;
+        .orElse(0) - currentSize.getRows() / 2;
 
     try {
-      for (int x = 0; x < size.getColumns(); x++) {
-        for (int y = 0; y < size.getRows(); y++) {
+      for (int x = 0; x < currentSize.getColumns(); x++) {
+        for (int y = 0; y < currentSize.getRows(); y++) {
           int bx = offsetX + x ;
           int by = offsetY + y;
 

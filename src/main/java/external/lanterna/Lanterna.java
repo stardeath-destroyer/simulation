@@ -13,14 +13,15 @@ import stardeath.interactions.Renderer;
 
 public class Lanterna implements UIFactory {
 
+  private final Terminal terminal;
   private final Screen screen;
 
   public Lanterna() throws IOException {
     DefaultTerminalFactory factory = new DefaultTerminalFactory();
-    Terminal terminal = factory.createTerminal();
+    this.terminal = factory.createTerminal();
 
     // Create and display a terminal screen.
-    this.screen = new TerminalScreen(terminal);
+    this.screen = new TerminalScreen(this.terminal);
     this.screen.setCursorPosition(null);
   }
 
@@ -32,7 +33,7 @@ public class Lanterna implements UIFactory {
   @Override
   public Renderer renderer() {
     try {
-      return new LanternaRenderer(screen);
+      return new LanternaRenderer(terminal, screen);
     } catch (IOException exception) {
       throw new RuntimeException("Unable to use Lanterna on this device. Sorry.");
     }
