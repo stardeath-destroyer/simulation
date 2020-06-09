@@ -1,7 +1,10 @@
 package external.lanterna.interactions;
 
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import java.io.IOException;
+import java.util.Objects;
 import stardeath.interactions.Movement;
 import stardeath.interactions.MovementInteractions;
 
@@ -18,19 +21,17 @@ public class LanternaMovementInteractions implements MovementInteractions {
     Movement movement = null;
     while (movement == null) {
       try {
-        switch (screen.readInput().getCharacter()) {
-          case 'w':
+        KeyStroke stroke = screen.readInput();
+        if (stroke != null) {
+          if (stroke.getKeyType() == KeyType.ArrowUp || Objects.equals('w', stroke.getCharacter())) {
             movement = Movement.UP;
-            break;
-          case 'a':
+          } else if (stroke.getKeyType() == KeyType.ArrowLeft || Objects.equals('a', stroke.getCharacter())) {
             movement = Movement.LEFT;
-            break;
-          case 's':
+          } else if (stroke.getKeyType() == KeyType.ArrowDown || Objects.equals('s', stroke.getCharacter())) {
             movement = Movement.DOWN;
-            break;
-          case 'd':
+          } else if (stroke.getKeyType() == KeyType.ArrowRight || Objects.equals('d', stroke.getCharacter())) {
             movement = Movement.RIGHT;
-            break;
+          }
         }
       } catch (IOException any) {
         // Too bad.
