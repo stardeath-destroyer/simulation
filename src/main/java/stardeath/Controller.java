@@ -9,6 +9,8 @@ import stardeath.interactions.MovementInteractions;
 import stardeath.interactions.Renderer;
 import stardeath.participants.Participant;
 import stardeath.participants.actions.ExecuteActions;
+import stardeath.participants.entities.Wookie;
+import stardeath.participants.entities.empire.JumpTrooper;
 import stardeath.participants.player.Player;
 import stardeath.world.Floor;
 import stardeath.world.tiles.Start;
@@ -29,6 +31,9 @@ public class Controller {
     List<Start> startingTiles = this.floor.getStartTiles();
     Start startingTile = startingTiles.get(new Random().nextInt(startingTiles.size()));
 
+    players.add(new JumpTrooper(15, 15));
+    for (int i = 0; i < 42; i++)
+      players.add(new Wookie(20, 20));
     players.add(new Player(startingTile.getX(), startingTile.getY()));
 
     discover();

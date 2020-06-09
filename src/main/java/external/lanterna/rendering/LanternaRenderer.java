@@ -53,9 +53,9 @@ public class LanternaRenderer implements Renderer {
             // TODO : We might want to support changing the foreground and the background colors
             //        simultaneously.
             if (background != ANSI.DEFAULT) {
-              background = TextColor.Indexed.fromRGB(100, 100, 100);
+              background = new TextColor.Indexed(235);
             } else {
-              foreground = TextColor.Indexed.fromRGB(100, 100, 100);
+              foreground = new TextColor.Indexed(235);
             }
 
             buffer[tile.getX()][tile.getY()] =

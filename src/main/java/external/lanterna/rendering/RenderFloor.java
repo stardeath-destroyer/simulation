@@ -1,6 +1,9 @@
 package external.lanterna.rendering;
 
+import static external.lanterna.rendering.Utils.inBounds;
+
 import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.TextColor.ANSI;
 import stardeath.world.Tile;
 import stardeath.world.TileVisitor;
@@ -21,7 +24,9 @@ public class RenderFloor implements TileVisitor {
   }
 
   private void setGrid(Tile tile, TextCharacter c) {
-    if (tile.isDiscovered()) {
+    if (tile.isDiscovered() &&
+        inBounds(tile.getX(), 0, buffer.length) &&
+        inBounds(tile.getY(), 0, buffer[tile.getX()].length)) {
       buffer[tile.getX()][tile.getY()] = c;
     }
   }
@@ -38,7 +43,7 @@ public class RenderFloor implements TileVisitor {
 
   @Override
   public void visitTile(Regular regular) {
-    setGrid(regular, new TextCharacter('.'));
+    setGrid(regular, new TextCharacter('.', new TextColor.Indexed(246), ANSI.DEFAULT));
   }
 
   @Override

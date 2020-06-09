@@ -11,7 +11,7 @@ public class ExecuteActions implements ParticipantVisitor {
 
   private void visit(Participant participant) {
     for (Action action : participant.getActions()) {
-      action.execute(participant);
+      action.execute();
     }
     participant.clearActions();
   }

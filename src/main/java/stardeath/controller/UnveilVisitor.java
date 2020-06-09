@@ -1,7 +1,6 @@
 package stardeath.controller;
 
 import stardeath.participants.ParticipantAdapter;
-import stardeath.participants.actions.Unveil;
 import stardeath.participants.player.Player;
 import stardeath.world.Floor;
 
@@ -15,6 +14,6 @@ public class UnveilVisitor extends ParticipantAdapter {
 
   @Override
   public void visitParticipant(Player player) {
-    player.addAction(new Unveil(level));
+    player.addAction(player.new UnveilAction(level));
   }
 }

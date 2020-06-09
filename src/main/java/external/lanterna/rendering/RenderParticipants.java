@@ -1,6 +1,10 @@
 package external.lanterna.rendering;
 
+import static external.lanterna.rendering.Utils.inBounds;
+
 import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.TextColor.ANSI;
 import java.util.Optional;
 import stardeath.participants.Participant;
 import stardeath.participants.ParticipantVisitor;
@@ -23,12 +27,15 @@ public class RenderParticipants implements ParticipantVisitor {
   }
 
   private void setGrid(Participant participant, TextCharacter c) {
-    buffer[participant.getX()][participant.getY()] = c;
+    if (inBounds(participant.getX(), 0, buffer.length) &&
+        inBounds(participant.getY(), 0, buffer[participant.getX()].length)) {
+      buffer[participant.getX()][participant.getY()] = c;
+    }
   }
 
   @Override
   public void visitParticipant(Player player) {
-    setGrid(player, new TextCharacter('P'));
+    setGrid(player, new TextCharacter('P', ANSI.GREEN, ANSI.DEFAULT));
     this.player = player;
   }
 
@@ -44,6 +51,6 @@ public class RenderParticipants implements ParticipantVisitor {
 
   @Override
   public void visitParticipant(Wookie wookie) {
-    setGrid(wookie, new TextCharacter('W'));
+    setGrid(wookie, new TextCharacter('W', new TextColor.Indexed(130), ANSI.DEFAULT));
   }
 }
