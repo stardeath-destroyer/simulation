@@ -1,4 +1,4 @@
-package stardeath;
+package stardeath.interactions;
 
 import java.util.Collection;
 import stardeath.participants.Participant;

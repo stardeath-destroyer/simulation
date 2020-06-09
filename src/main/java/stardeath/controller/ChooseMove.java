@@ -1,9 +1,7 @@
 package stardeath.controller;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Random;
+import stardeath.interactions.MovementInteractions;
 import stardeath.participants.Participant;
 import stardeath.participants.actions.Move;
 import stardeath.participants.actions.Unveil;
@@ -17,9 +15,11 @@ public class ChooseMove extends MovementVisitor {
 
   private static final Random sRandom = new Random();
   private final Floor level;
+  private final MovementInteractions interactions;
 
-  public ChooseMove(Floor level) {
+  public ChooseMove(Floor level, MovementInteractions interactions) {
     this.level = level;
+    this.interactions = interactions;
   }
 
   int random(int max) {
@@ -38,34 +38,20 @@ public class ChooseMove extends MovementVisitor {
 
   @Override
   public <P extends Player> void visitPlayer(P player) {
-    System.out.print("Enter your move (w, a, s, d) : ");
-    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    try {
-      boolean keepGoing = true;
-      while (keepGoing) {
-        keepGoing = false;
-        switch (reader.readLine()) {
-          case "w":
-            player.addAction(new Move(0, -1));
-            break;
-          case "a":
-            player.addAction(new Move(-1, 0));
-            break;
-          case "s":
-            player.addAction(new Move(0, 1));
-            break;
-          case "d":
-            player.addAction(new Move(1, 0));
-            break;
-          default:
-            keepGoing = true;
-            System.out.print("Wrong command. Please enter a valid move (w, a, s, d) : ");
-            System.out.flush();
-        }
-      }
-    } catch (IOException any) {
-      // Too bad.
+    switch (interactions.requestMovement()) {
+      case UP:
+        player.addAction(new Move(0, -1));
+      case LEFT:
+        player.addAction(new Move(-1, 0));
+        break;
+      case DOWN:
+        player.addAction(new Move(0, 1));
+        break;
+      case RIGHT:
+        player.addAction(new Move(1, 0));
+        break;
     }
+
     player.addAction(new Unveil(level));
   }
 }

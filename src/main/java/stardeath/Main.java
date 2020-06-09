@@ -1,8 +1,8 @@
 package stardeath;
 
+import external.lanterna.Lanterna;
 import java.io.IOException;
 import java.io.InputStream;
-import external.lanterna.rendering.LanternaRenderer;
 import stardeath.world.Floor;
 import stardeath.world.Tile;
 import stardeath.world.io.Decoding;
@@ -21,7 +21,7 @@ public class Main {
     Floor firstFloor = new Floor(
         Decoding.readTiles(stream).stream().toArray(Tile[]::new)
     );
-    Controller controller = new Controller(new LanternaRenderer(), firstFloor);
+    Controller controller = new Controller(new Lanterna(), firstFloor);
 
     while (true) {
       Thread.sleep(1000);

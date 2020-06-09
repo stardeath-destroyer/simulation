@@ -5,7 +5,7 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Collection;
 import stardeath.participants.Participant;
-import stardeath.Renderer;
+import stardeath.interactions.Renderer;
 import stardeath.world.Floor;
 import stardeath.world.Tile;
 
