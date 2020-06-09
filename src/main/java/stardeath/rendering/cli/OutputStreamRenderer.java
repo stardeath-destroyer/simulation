@@ -1,10 +1,11 @@
-package stardeath.rendering;
+package stardeath.rendering.cli;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Collection;
 import stardeath.participants.Participant;
+import stardeath.rendering.Renderer;
 import stardeath.world.Floor;
 import stardeath.world.Tile;
 

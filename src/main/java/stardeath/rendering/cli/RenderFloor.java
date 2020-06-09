@@ -1,4 +1,4 @@
-package stardeath.rendering;
+package stardeath.rendering.cli;
 
 import stardeath.world.Tile;
 import stardeath.world.TileVisitor;

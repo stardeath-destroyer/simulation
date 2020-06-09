@@ -1,4 +1,4 @@
-package stardeath.rendering;
+package stardeath.rendering.cli;
 
 import stardeath.participants.Participant;
 import stardeath.participants.ParticipantVisitor;
