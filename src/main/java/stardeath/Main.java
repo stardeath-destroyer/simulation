@@ -24,7 +24,6 @@ public class Main {
     Controller controller = new Controller(new Lanterna(), firstFloor);
 
     while (true) {
-      Thread.sleep(1000);
       controller.step();
       controller.draw();
     }
