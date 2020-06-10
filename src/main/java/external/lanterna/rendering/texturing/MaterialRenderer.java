@@ -59,7 +59,8 @@ public abstract class MaterialRenderer {
   }
 
   protected void drawParticipant(Participant participant, Material f, Material b, char c) {
-    drawEntity(participant, f, b, c);
+    if (participant.isVisible())
+      drawEntity(participant, f, b, c);
   }
 
   protected void drawTile(Tile tile, Material f, Material b, char c) {

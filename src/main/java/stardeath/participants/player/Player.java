@@ -23,8 +23,31 @@ public class Player extends Participant {
   }
 
   @Override
+  public boolean isVisible() {
+    return true;
+  }
+
+  @Override
   public void accept(ParticipantVisitor visitor) {
     visitor.visitParticipant(this);
+  }
+
+  public static class MaskAllParticipants implements Action {
+
+    @Override
+    public void execute(Floor level) {
+      level.getParticipants().forEach(Participant::hide);
+    }
+  }
+
+  public class ShowCloseParticipants implements Action {
+
+    @Override
+    public void execute(Floor level) {
+      RayCasting.compute(Player.this,
+          (x, y) -> level.tileAt(x, y).isOpaque(),
+          (x, y) -> level.getParticipant(x, y).ifPresent(Participant::show));
+    }
   }
 
   public class UnveilAction implements Action {

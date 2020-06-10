@@ -15,11 +15,13 @@ public abstract class Participant extends Entity implements Walker {
   private final List<Action> actions = new ArrayList<>();
   private Faction memberOf;
   private int hp;
+  private boolean visible;
 
   public Participant(int x, int y, Faction faction, int hp) {
     super(x, y);
     this.memberOf = faction;
     this.hp = hp;
+    this.visible = false;
   }
 
   public final void damage(int amount) {
@@ -28,6 +30,18 @@ public abstract class Participant extends Entity implements Walker {
 
   public boolean isAlive() {
     return hp <= 0;
+  }
+
+  public boolean isVisible() {
+    return visible;
+  }
+
+  public void hide() {
+    this.visible = false;
+  }
+
+  public void show() {
+    this.visible = true;
   }
 
   public final void addAction(Action action) {

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 import stardeath.controller.ChooseMove;
 import stardeath.controller.UnveilVisitor;
+import stardeath.controller.UpdateVisibility;
 import stardeath.interactions.MovementInteractions;
 import stardeath.interactions.Renderer;
 import stardeath.participants.actions.ExecuteActions;
@@ -50,6 +51,7 @@ public class Controller {
 
   private void turn() {
     floor.visitParticipants(new ExecuteActions(this.floor));
+    floor.visitParticipants(new UpdateVisibility());
   }
 
   public void step() {
