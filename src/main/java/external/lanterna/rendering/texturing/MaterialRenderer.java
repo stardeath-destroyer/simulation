@@ -46,12 +46,12 @@ public abstract class MaterialRenderer {
     if (inBounds(x, 0, characters.length) && inBounds(y, 0, characters[x].length)) {
 
       foreground[x][y] = Material.Void
-              .overlapped(foreground[x][y])
-              .overlapped(f);
+          .overlapped(foreground[x][y])
+          .overlapped(f);
 
       background[x][y] = Material.Void
-              .overlapped(background[x][y])
-              .overlapped(b);
+          .overlapped(background[x][y])
+          .overlapped(b);
 
       characters[x][y] = c;
       drawn[x][y] = true;
@@ -59,12 +59,14 @@ public abstract class MaterialRenderer {
   }
 
   protected void drawParticipant(Participant participant, Material f, Material b, char c) {
-    if (participant.isVisible())
+    if (participant.isVisible()) {
       drawEntity(participant, f, b, c);
+    }
   }
 
   protected void drawTile(Tile tile, Material f, Material b, char c) {
-    if (tile.isDiscovered())
+    if (tile.isDiscovered()) {
       drawEntity(tile, f, b, c);
+    }
   }
 }
