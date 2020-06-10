@@ -3,6 +3,7 @@ package stardeath.participants.player;
 import stardeath.participants.Participant;
 import stardeath.participants.ParticipantVisitor;
 import stardeath.participants.actions.Action;
+import stardeath.participants.factions.Faction;
 import stardeath.world.Floor;
 import stardeath.world.Tile;
 
@@ -13,7 +14,7 @@ public class Player extends Participant {
   private int visibilityRange;
 
   public Player(int x, int y) {
-    super(x, y);
+    super(x, y, Faction.Rebels, 100);
     this.visibilityRange = DEFAULT_VISIBILITY_RANGE;
   }
 

@@ -14,9 +14,20 @@ public abstract class Participant extends Entity implements Walker {
 
   private final List<Action> actions = new ArrayList<>();
   private Faction memberOf;
+  private int hp;
 
-  public Participant(int x, int y) {
+  public Participant(int x, int y, Faction faction, int hp) {
     super(x, y);
+    this.memberOf = faction;
+    this.hp = hp;
+  }
+
+  public final void damage(int amount) {
+    hp -= amount;
+  }
+
+  public boolean isAlive() {
+    return hp <= 0;
   }
 
   public final void addAction(Action action) {

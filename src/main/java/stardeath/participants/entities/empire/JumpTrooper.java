@@ -6,7 +6,7 @@ import stardeath.participants.movements.Jumper;
 public class JumpTrooper extends Trooper implements Jumper {
 
   public JumpTrooper(int x, int y) {
-    super(x, y);
+    super(x, y, 45);
   }
 
   @Override
