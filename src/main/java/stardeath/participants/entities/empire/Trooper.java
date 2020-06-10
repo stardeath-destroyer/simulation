@@ -5,7 +5,11 @@ import stardeath.participants.factions.Faction;
 
 public class Trooper extends Soldier {
 
-  public Trooper(int x, int y, int hp) {
+  protected Trooper(int x, int y, int hp) {
     super(x, y, Faction.Empire, hp);
+  }
+
+  public Trooper(int x, int y) {
+    super(x, y, Faction.Empire, 20);
   }
 }

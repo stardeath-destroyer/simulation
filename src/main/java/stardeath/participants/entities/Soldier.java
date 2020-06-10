@@ -5,8 +5,12 @@ import stardeath.participants.factions.Faction;
 
 public class Soldier extends Human {
 
-  public Soldier(int x, int y, Faction faction, int hp) {
+  protected Soldier(int x, int y, Faction faction, int hp) {
     super(x, y, faction, hp);
+  }
+
+  public Soldier(int x, int y) {
+    super(x, y, Faction.Rebels, 70);
   }
 
   @Override
