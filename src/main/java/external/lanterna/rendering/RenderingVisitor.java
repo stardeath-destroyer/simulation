@@ -68,7 +68,7 @@ public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor
   @Override
   public void visitParticipant(Player player) {
     this.player = player;
-    drawParticipant(player, Material.Player, Material.Void, 'P');
+    drawAnimate(player, Material.Player, Material.Void, 'P');
   }
 
   @Override
@@ -83,11 +83,11 @@ public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor
 
   @Override
   public void visitParticipant(Wookie wookie) {
-    drawParticipant(wookie, Material.WookieWool, Material.Void, 'W');
+    drawAnimate(wookie, Material.WookieWool, Material.Void, 'W');
   }
 
   @Override
   public void visitProjectile(Projectile projectile) {
-    throw new IllegalArgumentException("Projectile not supported yet.");
+    drawAnimate(projectile, Material.Laser, Material.Void, '*');
   }
 }

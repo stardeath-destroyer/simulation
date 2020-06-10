@@ -31,6 +31,8 @@ public class LanternaMovementInteractions implements MovementInteractions {
             movement = Movement.DOWN;
           } else if (stroke.getKeyType() == KeyType.ArrowRight || Objects.equals('d', stroke.getCharacter())) {
             movement = Movement.RIGHT;
+          } else if (stroke.getKeyType() == KeyType.Enter) {
+            movement = Movement.FIRE;
           }
         }
       } catch (IOException any) {

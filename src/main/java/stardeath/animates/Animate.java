@@ -12,14 +12,24 @@ public abstract class Animate extends Entity {
 
   private final List<Action> actions = new ArrayList<>();
   private boolean visible;
+  private boolean remove;
 
   protected Animate(int x, int y) {
     super(x, y);
     this.visible = false;
+    this.remove = false;
   }
 
   public boolean isVisible() {
     return visible;
+  }
+
+  public void remove() {
+    this.remove = true;
+  }
+
+  public boolean shouldRemove() {
+    return remove;
   }
 
   public void hide() {

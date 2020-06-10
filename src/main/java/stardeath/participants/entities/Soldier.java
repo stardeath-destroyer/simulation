@@ -1,7 +1,11 @@
 package stardeath.participants.entities;
 
 import stardeath.animates.AnimateVisitor;
+import stardeath.participants.actions.Action;
 import stardeath.participants.factions.Faction;
+import stardeath.participants.weapons.Projectile;
+import stardeath.participants.weapons.Projectile.Direction;
+import stardeath.world.Floor;
 
 public class Soldier extends Human {
 
@@ -26,5 +30,21 @@ public class Soldier extends Human {
   @Override
   public int getAttackDamage() {
     return 150;
+  }
+
+  public class Fire implements Action {
+
+    private final Direction direction;
+    private final int speed;
+
+    public Fire(Direction direction, int speed) {
+      this.direction = direction;
+      this.speed = speed;
+    }
+
+    @Override
+    public void execute(Floor level) {
+      level.addAnimate(new Projectile(getX(), getY(), direction, speed));
+    }
   }
 }

@@ -19,7 +19,8 @@ public abstract class Participant extends Animate implements Walker {
     hp -= amount;
   }
 
-  public boolean isAlive() {
-    return hp <= 0;
+  @Override
+  public boolean shouldRemove() {
+    return super.shouldRemove() || hp < 0;
   }
 }

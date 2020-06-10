@@ -33,7 +33,7 @@ public class Controller {
     List<Start> startingTiles = this.currentFloor.getStartTiles();
     Start startingTile = startingTiles.get(new Random().nextInt(startingTiles.size()));
 
-    currentFloor.addParticipant(new Player(startingTile.getX(), startingTile.getY()));
+    currentFloor.addAnimate(new Player(startingTile.getX(), startingTile.getY()));
 
     discover();
     turn();
@@ -50,6 +50,7 @@ public class Controller {
 
   private void turn() {
     currentFloor.visitAnimates(new ExecuteActions(this.currentFloor));
+    currentFloor.spawn();
     currentFloor.visitAnimates(new UpdateVisibility());
   }
 

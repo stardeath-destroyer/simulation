@@ -17,4 +17,8 @@ public class Vector {
   public int getY() {
     return y;
   }
+
+  public Vector add(Vector other) {
+    return new Vector(this.x + other.x, this.y + other.y);
+  }
 }

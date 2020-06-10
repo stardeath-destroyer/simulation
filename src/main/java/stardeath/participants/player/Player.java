@@ -2,13 +2,13 @@ package stardeath.participants.player;
 
 import stardeath.animates.Animate;
 import stardeath.animates.AnimateVisitor;
-import stardeath.participants.Participant;
 import stardeath.participants.actions.Action;
+import stardeath.participants.entities.Soldier;
 import stardeath.participants.factions.Faction;
 import stardeath.world.Floor;
 import stardeath.world.visibility.RayCasting;
 
-public class Player extends Participant {
+public class Player extends Soldier {
 
   private static final int DEFAULT_VISIBILITY_RANGE = 13;
 

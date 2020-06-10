@@ -52,10 +52,32 @@ public class Projectile extends Animate {
     }
   }
 
-  //public class Hit implements Action {
-  //
-  //  @Override
-  //  public void execute(Floor level) {
-  //  }
-  //}
+  public class MoveAndHit implements Action {
+
+    @Override
+    public void execute(Floor level) {
+      Vector base = new Vector(getX(), getY());
+      for (int i = 0; i < speed; i++) {
+        for (Vector step : direction.getSteps()) {
+          base = base.add(step);
+          x = base.getX();
+          y = base.getY();
+          ConsumeProjectileVisitor consumeProjectileVisitor = new ConsumeProjectileVisitor(10);
+          level.getParticipant(base.getX(), base.getY())
+              .ifPresent(a -> a.accept(consumeProjectileVisitor));
+
+          if (consumeProjectileVisitor.isConsumed()) {
+            remove();
+          }
+
+          level.getTile(base.getX(), base.getY())
+              .ifPresent(tile -> {
+                if (tile.isOpaque()) {
+                  remove();
+                }
+              });
+        }
+      }
+    }
+  }
 }

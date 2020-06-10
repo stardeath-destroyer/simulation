@@ -1,6 +1,7 @@
 package external.lanterna.rendering.texturing;
 
 import stardeath.Entity;
+import stardeath.animates.Animate;
 import stardeath.participants.Participant;
 import stardeath.world.Tile;
 
@@ -58,9 +59,9 @@ public abstract class MaterialRenderer {
     }
   }
 
-  protected void drawParticipant(Participant participant, Material f, Material b, char c) {
-    if (participant.isVisible()) {
-      drawEntity(participant, f, b, c);
+  protected void drawAnimate(Animate animate, Material f, Material b, char c) {
+    if (animate.isVisible()) {
+      drawEntity(animate, f, b, c);
     }
   }
 
