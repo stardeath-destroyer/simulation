@@ -33,8 +33,8 @@ public class Controller {
     List<Start> startingTiles = this.currentFloor.getStartTiles();
     Start startingTile = startingTiles.get(new Random().nextInt(startingTiles.size()));
 
-    for (int i = 0; i < 42; i++)
-      currentFloor.addParticipant(new Wookie(3, 20));
+    //for (int i = 0; i < 42; i++)
+      //currentFloor.addParticipant(new Wookie(3, 20));
 
     currentFloor.addParticipant(new Player(startingTile.getX(), startingTile.getY()));
 

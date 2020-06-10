@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.zip.ZipFile;
 import stardeath.world.Floor;
 import external.io.Decoding;
 import stardeath.world.World;
@@ -27,13 +28,7 @@ public class Main {
       level = args[0];
     }
 
-
-    final Path path = Paths.get("src/main/resources/world.stardeath");
-    final URI uri = URI.create("jar:" + path.toUri());
-
-
-
-    World world = Decoding.loadWorld(uri);
+    World world = Decoding.loadWorld(new ZipFile("src/main/resources/world3.stardeath"));
 
     Controller controller = new Controller(new Lanterna(), world);
 

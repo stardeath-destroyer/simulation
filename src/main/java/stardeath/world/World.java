@@ -1,9 +1,10 @@
 package stardeath.world;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class World {
-  private List<Floor> floors;
+  private List<Floor> floors = new ArrayList<>();
 
   public Floor getFirst(){
     return floors.get(0);

@@ -13,7 +13,10 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import stardeath.Main;
 import stardeath.participants.Participant;
 import stardeath.participants.entities.Soldier;
@@ -34,66 +37,53 @@ public class Decoding {
   }
 
 
-  public static World loadWorld(URI worldFile) throws java.io.IOException {
+  public static World loadWorld(ZipFile worldFile) throws java.io.IOException {
 
     World world = new World();
 
-    Iterable<Path> paths = FileSystems.newFileSystem(worldFile, Collections.emptyMap()).getRootDirectories();
+    try {
+      Enumeration<? extends ZipEntry> entries = worldFile.entries();
 
-    int levelnb = 1;
-    boolean found = true;
+      int levelNb = 0;
+      InputStream floorFile = null;
+      InputStream enemiesFile = null;
+      while (entries.hasMoreElements()) {
+        ZipEntry entry = entries.nextElement();
+        String name = entry.getName();
+        String type = entry.isDirectory() ? "DIR" : "FILE";
+        System.out.println(type + " " + name);
 
-    for(Path path : paths){
-      if(!found) break;
-      found = false;
-      String fileName = path.getFileName().toString();
-      if(fileName.equals("level-" + levelnb) && path.toFile().isDirectory()){
-        world.addFloor(readFloor(path.toFile()));
-        levelnb++;
-        found = true;
-      }
-    }
-
-        /*
-    FileSystems.newFileSystem(worldFile, Collections.emptyMap())
-        .getRootDirectories()
-        .forEach(root -> {
-          try {
-            Files.walk(root).forEach(path -> world.addFloor(readFloor(path.toFile())));
-          } catch (IOException e) {
-            e.printStackTrace();
+        if(entry.isDirectory()){
+          System.out.println("name: " + entry.getName());
+          //levelNb = Integer.parseInt(entry.getName().substring(5, 6));
+        }else{
+          if(entry.getName().endsWith(".floor")){
+            floorFile = worldFile.getInputStream(entry);
+          }else if(entry.getName().endsWith(".enemies")){
+            enemiesFile = worldFile.getInputStream(entry);
           }
-        });
+          if(enemiesFile != null && floorFile != null){
+            world.addFloor(readFloor(floorFile, enemiesFile));
+            floorFile.close();
+            floorFile = null;
+            enemiesFile.close();
+            enemiesFile = null;
+          }
+        }
+      }
 
-         */
-
+      worldFile.close();
+    } catch (IOException ex) {
+      ex.printStackTrace();
+    }
 
     return world;
   }
 
-  private static Floor readFloor(File folder){
-    if(!folder.isDirectory()) throw new IllegalArgumentException("Not a folder");
-    List<Participant> enemies = null;
-    Floor floor = null;
+  private static Floor readFloor(InputStream floorFile, InputStream enemiesFile) throws IOException {
 
-    try{
-      for (final File fileEntry : folder.listFiles()) {
-        String extension = fileEntry.getName().split(".")[1];
-        if(extension.equals("floor")){
-          floor = new Floor(readTiles(new FileInputStream(fileEntry)).toArray(new Tile[0]));
-        }else if(extension.equals("enemies")){
-          enemies = readEnemies(new FileInputStream(fileEntry));
-        }
-      }
-    }catch (IOException ex){
-      ex.printStackTrace();
-      return null;
-    }
-
-
-
-    if(floor == null) throw new RuntimeException("*.floor file not found");
-    if(enemies == null) throw new RuntimeException("*.enemies file not found");
+    Floor floor = new Floor(readTiles(floorFile).toArray(new Tile[0]));
+    List<Participant> enemies = readEnemies(enemiesFile);
     floor.addParticipants(enemies);
 
     return floor;
