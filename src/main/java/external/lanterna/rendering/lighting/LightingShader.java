@@ -34,31 +34,27 @@ public class LightingShader {
   }
 
   public void withPlayer(Player player) {
+    RayCasting.compute(player, (x, y) -> {
+          if (x >= 0 && y >= 0 && x < width && y < height) {
+            return opaque[x][y];
+          }
+          return false;
+        }, (x, y) -> {
+          if (x >= 0 && y >= 0 && x < width && y < height) {
+            int distance = distanceTo(player.getX(), player.getY(), x, y);
+            if (distance > 10) {
+              lighting[x][y] = LightingLevel.Dark;
+            } else if (distance > 7) {
+              lighting[x][y] = LightingLevel.Medium;
+            } else if (distance > 5) {
+              lighting[x][y] = LightingLevel.Bright;
+            } else {
+              lighting[x][y] = LightingLevel.Brightest;
+            }
 
-    // TODO : Write directly in the brightness buffer.
-    boolean[][] visible = RayCasting.compute(width, height, player, (x, y) -> {
-      if (x >= 0 && y >= 0 && x < width && y < height) {
-        return opaque[x][y];
-      }
-      return false;
-    });
-
-    for (int i = 0; i < visible.length; i++) {
-      for (int j = 0; j < visible[i].length; j++) {
-        if (visible[i][j]) {
-          int distance = distanceTo(player.getX(), player.getY(), i, j);
-          if (distance > 10) {
-            lighting[i][j] = LightingLevel.Dark;
-          } else if (distance > 7) {
-            lighting[i][j] = LightingLevel.Medium;
-          } else if (distance > 5) {
-            lighting[i][j] = LightingLevel.Bright;
-          } else {
-            lighting[i][j] = LightingLevel.Brightest;
           }
         }
-      }
-    }
+    );
   }
 
   public LightingLevel[][] getLighting() {

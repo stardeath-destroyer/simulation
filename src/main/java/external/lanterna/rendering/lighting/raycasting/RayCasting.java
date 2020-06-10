@@ -9,36 +9,24 @@ import stardeath.participants.player.Player;
 
 public class RayCasting {
 
-  public static boolean[][] compute(
-      int width, int height,
+  public static void compute(
       Player player,
-      BiFunction<Integer, Integer, Boolean> opaque
+      BiFunction<Integer, Integer, Boolean> opaque,
+      BiConsumer<Integer, Integer> write
   ) {
-    boolean[][] visible = new boolean[width][height];
-    BiConsumer<Integer, Integer> write = (x, y) -> {
-      if (x >= 0 &&
-          y >= 0 &&
-          x < visible.length &&
-          y < visible[x].length) {
-        visible[x][y] = true;
-      }
-    };
+
 
     for (Octant octant : Octant.values()) {
-      computeFirstOctant(
-          Transforms
-              .translateOctant(Transforms.translateOrigin(opaque, player.getX(), player.getY()),
-                  octant),
-          Transforms
-              .translateOctant(Transforms.translateOrigin(write, player.getX(), player.getY()),
-                  octant),
+      computeOctant(
+          Transforms.translateOctant(octant,
+              Transforms.translateOrigin(opaque, player.getX(), player.getY())),
+          Transforms.translateOctant(octant,
+              Transforms.translateOrigin(write, player.getX(), player.getY())),
           player.getVisibilityRange());
     }
-
-    return visible;
   }
 
-  private static void computeFirstOctant(
+  private static void computeOctant(
       BiFunction<Integer, Integer, Boolean> opaque,
       BiConsumer<Integer, Integer> markVisible,
       int radius
@@ -47,17 +35,16 @@ public class RayCasting {
     queue.addLast(new Portion(0, new Vector(1, 0), new Vector(1, 1)));
     while (queue.size() > 0) {
       Portion current = queue.pollFirst();
-      if (current.getX() >= radius) {
-        continue;
+      if (current.getX() < radius) {
+        computeColumnPortion(
+            current.getX(),
+            current.getTop(),
+            current.getBottom(),
+            opaque,
+            markVisible,
+            radius,
+            queue);
       }
-      computeColumnPortion(
-          current.getX(),
-          current.getTop(),
-          current.getBottom(),
-          opaque,
-          markVisible,
-          radius,
-          queue);
     }
   }
 

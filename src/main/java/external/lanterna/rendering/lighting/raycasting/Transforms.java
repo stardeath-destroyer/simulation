@@ -22,8 +22,8 @@ import java.util.function.BiFunction;
   }
 
   public static <T> BiFunction<Integer, Integer, T> translateOctant(
-      BiFunction<Integer, Integer, T> f,
-      Octant octant) {
+      Octant octant,
+      BiFunction<Integer, Integer, T> f) {
     return (x, y) -> {
       Vector vector = octant.transformToZero(new Vector(x, y));
       return f.apply(vector.getX(), vector.getY());
@@ -31,8 +31,8 @@ import java.util.function.BiFunction;
   }
 
   public static BiConsumer<Integer, Integer> translateOctant(
-      BiConsumer<Integer, Integer> f,
-      Octant octant) {
+      Octant octant,
+      BiConsumer<Integer, Integer> f) {
     return (x, y) -> {
       Vector vector = octant.transformToZero(new Vector(x, y));
       f.accept(vector.getX(), vector.getY());
