@@ -9,7 +9,7 @@ import stardeath.world.Tile;
 
 public class Player extends Participant {
 
-  private static final int DEFAULT_VISIBILITY_RANGE = 20;
+  private static final int DEFAULT_VISIBILITY_RANGE = 13;
 
   private int visibilityRange;
 

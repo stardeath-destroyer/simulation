@@ -1,6 +1,8 @@
 package external.lanterna.rendering.texturing;
 
 import stardeath.Entity;
+import stardeath.participants.Participant;
+import stardeath.world.Tile;
 
 public abstract class MaterialRenderer {
 
@@ -36,20 +38,32 @@ public abstract class MaterialRenderer {
     return drawn;
   }
 
-  protected void drawEntity(Entity entity, Material f, Material b, char c) {
+  private void drawEntity(Entity entity, Material f, Material b, char c) {
     // Only draw the entity if we are within the bounds.
-    if (inBounds(entity.getX(), 0, characters.length) &&
-        inBounds(entity.getY(), 0, characters[entity.getX()].length)) {
-      foreground[entity.getX()][entity.getY()] =
-          Material.Void
-              .overlapped(foreground[entity.getX()][entity.getY()])
+    int x = entity.getX();
+    int y = entity.getY();
+
+    if (inBounds(x, 0, characters.length) && inBounds(y, 0, characters[x].length)) {
+
+      foreground[x][y] = Material.Void
+              .overlapped(foreground[x][y])
               .overlapped(f);
-      background[entity.getX()][entity.getY()] =
-          Material.Void
-              .overlapped(background[entity.getX()][entity.getY()])
+
+      background[x][y] = Material.Void
+              .overlapped(background[x][y])
               .overlapped(b);
-      characters[entity.getX()][entity.getY()] = c;
-      drawn[entity.getX()][entity.getY()] = true;
+
+      characters[x][y] = c;
+      drawn[x][y] = true;
     }
+  }
+
+  protected void drawParticipant(Participant participant, Material f, Material b, char c) {
+    drawEntity(participant, f, b, c);
+  }
+
+  protected void drawTile(Tile tile, Material f, Material b, char c) {
+    if (tile.isDiscovered())
+      drawEntity(tile, f, b, c);
   }
 }

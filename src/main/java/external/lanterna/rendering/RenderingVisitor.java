@@ -46,28 +46,28 @@ public class RenderingVisitor extends MaterialRenderer implements ParticipantVis
 
   @Override
   public void visitTile(Hole hole) {
-    drawEntity(hole, Material.Void, Material.Void, ' ');
+    drawTile(hole, Material.Void, Material.Void, ' ');
   }
 
   @Override
   public void visitTile(Regular regular) {
-    drawEntity(regular, Material.Iron, Material.Void, '.');
+    drawTile(regular, Material.Iron, Material.Void, '.');
   }
 
   @Override
   public void visitTile(Start start) {
-    drawEntity(start, Material.Iron, Material.Void, '.');
+    drawTile(start, Material.Iron, Material.Void, '.');
   }
 
   @Override
   public void visitTile(Wall wall) {
-    drawEntity(wall, Material.Void, Material.Iron, ' ');
+    drawTile(wall, Material.Void, Material.Iron, ' ');
   }
 
   @Override
   public void visitParticipant(Player player) {
     this.player = player;
-    drawEntity(player, Material.Player, Material.Void, 'P');
+    drawParticipant(player, Material.Player, Material.Void, 'P');
   }
 
   @Override
@@ -82,6 +82,6 @@ public class RenderingVisitor extends MaterialRenderer implements ParticipantVis
 
   @Override
   public void visitParticipant(Wookie wookie) {
-    drawEntity(wookie, Material.WookieWool, Material.Void, 'W');
+    drawParticipant(wookie, Material.WookieWool, Material.Void, 'W');
   }
 }
