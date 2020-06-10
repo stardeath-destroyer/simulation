@@ -5,7 +5,7 @@ import stardeath.participants.ParticipantVisitor;
 import stardeath.participants.actions.Action;
 import stardeath.participants.factions.Faction;
 import stardeath.world.Floor;
-import stardeath.world.Tile;
+import stardeath.world.visibility.RayCasting;
 
 public class Player extends Participant {
 
@@ -29,17 +29,11 @@ public class Player extends Participant {
 
   public class UnveilAction implements Action {
 
-    private final Floor floor;
-
-    public UnveilAction(Floor floor) {
-      this.floor = floor;
-    }
-
     @Override
     public void execute(Floor level) {
-      floor.getTiles().stream()
-          .filter(tile -> tile.distanceTo(getX(), getY()) < getVisibilityRange())
-          .forEach(Tile::unveil);
+      RayCasting.compute(Player.this,
+          (x, y) -> level.tileAt(x, y).isOpaque(),
+          (x, y) -> level.tileAt(x, y).unveil());
     }
   }
 }

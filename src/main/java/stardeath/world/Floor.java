@@ -51,6 +51,10 @@ public final class Floor {
         .findFirst();
   }
 
+  public Tile tileAt(int x, int y) {
+    return tiles.stream().filter(t -> t.getX() == x && t.getY() == y).findFirst().get();
+  }
+
   public final List<Tile> getTiles() {
     return Collections.unmodifiableList(tiles);
   }

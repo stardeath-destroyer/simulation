@@ -41,7 +41,7 @@ public class Controller {
   }
 
   private void discover() {
-    floor.visitParticipants(new UnveilVisitor(floor));
+    floor.visitParticipants(new UnveilVisitor());
   }
 
   private void move() {
