@@ -8,33 +8,32 @@ import stardeath.controller.UpdateVisibility;
 import stardeath.interactions.MovementInteractions;
 import stardeath.interactions.Renderer;
 import stardeath.participants.actions.ExecuteActions;
-import stardeath.participants.entities.Wookie;
 import stardeath.participants.player.Player;
 import stardeath.world.Floor;
+import stardeath.world.World;
 import stardeath.world.tiles.Start;
 
 public class Controller {
 
   private final Renderer renderer;
   private final MovementInteractions movements;
+  private final World world;
 
-  private Floor floor;
+  private Floor currentFloor;
 
-  public Controller(UIFactory factory, Floor floor) {
+  public Controller(UIFactory factory, World world) {
     this.renderer = factory.renderer();
     this.movements = factory.movement();
-    this.floor = floor;
+    this.world = world;
+    this.currentFloor = world.getFirst();
     
     // Register this Controller's ability to render things NOW to the Renderer.
     this.renderer.registerRenderRequestListener(this::draw);
 
-    List<Start> startingTiles = this.floor.getStartTiles();
+    List<Start> startingTiles = this.currentFloor.getStartTiles();
     Start startingTile = startingTiles.get(new Random().nextInt(startingTiles.size()));
 
-    for (int i = 0; i < 42; i++)
-      floor.addParticipant(new Wookie(20, 20));
-
-    floor.addParticipant(new Player(startingTile.getX(), startingTile.getY()));
+    currentFloor.addParticipant(new Player(startingTile.getX(), startingTile.getY()));
 
     discover();
     turn();
@@ -42,16 +41,16 @@ public class Controller {
   }
 
   private void discover() {
-    floor.visitAnimates(new UnveilVisitor());
+    currentFloor.visitAnimates(new UnveilVisitor());
   }
 
   private void move() {
-    floor.visitAnimates(new ChooseMove(floor, movements));
+    currentFloor.visitAnimates(new ChooseMove(currentFloor, movements));
   }
 
   private void turn() {
-    floor.visitAnimates(new ExecuteActions(this.floor));
-    floor.visitAnimates(new UpdateVisibility());
+    currentFloor.visitAnimates(new ExecuteActions(this.currentFloor));
+    currentFloor.visitAnimates(new UpdateVisibility());
   }
 
   public void step() {
@@ -63,6 +62,6 @@ public class Controller {
   public void draw() {
 
     // Draw the contents.
-    renderer.render(floor);
+    renderer.render(currentFloor);
   }
 }

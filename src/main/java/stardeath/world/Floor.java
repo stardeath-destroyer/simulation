@@ -42,6 +42,10 @@ public final class Floor {
     animates.add(participant);
   }
 
+  public void addParticipants(List<Participant> newParticipants){
+    animates.addAll(newParticipants);
+  }
+
   public void removeParticipant(Participant participant) {
     animates.remove(participant);
   }

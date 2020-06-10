@@ -1,18 +1,26 @@
 package stardeath;
 
 import external.lanterna.Lanterna;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.zip.ZipFile;
 import stardeath.world.Floor;
-import stardeath.world.Tile;
 import external.io.Decoding;
+import stardeath.world.World;
 
 /**
  * The main entry point of our application.
  */
 public class Main {
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException, URISyntaxException {
 
     String level = "visibility.floor";
 
@@ -20,14 +28,9 @@ public class Main {
       level = args[0];
     }
 
-    InputStream stream = Main.class
-        .getClassLoader()
-        .getResourceAsStream(level);
+    World world = Decoding.loadWorld(new ZipFile("src/main/resources/world3.stardeath"));
 
-    Floor firstFloor = new Floor(
-        Decoding.readTiles(stream).stream().toArray(Tile[]::new)
-    );
-    Controller controller = new Controller(new Lanterna(), firstFloor);
+    Controller controller = new Controller(new Lanterna(), world);
 
     while (true) {
       controller.step();
