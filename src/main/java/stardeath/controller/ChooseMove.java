@@ -28,8 +28,7 @@ public class ChooseMove extends MovementVisitor {
   public <J extends Participant & Jumper> void visitJumper(J jumper) {
     jumper.addAction(jumper.new MoveAction(
         random(-jumper.getRange(), jumper.getRange()),
-        random(-jumper.getRange(), jumper.getRange()),
-        level
+        random(-jumper.getRange(), jumper.getRange())
     ));
   }
 
@@ -37,8 +36,7 @@ public class ChooseMove extends MovementVisitor {
   public <W extends Participant & Walker> void visitWalker(W walker) {
     walker.addAction(walker.new MoveAction(
         random(-1, 1),
-        random(-1, 1),
-        level
+        random(-1, 1)
     ));
   }
 
@@ -46,16 +44,16 @@ public class ChooseMove extends MovementVisitor {
   public <P extends Player> void visitPlayer(P player) {
     switch (interactions.requestMovement()) {
       case UP:
-        player.addAction(player.new MoveAction(0, -1, level));
+        player.addAction(player.new MoveAction(0, -1));
         break;
       case LEFT:
-        player.addAction(player.new MoveAction(-1, 0, level));
+        player.addAction(player.new MoveAction(-1, 0));
         break;
       case DOWN:
-        player.addAction(player.new MoveAction(0, 1, level));
+        player.addAction(player.new MoveAction(0, 1));
         break;
       case RIGHT:
-        player.addAction(player.new MoveAction(1, 0, level));
+        player.addAction(player.new MoveAction(1, 0));
         break;
     }
   }

@@ -37,12 +37,10 @@ public abstract class Participant extends Entity implements Walker {
 
     private final int deltaX;
     private final int deltaY;
-    private Floor floor;
 
-    public MoveAction(int x, int y, Floor floor) {
+    public MoveAction(int x, int y) {
       this.deltaX = x;
       this.deltaY = y;
-      this.floor = floor;
     }
 
     @Override
@@ -50,7 +48,7 @@ public abstract class Participant extends Entity implements Walker {
       int newX = getX() + deltaX;
       int newY = getY() + deltaY;
 
-      if (floor.getTiles().stream()
+      if (level.getTiles().stream()
           .filter(tile -> tile.getX() == newX && tile.getY() == newY)
           .noneMatch(Tile::isOpaque)) {
         Participant.this.setPosition(getX() + deltaX, getY() + deltaY);
