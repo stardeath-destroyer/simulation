@@ -7,6 +7,7 @@ import stardeath.participants.attacks.AttackVisitor;
 import stardeath.participants.attacks.Attacker;
 import stardeath.participants.attacks.SplashAttacker;
 import stardeath.participants.player.Player;
+import stardeath.participants.weapons.Projectile;
 import stardeath.world.Floor;
 
 public class ChooseAttack extends AttackVisitor {
@@ -39,6 +40,11 @@ public class ChooseAttack extends AttackVisitor {
 
   @Override
   public void visitParticipant(Player player) {
+
+  }
+
+  @Override
+  public void visitProjectile(Projectile projectile) {
 
   }
 }

@@ -1,11 +1,12 @@
 package stardeath.participants.actions;
 
+import stardeath.animates.Animate;
 import stardeath.animates.AnimateVisitor;
-import stardeath.participants.Participant;
 import stardeath.participants.entities.Soldier;
 import stardeath.participants.entities.Wookie;
 import stardeath.participants.entities.empire.JumpTrooper;
 import stardeath.participants.player.Player;
+import stardeath.participants.weapons.Projectile;
 import stardeath.world.Floor;
 
 public class ExecuteActions implements AnimateVisitor {
@@ -16,11 +17,11 @@ public class ExecuteActions implements AnimateVisitor {
     this.floor = floor;
   }
 
-  private void visit(Participant participant) {
-    for (Action action : participant.getActions()) {
+  private void visit(Animate animate) {
+    for (Action action : animate.getActions()) {
       action.execute(floor);
     }
-    participant.clearActions();
+    animate.clearActions();
   }
 
   @Override
@@ -41,5 +42,10 @@ public class ExecuteActions implements AnimateVisitor {
   @Override
   public void visitParticipant(Wookie wookie) {
     visit(wookie);
+  }
+
+  @Override
+  public void visitProjectile(Projectile projectile) {
+    visit(projectile);
   }
 }

@@ -1,23 +1,24 @@
 package external.cli.rendering;
 
+import stardeath.animates.Animate;
 import stardeath.animates.AnimateVisitor;
-import stardeath.participants.Participant;
 import stardeath.participants.entities.Soldier;
 import stardeath.participants.entities.Wookie;
 import stardeath.participants.entities.empire.JumpTrooper;
 import stardeath.participants.player.Player;
+import stardeath.participants.weapons.Projectile;
 
-public class RenderParticipants implements AnimateVisitor {
+public class RenderAnimates implements AnimateVisitor {
 
   private final char[][] buffer;
 
-  public RenderParticipants(char[][] buffer) {
+  public RenderAnimates(char[][] buffer) {
     this.buffer = buffer;
   }
 
-  private void setGrid(Participant participant, char symbol) {
-    if (participant.isVisible()) {
-      buffer[participant.getY()][participant.getX()] = symbol;
+  private void setGrid(Animate animate, char symbol) {
+    if (animate.isVisible()) {
+      buffer[animate.getY()][animate.getX()] = symbol;
     }
   }
 
@@ -39,5 +40,10 @@ public class RenderParticipants implements AnimateVisitor {
   @Override
   public void visitParticipant(Wookie wookie) {
     setGrid(wookie, 'W');
+  }
+
+  @Override
+  public void visitProjectile(Projectile projectile) {
+    setGrid(projectile, '*');
   }
 }

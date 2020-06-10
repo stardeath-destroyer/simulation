@@ -30,10 +30,10 @@ public class OutputStreamRenderer implements Renderer {
     }
 
     RenderFloor renderFloor = new RenderFloor(elements);
-    RenderParticipants renderParticipants = new RenderParticipants(elements);
+    RenderAnimates renderAnimates = new RenderAnimates(elements);
 
     floor.visitTiles(renderFloor);
-    floor.visitAnimates(renderParticipants);
+    floor.visitAnimates(renderAnimates);
 
     try {
       for (char[] line : elements) {

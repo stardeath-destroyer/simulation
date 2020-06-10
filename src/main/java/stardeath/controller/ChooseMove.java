@@ -7,6 +7,7 @@ import stardeath.animates.movements.Jumper;
 import stardeath.animates.movements.MovementVisitor;
 import stardeath.animates.movements.Walker;
 import stardeath.participants.player.Player;
+import stardeath.participants.weapons.Projectile;
 import stardeath.world.Floor;
 
 public class ChooseMove extends MovementVisitor {
@@ -56,5 +57,10 @@ public class ChooseMove extends MovementVisitor {
         player.addAction(player.new MoveAction(1, 0));
         break;
     }
+  }
+
+  @Override
+  public void visitProjectile(Projectile projectile) {
+    // TODO
   }
 }

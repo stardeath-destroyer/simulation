@@ -8,6 +8,7 @@ import stardeath.participants.entities.Soldier;
 import stardeath.participants.entities.Wookie;
 import stardeath.participants.entities.empire.JumpTrooper;
 import stardeath.participants.player.Player;
+import stardeath.participants.weapons.Projectile;
 import stardeath.world.TileVisitor;
 import stardeath.world.tiles.Armory;
 import stardeath.world.tiles.Dump;
@@ -83,5 +84,10 @@ public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor
   @Override
   public void visitParticipant(Wookie wookie) {
     drawParticipant(wookie, Material.WookieWool, Material.Void, 'W');
+  }
+
+  @Override
+  public void visitProjectile(Projectile projectile) {
+    throw new IllegalArgumentException("Projectile not supported yet.");
   }
 }
