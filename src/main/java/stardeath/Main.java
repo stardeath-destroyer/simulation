@@ -1,18 +1,10 @@
 package stardeath;
 
-import external.lanterna.Lanterna;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.zip.ZipFile;
-import stardeath.world.Floor;
 import external.io.Decoding;
+import external.lanterna.Lanterna;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.zip.ZipFile;
 import stardeath.world.World;
 
 /**

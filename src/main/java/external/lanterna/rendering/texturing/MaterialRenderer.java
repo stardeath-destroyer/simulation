@@ -1,8 +1,6 @@
 package external.lanterna.rendering.texturing;
 
-import stardeath.Entity;
 import stardeath.animates.Animate;
-import stardeath.participants.Participant;
 import stardeath.world.Tile;
 
 public abstract class MaterialRenderer {
@@ -39,11 +37,9 @@ public abstract class MaterialRenderer {
     return drawn;
   }
 
-  private void drawEntity(Entity entity, Material f, Material b, char c) {
-    // Only draw the entity if we are within the bounds.
-    int x = entity.getX();
-    int y = entity.getY();
+  private void drawAt(int x, int y, Material f, Material b, char c) {
 
+    // Only draw the entity if we are within the bounds.
     if (inBounds(x, 0, characters.length) && inBounds(y, 0, characters[x].length)) {
 
       foreground[x][y] = Material.Void
@@ -61,13 +57,19 @@ public abstract class MaterialRenderer {
 
   protected void drawAnimate(Animate animate, Material f, Material b, char c) {
     if (animate.isVisible()) {
-      drawEntity(animate, f, b, c);
+      drawAnimate(animate, animate.getX(), animate.getY(), f, b, c);
+    }
+  }
+
+  protected void drawAnimate(Animate animate, int x, int y, Material f, Material b, char c) {
+    if (animate.isVisible()) {
+      drawAt(x, y, f, b, c);
     }
   }
 
   protected void drawTile(Tile tile, Material f, Material b, char c) {
     if (tile.isDiscovered()) {
-      drawEntity(tile, f, b, c);
+      drawAt(tile.getX(), tile.getY(), f, b, c);
     }
   }
 }

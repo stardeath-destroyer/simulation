@@ -11,11 +11,17 @@ public class Projectile extends Animate {
 
   private final Direction direction;
   private final int speed;
+  private final int damage;
 
-  public Projectile(int x, int y, Direction direction, int speed) {
+  public Projectile(int x, int y, int damage, Direction direction, int speed) {
     super(x, y);
+    this.damage = damage;
     this.direction = direction;
     this.speed = speed;
+  }
+
+  public Direction getDirection() {
+    return direction;
   }
 
   @Override
@@ -24,8 +30,8 @@ public class Projectile extends Animate {
   }
 
   public enum Direction {
-    ZERO(List.of(new Vector(1, 0), new Vector(1, 0)));
-    //ONE,
+    ZERO(List.of(new Vector(1, 0), new Vector(1, 0))),
+    ONE(List.of(new Vector(1, 0), new Vector(0, -1), new Vector(1, 0)));
     //TWO,
     //THREE,
     //FOUR,
@@ -59,23 +65,30 @@ public class Projectile extends Animate {
       Vector base = new Vector(getX(), getY());
       for (int i = 0; i < speed; i++) {
         for (Vector step : direction.getSteps()) {
+
+          // Move by one of the internal direction step vectors.
           base = base.add(step);
+
+          // Update the position of the head of this projectile.
           x = base.getX();
           y = base.getY();
-          ConsumeProjectileVisitor consumeProjectileVisitor = new ConsumeProjectileVisitor(10);
-          level.getParticipant(base.getX(), base.getY())
-              .ifPresent(a -> a.accept(consumeProjectileVisitor));
 
+          // Apply the damage to whatever is on the path of the projectile.
+          ConsumeProjectileVisitor consumeProjectileVisitor = new ConsumeProjectileVisitor(damage);
+          level.getParticipant(x, y).ifPresent(a -> a.accept(consumeProjectileVisitor));
+
+          // Remove the projectile if it has hit a participant already.
           if (consumeProjectileVisitor.isConsumed()) {
             remove();
           }
 
-          level.getTile(base.getX(), base.getY())
-              .ifPresent(tile -> {
-                if (tile.isOpaque()) {
-                  remove();
-                }
-              });
+          // If no participant was hit, maybe we have actually hit a wall. If so, remove this
+          // projectile.
+          level.getTile(base.getX(), base.getY()).ifPresent(tile -> {
+            if (tile.isOpaque()) {
+              remove();
+            }
+          });
         }
       }
     }

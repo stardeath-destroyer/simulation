@@ -10,6 +10,7 @@ import stardeath.participants.entities.empire.JumpTrooper;
 import stardeath.participants.player.Player;
 import stardeath.participants.weapons.Projectile;
 import stardeath.world.TileVisitor;
+import stardeath.world.Vector;
 import stardeath.world.tiles.Armory;
 import stardeath.world.tiles.Dump;
 import stardeath.world.tiles.Elevator;
@@ -88,6 +89,12 @@ public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor
 
   @Override
   public void visitProjectile(Projectile projectile) {
-    drawAnimate(projectile, Material.Laser, Material.Void, '*');
+    int steps = projectile.getDirection().getSteps().size();
+
+    Vector position = new Vector(projectile.getX(), projectile.getY());
+    Vector previous = position.add(projectile.getDirection().getSteps().get(steps - 1).inverse());
+
+    drawAnimate(projectile, position.getX(), position.getY(), Material.Laser, Material.Void, '*');
+    drawAnimate(projectile, previous.getX(), previous.getY(), Material.Laser, Material.Void, '*');
   }
 }

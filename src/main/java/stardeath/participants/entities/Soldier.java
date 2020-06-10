@@ -44,7 +44,13 @@ public class Soldier extends Human {
 
     @Override
     public void execute(Floor level) {
-      level.addAnimate(new Projectile(getX(), getY(), direction, speed));
+      // Make the projectile leave the player before adding it, to make sure the Player does not
+      // shoot himself by mistake.
+      int startX = direction.getSteps().get(0).getX() + getX();
+      int startY = direction.getSteps().get(0).getY() + getY();
+
+      // Add the projectile.
+      level.addAnimate(new Projectile(startX, startY, 10, direction, speed));
     }
   }
 }

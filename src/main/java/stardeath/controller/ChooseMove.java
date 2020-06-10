@@ -36,10 +36,10 @@ public class ChooseMove extends MovementVisitor {
 
   @Override
   public <W extends Participant & Walker> void visitWalker(W walker) {
-    //walker.addAction(walker.new MoveAction(
-    //    random(-1, 1),
-    //    random(-1, 1)
-    //));
+    walker.addAction(walker.new MoveAction(
+        random(-1, 1),
+        random(-1, 1)
+    ));
   }
 
   @Override
@@ -58,7 +58,7 @@ public class ChooseMove extends MovementVisitor {
         player.addAction(player.new MoveAction(1, 0));
         break;
       case FIRE:
-        player.addAction(player.new Fire(Direction.ZERO, 1));
+        player.addAction(player.new Fire(Direction.ONE, 1));
         break;
     }
   }

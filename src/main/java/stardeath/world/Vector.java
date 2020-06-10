@@ -21,4 +21,8 @@ public class Vector {
   public Vector add(Vector other) {
     return new Vector(this.x + other.x, this.y + other.y);
   }
+
+  public Vector inverse() {
+    return new Vector(-this.x, -this.y);
+  }
 }

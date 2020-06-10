@@ -34,6 +34,7 @@ public class Controller {
     Start startingTile = startingTiles.get(new Random().nextInt(startingTiles.size()));
 
     currentFloor.addAnimate(new Player(startingTile.getX(), startingTile.getY()));
+    currentFloor.spawn();
 
     discover();
     turn();

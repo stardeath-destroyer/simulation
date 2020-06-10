@@ -8,10 +8,8 @@ import external.lanterna.rendering.lighting.LightingLevel;
 import external.lanterna.rendering.lighting.LightingShader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import stardeath.interactions.Renderer;
-import stardeath.participants.Participant;
 import stardeath.participants.player.Player;
 import stardeath.world.Floor;
 
