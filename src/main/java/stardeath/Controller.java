@@ -1,13 +1,11 @@
 package stardeath;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import stardeath.controller.ChooseMove;
 import stardeath.controller.UnveilVisitor;
 import stardeath.interactions.MovementInteractions;
 import stardeath.interactions.Renderer;
-import stardeath.participants.Participant;
 import stardeath.participants.actions.ExecuteActions;
 import stardeath.participants.entities.Wookie;
 import stardeath.participants.player.Player;
@@ -20,7 +18,6 @@ public class Controller {
   private final MovementInteractions movements;
 
   private Floor floor;
-  private final List<Participant> players = new ArrayList<>();
 
   public Controller(UIFactory factory, Floor floor) {
     this.renderer = factory.renderer();
@@ -34,8 +31,9 @@ public class Controller {
     Start startingTile = startingTiles.get(new Random().nextInt(startingTiles.size()));
 
     for (int i = 0; i < 42; i++)
-      players.add(new Wookie(20, 20));
-    players.add(new Player(startingTile.getX(), startingTile.getY()));
+      floor.addParticipant(new Wookie(20, 20));
+
+    floor.addParticipant(new Player(startingTile.getX(), startingTile.getY()));
 
     discover();
     turn();
@@ -43,18 +41,15 @@ public class Controller {
   }
 
   private void discover() {
-    UnveilVisitor visitor = new UnveilVisitor(floor);
-    players.forEach(p -> p.accept(visitor));
+    floor.visitParticipants(new UnveilVisitor(floor));
   }
 
   private void move() {
-    ChooseMove move = new ChooseMove(floor, movements);
-    players.forEach(p -> p.accept(move));
+    floor.visitParticipants(new ChooseMove(floor, movements));
   }
 
   private void turn() {
-    ExecuteActions execute = new ExecuteActions(this.floor);
-    players.forEach(p -> p.accept(execute));
+    floor.visitParticipants(new ExecuteActions(this.floor));
   }
 
   public void step() {
@@ -66,6 +61,6 @@ public class Controller {
   public void draw() {
 
     // Draw the contents.
-    renderer.render(floor, players);
+    renderer.render(floor);
   }
 }

@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import stardeath.participants.Participant;
+import stardeath.participants.ParticipantVisitor;
 import stardeath.world.tiles.Start;
 
 public final class Floor {
@@ -54,9 +55,13 @@ public final class Floor {
     return Collections.unmodifiableList(tiles);
   }
 
+  public List<Participant> getParticipants() {
+    return Collections.unmodifiableList(participants);
+  }
+
   public final List<Start> getStartTiles() {
     List<Start> tiles = new ArrayList<>();
-    visit(new TileVisitorAdapter() {
+    visitTiles(new TileVisitorAdapter() {
       @Override
       public void visitTile(Start start) {
         tiles.add(start);
@@ -65,7 +70,11 @@ public final class Floor {
     return tiles;
   }
 
-  public void visit(TileVisitor visitor) {
+  public void visitParticipants(ParticipantVisitor visitor) {
+    participants.forEach(participant -> participant.accept(visitor));
+  }
+
+  public void visitTiles(TileVisitor visitor) {
     for (Tile tile : tiles) {
       tile.accept(visitor);
     }

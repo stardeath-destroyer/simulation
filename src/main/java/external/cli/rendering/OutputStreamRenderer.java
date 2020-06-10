@@ -18,7 +18,7 @@ public class OutputStreamRenderer implements Renderer {
   }
 
   @Override
-  public void render(Floor floor, Collection<Participant> participants) {
+  public void render(Floor floor) {
     int maxX = 0, maxY = 0;
     for (Tile tile : floor.getTiles()) {
       maxX = Math.max(maxX, tile.getX() + 1);
@@ -34,8 +34,8 @@ public class OutputStreamRenderer implements Renderer {
     RenderFloor renderFloor = new RenderFloor(elements);
     RenderParticipants renderParticipants = new RenderParticipants(elements);
 
-    floor.visit(renderFloor);
-    participants.forEach(p -> p.accept(renderParticipants));
+    floor.visitTiles(renderFloor);
+    floor.visitParticipants(renderParticipants);
 
     try {
       for (char[] line : elements) {

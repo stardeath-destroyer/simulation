@@ -15,4 +15,14 @@ public class Wookie extends Participant implements SplashAttacker {
   public void accept(ParticipantVisitor visitor) {
     visitor.visitParticipant(this);
   }
+
+  @Override
+  public int getAttackRange() {
+    return 0;
+  }
+
+  @Override
+  public int getAttackDamage() {
+    return 0;
+  }
 }

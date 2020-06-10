@@ -35,15 +35,15 @@ public class LanternaRenderer implements Renderer {
   }
 
   @Override
-  public void render(Floor floor, Collection<Participant> players) {
+  public void render(Floor floor) {
 
     RenderingVisitor render = new RenderingVisitor(floor.getWidth() + 1, floor.getHeight() + 1);
     LightingShader shader = new LightingShader(floor.getWidth() + 1, floor.getHeight() + 1,
         floor.getTiles());
 
     // Visit the floor and the participants.
-    floor.visit(render);
-    players.forEach(p -> p.accept(render));
+    floor.visitTiles(render);
+    floor.visitParticipants(render);
 
     // Calculate the lighting.
     render.getPlayer().ifPresent(shader::withPlayer);
