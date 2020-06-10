@@ -16,7 +16,9 @@ public class RenderParticipants implements ParticipantVisitor {
   }
 
   private void setGrid(Participant participant, char symbol) {
-    buffer[participant.getY()][participant.getX()] = symbol;
+    if (participant.isVisible()) {
+      buffer[participant.getY()][participant.getX()] = symbol;
+    }
   }
 
   @Override
