@@ -24,10 +24,14 @@ public class RayCasting {
       }
     };
 
-    for (int i = 0; i < 8; i++) {
+    for (Octant octant : Octant.values()) {
       computeFirstOctant(
-          translateOctant(translateOrigin(opaque, player.getX(), player.getY()), i),
-          translateOctant(translateOrigin(write, player.getX(), player.getY()), i),
+          Transforms
+              .translateOctant(Transforms.translateOrigin(opaque, player.getX(), player.getY()),
+                  octant),
+          Transforms
+              .translateOctant(Transforms.translateOrigin(write, player.getX(), player.getY()),
+                  octant),
           player.getVisibilityRange());
     }
 
@@ -43,13 +47,13 @@ public class RayCasting {
     queue.addLast(new Portion(0, new Vector(1, 0), new Vector(1, 1)));
     while (queue.size() > 0) {
       Portion current = queue.pollFirst();
-      if (current.x >= radius) {
+      if (current.getX() >= radius) {
         continue;
       }
       computeColumnPortion(
-          current.x,
-          current.top,
-          current.bottom,
+          current.getX(),
+          current.getTop(),
+          current.getBottom(),
           opaque,
           markVisible,
           radius,
@@ -122,61 +126,5 @@ public class RayCasting {
     return (2 * x - 1) * (2 * x - 1) + (2 * y - 1) * (2 * y - 1) <= 4 * length * length;
   }
 
-  private static <T> BiFunction<Integer, Integer, T> translateOrigin(
-      BiFunction<Integer, Integer, T> f,
-      int x, int y) {
-    return (a, b) -> f.apply(a + x, b + y);
-  }
 
-  private static BiConsumer<Integer, Integer> translateOrigin(
-      BiConsumer<Integer, Integer> f,
-      int x, int y) {
-    return (a, b) -> f.accept(a + x, b + y);
-  }
-
-  private static <T> BiFunction<Integer, Integer, T> translateOctant(
-      BiFunction<Integer, Integer, T> f,
-      int octant) {
-    switch (octant) {
-      default:
-        return f;
-      case 1:
-        return (x, y) -> f.apply(y, x);
-      case 2:
-        return (x, y) -> f.apply(-y, x);
-      case 3:
-        return (x, y) -> f.apply(-x, y);
-      case 4:
-        return (x, y) -> f.apply(-x, -y);
-      case 5:
-        return (x, y) -> f.apply(-y, -x);
-      case 6:
-        return (x, y) -> f.apply(y, -x);
-      case 7:
-        return (x, y) -> f.apply(x, -y);
-    }
-  }
-
-  private static BiConsumer<Integer, Integer> translateOctant(
-      BiConsumer<Integer, Integer> f,
-      int octant) {
-    switch (octant) {
-      default:
-        return f;
-      case 1:
-        return (x, y) -> f.accept(y, x);
-      case 2:
-        return (x, y) -> f.accept(-y, x);
-      case 3:
-        return (x, y) -> f.accept(-x, y);
-      case 4:
-        return (x, y) -> f.accept(-x, -y);
-      case 5:
-        return (x, y) -> f.accept(-y, -x);
-      case 6:
-        return (x, y) -> f.accept(y, -x);
-      case 7:
-        return (x, y) -> f.accept(x, -y);
-    }
-  }
 }
