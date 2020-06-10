@@ -46,7 +46,8 @@ public class Decoding {
     for(Path path : paths){
       if(!found) break;
       found = false;
-      if(path.getFileName().toString().equals("level-" + levelnb) && path.toFile().isDirectory()){
+      String fileName = path.getFileName().toString();
+      if(fileName.equals("level-" + levelnb) && path.toFile().isDirectory()){
         world.addFloor(readFloor(path.toFile()));
         levelnb++;
         found = true;
