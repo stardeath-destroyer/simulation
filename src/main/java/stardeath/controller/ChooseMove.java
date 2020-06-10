@@ -3,9 +3,9 @@ package stardeath.controller;
 import java.util.Random;
 import stardeath.interactions.MovementInteractions;
 import stardeath.participants.Participant;
-import stardeath.participants.movements.Jumper;
-import stardeath.participants.movements.MovementVisitor;
-import stardeath.participants.movements.Walker;
+import stardeath.animates.movements.Jumper;
+import stardeath.animates.movements.MovementVisitor;
+import stardeath.animates.movements.Walker;
 import stardeath.participants.player.Player;
 import stardeath.world.Floor;
 

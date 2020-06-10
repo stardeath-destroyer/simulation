@@ -1,14 +1,14 @@
 package stardeath.participants.actions;
 
+import stardeath.animates.AnimateVisitor;
 import stardeath.participants.Participant;
-import stardeath.participants.ParticipantVisitor;
 import stardeath.participants.entities.Soldier;
 import stardeath.participants.entities.Wookie;
 import stardeath.participants.entities.empire.JumpTrooper;
 import stardeath.participants.player.Player;
 import stardeath.world.Floor;
 
-public class ExecuteActions implements ParticipantVisitor {
+public class ExecuteActions implements AnimateVisitor {
 
   private Floor floor;
 

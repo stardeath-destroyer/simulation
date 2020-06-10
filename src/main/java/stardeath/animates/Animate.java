@@ -1,8 +1,9 @@
-package stardeath;
+package stardeath.animates;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import stardeath.Entity;
 import stardeath.participants.actions.Action;
 import stardeath.world.Floor;
 import stardeath.world.Tile;
@@ -45,6 +46,8 @@ public abstract class Animate extends Entity {
     this.x = x;
     this.y = y;
   }
+
+  public abstract void accept(AnimateVisitor visitor);
 
   public class MoveAction implements Action {
 

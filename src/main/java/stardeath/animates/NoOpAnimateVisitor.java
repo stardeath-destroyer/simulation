@@ -1,11 +1,11 @@
-package stardeath.participants;
+package stardeath.animates;
 
 import stardeath.participants.entities.Soldier;
 import stardeath.participants.entities.Wookie;
 import stardeath.participants.entities.empire.JumpTrooper;
 import stardeath.participants.player.Player;
 
-public abstract class ParticipantAdapter implements ParticipantVisitor {
+public class NoOpAnimateVisitor implements AnimateVisitor {
 
   @Override
   public void visitParticipant(Player player) {

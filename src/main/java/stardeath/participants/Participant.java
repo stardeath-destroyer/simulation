@@ -1,8 +1,8 @@
 package stardeath.participants;
 
-import stardeath.Animate;
+import stardeath.animates.Animate;
 import stardeath.participants.factions.Faction;
-import stardeath.participants.movements.Walker;
+import stardeath.animates.movements.Walker;
 
 public abstract class Participant extends Animate implements Walker {
 
@@ -22,7 +22,4 @@ public abstract class Participant extends Animate implements Walker {
   public boolean isAlive() {
     return hp <= 0;
   }
-
-  public abstract void accept(ParticipantVisitor visitor);
-
 }

@@ -1,9 +1,9 @@
 package stardeath.controller;
 
-import stardeath.participants.ParticipantAdapter;
+import stardeath.animates.NoOpAnimateVisitor;
 import stardeath.participants.player.Player;
 
-public class UnveilVisitor extends ParticipantAdapter {
+public class UnveilVisitor extends NoOpAnimateVisitor {
 
   @Override
   public void visitParticipant(Player player) {

@@ -1,7 +1,8 @@
 package stardeath.participants.player;
 
+import stardeath.animates.Animate;
+import stardeath.animates.AnimateVisitor;
 import stardeath.participants.Participant;
-import stardeath.participants.ParticipantVisitor;
 import stardeath.participants.actions.Action;
 import stardeath.participants.factions.Faction;
 import stardeath.world.Floor;
@@ -28,7 +29,7 @@ public class Player extends Participant {
   }
 
   @Override
-  public void accept(ParticipantVisitor visitor) {
+  public void accept(AnimateVisitor visitor) {
     visitor.visitParticipant(this);
   }
 
@@ -36,7 +37,7 @@ public class Player extends Participant {
 
     @Override
     public void execute(Floor level) {
-      level.getParticipants().forEach(Participant::hide);
+      level.getParticipants().forEach(Animate::hide);
     }
   }
 
@@ -46,7 +47,7 @@ public class Player extends Participant {
     public void execute(Floor level) {
       RayCasting.compute(Player.this,
           (x, y) -> level.tileAt(x, y).isOpaque(),
-          (x, y) -> level.getParticipant(x, y).ifPresent(Participant::show));
+          (x, y) -> level.getParticipant(x, y).ifPresent(Animate::show));
     }
   }
 

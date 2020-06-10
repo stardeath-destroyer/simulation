@@ -1,12 +1,12 @@
 package stardeath.participants.attacks;
 
+import stardeath.animates.AnimateVisitor;
 import stardeath.participants.Participant;
-import stardeath.participants.ParticipantVisitor;
 import stardeath.participants.entities.Soldier;
 import stardeath.participants.entities.Wookie;
 import stardeath.participants.entities.empire.JumpTrooper;
 
-public abstract class AttackVisitor implements ParticipantVisitor {
+public abstract class AttackVisitor implements AnimateVisitor {
 
   public abstract <A extends Participant & Attacker> void visitAttacker(A participant);
   public abstract <S extends Participant & SplashAttacker> void visitSplashAttacker(S participant);

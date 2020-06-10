@@ -3,7 +3,7 @@ package external.lanterna.rendering;
 import external.lanterna.rendering.texturing.Material;
 import external.lanterna.rendering.texturing.MaterialRenderer;
 import java.util.Optional;
-import stardeath.participants.ParticipantVisitor;
+import stardeath.animates.AnimateVisitor;
 import stardeath.participants.entities.Soldier;
 import stardeath.participants.entities.Wookie;
 import stardeath.participants.entities.empire.JumpTrooper;
@@ -17,7 +17,7 @@ import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Start;
 import stardeath.world.tiles.Wall;
 
-public class RenderingVisitor extends MaterialRenderer implements ParticipantVisitor, TileVisitor {
+public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor, TileVisitor {
 
   private Player player;
 

@@ -1,10 +1,10 @@
 package stardeath.controller;
 
-import stardeath.participants.ParticipantAdapter;
+import stardeath.animates.NoOpAnimateVisitor;
 import stardeath.participants.actions.Action;
 import stardeath.participants.player.Player;
 
-public class UpdateVisibility extends ParticipantAdapter {
+public class UpdateVisibility extends NoOpAnimateVisitor {
 
   @Override
   public void visitParticipant(Player player) {

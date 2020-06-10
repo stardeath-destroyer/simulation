@@ -1,7 +1,7 @@
 package stardeath.participants.entities.empire;
 
-import stardeath.participants.ParticipantVisitor;
-import stardeath.participants.movements.Jumper;
+import stardeath.animates.AnimateVisitor;
+import stardeath.animates.movements.Jumper;
 
 public class JumpTrooper extends Trooper implements Jumper {
 
@@ -15,7 +15,7 @@ public class JumpTrooper extends Trooper implements Jumper {
   }
 
   @Override
-  public void accept(ParticipantVisitor visitor) {
+  public void accept(AnimateVisitor visitor) {
     visitor.visitParticipant(this);
   }
 }

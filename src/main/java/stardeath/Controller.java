@@ -42,16 +42,16 @@ public class Controller {
   }
 
   private void discover() {
-    floor.visitParticipants(new UnveilVisitor());
+    floor.visitAnimates(new UnveilVisitor());
   }
 
   private void move() {
-    floor.visitParticipants(new ChooseMove(floor, movements));
+    floor.visitAnimates(new ChooseMove(floor, movements));
   }
 
   private void turn() {
-    floor.visitParticipants(new ExecuteActions(this.floor));
-    floor.visitParticipants(new UpdateVisibility());
+    floor.visitAnimates(new ExecuteActions(this.floor));
+    floor.visitAnimates(new UpdateVisibility());
   }
 
   public void step() {

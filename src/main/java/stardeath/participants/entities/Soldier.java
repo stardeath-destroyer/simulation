@@ -1,6 +1,6 @@
 package stardeath.participants.entities;
 
-import stardeath.participants.ParticipantVisitor;
+import stardeath.animates.AnimateVisitor;
 import stardeath.participants.factions.Faction;
 
 public class Soldier extends Human {
@@ -10,7 +10,7 @@ public class Soldier extends Human {
   }
 
   @Override
-  public void accept(ParticipantVisitor visitor) {
+  public void accept(AnimateVisitor visitor) {
     visitor.visitParticipant(this);
   }
 

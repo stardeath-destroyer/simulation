@@ -1,4 +1,4 @@
-package stardeath.participants.movements;
+package stardeath.animates.movements;
 
 public interface Jumper extends Walker {
 

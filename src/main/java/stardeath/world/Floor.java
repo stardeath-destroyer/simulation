@@ -6,14 +6,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import stardeath.animates.Animate;
+import stardeath.animates.AnimateVisitor;
 import stardeath.participants.Participant;
-import stardeath.participants.ParticipantVisitor;
 import stardeath.world.tiles.Start;
 
 public final class Floor {
 
   private final List<Tile> tiles;
-  private final List<Participant> participants;
+  private final List<Animate> animates;
 
   private Floor previous;
   private Floor next;
@@ -22,7 +23,7 @@ public final class Floor {
 
   public Floor(Tile... tiles) {
     this.tiles = Stream.of(tiles).collect(Collectors.toList());
-    this.participants = new ArrayList<>();
+    this.animates = new ArrayList<>();
     this.tiles.forEach(tile -> {
       width = Math.max(tile.getX(), width);
       height = Math.max(tile.getY(), height);
@@ -38,15 +39,15 @@ public final class Floor {
   }
 
   public void addParticipant(Participant participant) {
-    participants.add(participant);
+    animates.add(participant);
   }
 
   public void removeParticipant(Participant participant) {
-    participants.remove(participant);
+    animates.remove(participant);
   }
 
-  public Optional<Participant> getParticipant(int x, int y) {
-    return participants.stream()
+  public Optional<Animate> getParticipant(int x, int y) {
+    return animates.stream()
         .filter(p -> p.getX() == x && p.getY() == y)
         .findFirst();
   }
@@ -59,8 +60,8 @@ public final class Floor {
     return Collections.unmodifiableList(tiles);
   }
 
-  public List<Participant> getParticipants() {
-    return Collections.unmodifiableList(participants);
+  public List<Animate> getParticipants() {
+    return Collections.unmodifiableList(animates);
   }
 
   public final List<Start> getStartTiles() {
@@ -74,8 +75,8 @@ public final class Floor {
     return tiles;
   }
 
-  public void visitParticipants(ParticipantVisitor visitor) {
-    participants.forEach(participant -> participant.accept(visitor));
+  public void visitAnimates(AnimateVisitor visitor) {
+    animates.forEach(a -> a.accept(visitor));
   }
 
   public void visitTiles(TileVisitor visitor) {

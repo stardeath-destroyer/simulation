@@ -43,7 +43,7 @@ public class LanternaRenderer implements Renderer {
 
     // Visit the floor and the participants.
     floor.visitTiles(render);
-    floor.visitParticipants(render);
+    floor.visitAnimates(render);
 
 
     // We MUST have at least one player.

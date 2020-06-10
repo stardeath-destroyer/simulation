@@ -3,8 +3,6 @@ package external.cli.rendering;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
-import java.util.Collection;
-import stardeath.participants.Participant;
 import stardeath.interactions.Renderer;
 import stardeath.world.Floor;
 import stardeath.world.Tile;
@@ -35,7 +33,7 @@ public class OutputStreamRenderer implements Renderer {
     RenderParticipants renderParticipants = new RenderParticipants(elements);
 
     floor.visitTiles(renderFloor);
-    floor.visitParticipants(renderParticipants);
+    floor.visitAnimates(renderParticipants);
 
     try {
       for (char[] line : elements) {

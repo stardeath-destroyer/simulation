@@ -1,7 +1,7 @@
 package stardeath.participants.entities;
 
+import stardeath.animates.AnimateVisitor;
 import stardeath.participants.Participant;
-import stardeath.participants.ParticipantVisitor;
 import stardeath.participants.attacks.SplashAttacker;
 import stardeath.participants.factions.Faction;
 
@@ -12,7 +12,7 @@ public class Wookie extends Participant implements SplashAttacker {
   }
 
   @Override
-  public void accept(ParticipantVisitor visitor) {
+  public void accept(AnimateVisitor visitor) {
     visitor.visitParticipant(this);
   }
 

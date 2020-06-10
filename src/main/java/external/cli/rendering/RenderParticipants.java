@@ -1,13 +1,13 @@
 package external.cli.rendering;
 
+import stardeath.animates.AnimateVisitor;
 import stardeath.participants.Participant;
-import stardeath.participants.ParticipantVisitor;
 import stardeath.participants.entities.Soldier;
 import stardeath.participants.entities.Wookie;
 import stardeath.participants.entities.empire.JumpTrooper;
 import stardeath.participants.player.Player;
 
-public class RenderParticipants implements ParticipantVisitor {
+public class RenderParticipants implements AnimateVisitor {
 
   private final char[][] buffer;
 
