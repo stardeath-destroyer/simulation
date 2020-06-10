@@ -7,11 +7,9 @@ import stardeath.controller.ChooseMove;
 import stardeath.controller.UnveilVisitor;
 import stardeath.interactions.MovementInteractions;
 import stardeath.interactions.Renderer;
-import stardeath.interactions.Renderer.OnRenderRequestListener;
 import stardeath.participants.Participant;
 import stardeath.participants.actions.ExecuteActions;
 import stardeath.participants.entities.Wookie;
-import stardeath.participants.entities.empire.JumpTrooper;
 import stardeath.participants.player.Player;
 import stardeath.world.Floor;
 import stardeath.world.tiles.Start;
@@ -55,7 +53,7 @@ public class Controller {
   }
 
   private void turn() {
-    ExecuteActions execute = new ExecuteActions();
+    ExecuteActions execute = new ExecuteActions(this.floor);
     players.forEach(p -> p.accept(execute));
   }
 

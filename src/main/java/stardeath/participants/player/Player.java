@@ -35,7 +35,7 @@ public class Player extends Participant {
     }
 
     @Override
-    public void execute() {
+    public void execute(Floor level) {
       floor.getTiles().stream()
           .filter(tile -> tile.distanceTo(getX(), getY()) < getVisibilityRange())
           .forEach(Tile::unveil);

@@ -6,12 +6,19 @@ import stardeath.participants.entities.Soldier;
 import stardeath.participants.entities.Wookie;
 import stardeath.participants.entities.empire.JumpTrooper;
 import stardeath.participants.player.Player;
+import stardeath.world.Floor;
 
 public class ExecuteActions implements ParticipantVisitor {
 
+  private Floor floor;
+
+  public ExecuteActions(Floor floor) {
+    this.floor = floor;
+  }
+
   private void visit(Participant participant) {
     for (Action action : participant.getActions()) {
-      action.execute();
+      action.execute(floor);
     }
     participant.clearActions();
   }

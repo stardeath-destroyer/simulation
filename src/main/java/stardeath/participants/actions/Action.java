@@ -1,14 +1,16 @@
 package stardeath.participants.actions;
 
+import stardeath.world.Floor;
+
 public interface Action {
 
   static Action of(Action... actions) {
-    return () -> {
+    return level -> {
       for (Action action : actions) {
-        action.execute();
+        action.execute(level);
       }
     };
   }
 
-  void execute();
+  void execute(Floor level);
 }

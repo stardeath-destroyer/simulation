@@ -46,7 +46,7 @@ public abstract class Participant extends Entity implements Walker {
     }
 
     @Override
-    public void execute() {
+    public void execute(Floor level) {
       int newX = getX() + deltaX;
       int newY = getY() + deltaY;
 
