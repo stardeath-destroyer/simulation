@@ -4,6 +4,7 @@ import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.Terminal;
+import external.lanterna.rendering.lighting.LightingLevel;
 import external.lanterna.rendering.lighting.LightingShader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,18 +39,18 @@ public class LanternaRenderer implements Renderer {
   public void render(Floor floor) {
 
     RenderingVisitor render = new RenderingVisitor(floor.getWidth() + 1, floor.getHeight() + 1);
-    LightingShader shader = new LightingShader(floor.getWidth() + 1, floor.getHeight() + 1,
-        floor.getTiles());
+    LightingShader shader = new LightingShader(floor);
 
     // Visit the floor and the participants.
     floor.visitTiles(render);
     floor.visitParticipants(render);
 
-    // Calculate the lighting.
-    render.getPlayer().ifPresent(shader::withPlayer);
 
     // We MUST have at least one player.
     Player player = render.getPlayer().orElseThrow();
+
+    // Calculate the lighting.
+    LightingLevel[][] lighting = shader.withPlayer(player);
 
     // Offset the screen appropriately.
     int offsetX = player.getX() - currentSize.getColumns() / 2;
@@ -68,8 +69,8 @@ public class LanternaRenderer implements Renderer {
           if (insideBuffer && render.getDrawn()[bx][by]) {
             screen.setCharacter(x, y, new TextCharacter(
                 render.getCharacters()[bx][by],
-                render.getForeground()[bx][by].lighted(shader.getLighting()[bx][by]),
-                render.getBackground()[bx][by].lighted(shader.getLighting()[bx][by])
+                render.getForeground()[bx][by].lighted(lighting[bx][by]),
+                render.getBackground()[bx][by].lighted(lighting[bx][by])
             ));
           } else {
             screen.setCharacter(x, y, TextCharacter.DEFAULT_CHARACTER);
