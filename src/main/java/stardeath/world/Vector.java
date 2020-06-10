@@ -1,6 +1,6 @@
-package stardeath.world.visibility;
+package stardeath.world;
 
-/* package */ class Vector {
+public class Vector {
 
   private final int x;
   private final int y;

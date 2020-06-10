@@ -2,6 +2,7 @@ package stardeath.world.visibility;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import stardeath.world.Vector;
 
 /* package */ final class Transforms {
 

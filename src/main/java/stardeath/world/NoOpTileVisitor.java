@@ -8,7 +8,7 @@ import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Start;
 import stardeath.world.tiles.Wall;
 
-public abstract class TileVisitorAdapter implements TileVisitor {
+public abstract class NoOpTileVisitor implements TileVisitor {
 
   @Override
   public void visitTile(Armory armory) {

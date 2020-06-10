@@ -1,5 +1,7 @@
 package stardeath.world.visibility;
 
+import stardeath.world.Vector;
+
 /* package */ class Portion {
 
   private final int x;

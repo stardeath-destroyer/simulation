@@ -1,5 +1,7 @@
 package stardeath.world.visibility;
 
+import stardeath.world.Vector;
+
 /* package */ enum Octant {
   ZERO(1, 0, 0, 1),
   ONE(0, 1, 1, 0),

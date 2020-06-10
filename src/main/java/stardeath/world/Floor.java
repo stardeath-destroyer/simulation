@@ -66,7 +66,7 @@ public final class Floor {
 
   public final List<Start> getStartTiles() {
     List<Start> tiles = new ArrayList<>();
-    visitTiles(new TileVisitorAdapter() {
+    visitTiles(new NoOpTileVisitor() {
       @Override
       public void visitTile(Start start) {
         tiles.add(start);
