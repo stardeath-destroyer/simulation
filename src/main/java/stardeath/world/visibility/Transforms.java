@@ -1,4 +1,4 @@
-package external.lanterna.rendering.lighting.raycasting;
+package stardeath.world.visibility;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;

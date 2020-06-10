@@ -1,4 +1,4 @@
-package external.lanterna.rendering.lighting.raycasting;
+package stardeath.world.visibility;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -112,6 +112,4 @@ public class RayCasting {
   private static boolean isInRadius(int x, int y, int length) {
     return (2 * x - 1) * (2 * x - 1) + (2 * y - 1) * (2 * y - 1) <= 4 * length * length;
   }
-
-
 }

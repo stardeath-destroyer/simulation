@@ -1,6 +1,6 @@
 package external.lanterna.rendering.lighting;
 
-import external.lanterna.rendering.lighting.raycasting.RayCasting;
+import stardeath.world.visibility.RayCasting;
 import java.util.function.BiFunction;
 import stardeath.participants.player.Player;
 import stardeath.world.Floor;

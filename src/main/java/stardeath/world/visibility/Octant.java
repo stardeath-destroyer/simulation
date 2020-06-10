@@ -1,6 +1,6 @@
-package external.lanterna.rendering.lighting.raycasting;
+package stardeath.world.visibility;
 
-public enum Octant {
+/* package */ enum Octant {
   ZERO(1, 0, 0, 1),
   ONE(0, 1, 1, 0),
   TWO(0, -1, 1, 0),

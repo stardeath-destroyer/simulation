@@ -1,4 +1,4 @@
-package external.lanterna.rendering.lighting.raycasting;
+package stardeath.world.visibility;
 
 /* package */ class Portion {
 
