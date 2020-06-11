@@ -2,10 +2,10 @@ package external.cli;
 
 import external.cli.interactions.InputStreamMovementInteractions;
 import external.cli.rendering.OutputStreamRenderer;
-import stardeath.InteractionsFactory;
-import stardeath.interactions.GetDirections;
-import stardeath.interactions.GetMovements;
-import stardeath.interactions.Renderer;
+import stardeath.controller.InteractionsFactory;
+import stardeath.controller.interactions.GetDirections;
+import stardeath.controller.interactions.GetMovements;
+import stardeath.controller.interactions.Renderer;
 
 public class CLI implements InteractionsFactory {
 

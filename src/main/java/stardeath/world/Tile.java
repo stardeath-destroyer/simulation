@@ -1,6 +1,7 @@
 package stardeath.world;
 
 import stardeath.Entity;
+import stardeath.world.visitors.TileVisitor;
 
 public abstract class Tile extends Entity {
 

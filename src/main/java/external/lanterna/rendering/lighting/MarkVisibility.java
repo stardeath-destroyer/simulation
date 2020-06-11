@@ -2,7 +2,7 @@ package external.lanterna.rendering.lighting;
 
 import java.util.Arrays;
 import java.util.function.BiConsumer;
-import stardeath.participants.player.Player;
+import stardeath.animates.participants.entities.Player;
 import stardeath.world.Floor;
 
 public class MarkVisibility implements BiConsumer<Integer, Integer> {

@@ -4,10 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import stardeath.interactions.GetDirections;
-import stardeath.interactions.GetMovements;
-import stardeath.interactions.Movement;
-import stardeath.participants.weapons.ProjectileDirection;
+import stardeath.controller.interactions.GetDirections;
+import stardeath.controller.interactions.GetMovements;
+import stardeath.controller.interactions.Movement;
+import stardeath.animates.weapons.ProjectileDirection;
 
 public class InputStreamMovementInteractions implements GetDirections, GetMovements {
 

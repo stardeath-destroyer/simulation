@@ -7,9 +7,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import stardeath.animates.Animate;
-import stardeath.animates.AnimateVisitor;
-import stardeath.participants.Participant;
+import stardeath.animates.visitors.AnimateVisitor;
+import stardeath.animates.participants.Participant;
 import stardeath.world.tiles.Start;
+import stardeath.world.visitors.NoOpTileVisitor;
+import stardeath.world.visitors.TileVisitor;
 
 public final class Floor {
 

@@ -1,7 +1,7 @@
 package external.cli.rendering;
 
 import stardeath.world.Tile;
-import stardeath.world.TileVisitor;
+import stardeath.world.visitors.TileVisitor;
 import stardeath.world.tiles.Armory;
 import stardeath.world.tiles.Dump;
 import stardeath.world.tiles.Elevator;

@@ -12,10 +12,10 @@ import external.lanterna.rendering.lighting.LightingShader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import stardeath.interactions.GetDirections;
-import stardeath.interactions.Renderer;
-import stardeath.participants.player.Player;
-import stardeath.participants.weapons.ProjectileDirection;
+import stardeath.controller.interactions.GetDirections;
+import stardeath.controller.interactions.Renderer;
+import stardeath.animates.participants.entities.Player;
+import stardeath.animates.weapons.ProjectileDirection;
 import stardeath.world.Floor;
 
 public class LanternaRenderer implements GetDirections, Renderer {

@@ -1,7 +1,7 @@
 package stardeath.world.tiles;
 
 import stardeath.world.Tile;
-import stardeath.world.TileVisitor;
+import stardeath.world.visitors.TileVisitor;
 
 public class Regular extends Tile {
 

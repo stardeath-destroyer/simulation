@@ -5,7 +5,7 @@ import java.util.Deque;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-import stardeath.participants.player.Player;
+import stardeath.animates.participants.entities.Player;
 import stardeath.world.Vector;
 
 public class RayCasting {

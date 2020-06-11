@@ -7,10 +7,10 @@ import com.googlecode.lanterna.terminal.Terminal;
 import external.lanterna.interactions.LanternaGetMovements;
 import external.lanterna.rendering.LanternaRenderer;
 import java.io.IOException;
-import stardeath.InteractionsFactory;
-import stardeath.interactions.GetDirections;
-import stardeath.interactions.GetMovements;
-import stardeath.interactions.Renderer;
+import stardeath.controller.InteractionsFactory;
+import stardeath.controller.interactions.GetDirections;
+import stardeath.controller.interactions.GetMovements;
+import stardeath.controller.interactions.Renderer;
 
 public class Lanterna implements InteractionsFactory {
 

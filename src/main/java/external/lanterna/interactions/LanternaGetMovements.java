@@ -5,8 +5,8 @@ import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import java.io.IOException;
 import java.util.Objects;
-import stardeath.interactions.Movement;
-import stardeath.interactions.GetMovements;
+import stardeath.controller.interactions.Movement;
+import stardeath.controller.interactions.GetMovements;
 
 public class LanternaGetMovements implements GetMovements {
 

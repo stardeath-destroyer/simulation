@@ -3,7 +3,7 @@ package external.cli.rendering;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
-import stardeath.interactions.Renderer;
+import stardeath.controller.interactions.Renderer;
 import stardeath.world.Floor;
 import stardeath.world.Tile;
 

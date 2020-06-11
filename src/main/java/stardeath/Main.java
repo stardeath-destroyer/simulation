@@ -5,6 +5,7 @@ import external.lanterna.Lanterna;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.zip.ZipFile;
+import stardeath.controller.Controller;
 import stardeath.world.World;
 
 /**
