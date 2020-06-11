@@ -6,13 +6,13 @@ import com.googlecode.lanterna.screen.Screen;
 import java.io.IOException;
 import java.util.Objects;
 import stardeath.interactions.Movement;
-import stardeath.interactions.MovementInteractions;
+import stardeath.interactions.GetMovements;
 
-public class LanternaMovementInteractions implements MovementInteractions {
+public class LanternaGetMovements implements GetMovements {
 
   private final Screen screen;
 
-  public LanternaMovementInteractions(Screen screen) {
+  public LanternaGetMovements(Screen screen) {
     this.screen = screen;
   }
 

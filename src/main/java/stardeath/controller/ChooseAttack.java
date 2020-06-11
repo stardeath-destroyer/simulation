@@ -2,7 +2,6 @@ package stardeath.controller;
 
 import java.util.Random;
 import stardeath.participants.Participant;
-import stardeath.participants.actions.BlasterAttack;
 import stardeath.participants.attacks.AttackVisitor;
 import stardeath.participants.attacks.Attacker;
 import stardeath.participants.attacks.SplashAttacker;
@@ -21,16 +20,7 @@ public class ChooseAttack extends AttackVisitor {
 
   @Override
   public <A extends Participant & Attacker> void visitAttacker(A participant) {
-    int dx = 0, dy = 0;
 
-    // TODO : Refactor with Movement
-    while ((dx == 0 && dy == 0) || (dx != 0 && dy != 0)) {
-      dx = sRandom.nextInt(3) - 1;
-      dy = sRandom.nextInt(3) - 1;
-    }
-
-    participant.addAction(new BlasterAttack(participant.getX(), participant.getY(),
-        dx, dy, participant.getAttackRange(), participant.getAttackDamage()));
   }
 
   @Override

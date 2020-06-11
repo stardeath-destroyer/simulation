@@ -1,6 +1,6 @@
 package stardeath.interactions;
 
-public interface MovementInteractions {
+public interface GetMovements {
 
   Movement requestMovement();
 }

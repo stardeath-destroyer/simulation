@@ -4,38 +4,47 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
-import external.lanterna.interactions.LanternaMovementInteractions;
+import external.lanterna.interactions.LanternaGetMovements;
 import external.lanterna.rendering.LanternaRenderer;
 import java.io.IOException;
-import stardeath.UIFactory;
-import stardeath.interactions.MovementInteractions;
+import stardeath.InteractionsFactory;
+import stardeath.interactions.GetDirections;
+import stardeath.interactions.GetMovements;
 import stardeath.interactions.Renderer;
 
-public class Lanterna implements UIFactory {
+public class Lanterna implements InteractionsFactory {
 
-  private final Terminal terminal;
-  private final Screen screen;
+  private final GetDirections getDirections;
+  private final GetMovements getMovements;
+  private final Renderer renderer;
 
   public Lanterna() throws IOException {
     DefaultTerminalFactory factory = new DefaultTerminalFactory();
-    this.terminal = factory.createTerminal();
 
     // Create and display a terminal screen.
-    this.screen = new TerminalScreen(this.terminal);
-    this.screen.setCursorPosition(null);
+    Terminal terminal = factory.createTerminal();
+    Screen screen = new TerminalScreen(terminal);
+    screen.setCursorPosition(null);
+
+    // Set the different fields.
+    LanternaRenderer lanternaRenderer = new LanternaRenderer(terminal, screen);
+    this.getDirections = lanternaRenderer;
+    this.getMovements = new LanternaGetMovements(screen);
+    this.renderer = lanternaRenderer;
   }
 
   @Override
-  public MovementInteractions movement() {
-    return new LanternaMovementInteractions(screen);
+  public GetDirections direction() {
+    return getDirections;
+  }
+
+  @Override
+  public GetMovements movement() {
+    return getMovements;
   }
 
   @Override
   public Renderer renderer() {
-    try {
-      return new LanternaRenderer(terminal, screen);
-    } catch (IOException exception) {
-      throw new RuntimeException("Unable to use Lanterna on this device. Sorry.");
-    }
+    return renderer;
   }
 }

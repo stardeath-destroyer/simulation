@@ -89,12 +89,6 @@ public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor
 
   @Override
   public void visitProjectile(Projectile projectile) {
-    int steps = projectile.getDirection().getSteps().size();
-
-    Vector position = new Vector(projectile.getX(), projectile.getY());
-    Vector previous = position.add(projectile.getDirection().getSteps().get(steps - 1).inverse());
-
-    drawAnimate(projectile, position.getX(), position.getY(), Material.Laser, Material.Void, '*');
-    drawAnimate(projectile, previous.getX(), previous.getY(), Material.Laser, Material.Void, '*');
+    drawAnimate(projectile, projectile.getX(), projectile.getY(), Material.Laser, Material.Void, '*');
   }
 }

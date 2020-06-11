@@ -5,7 +5,8 @@ import java.util.Random;
 import stardeath.controller.ChooseMove;
 import stardeath.controller.UnveilVisitor;
 import stardeath.controller.UpdateVisibility;
-import stardeath.interactions.MovementInteractions;
+import stardeath.interactions.GetDirections;
+import stardeath.interactions.GetMovements;
 import stardeath.interactions.Renderer;
 import stardeath.participants.actions.ExecuteActions;
 import stardeath.participants.player.Player;
@@ -16,13 +17,15 @@ import stardeath.world.tiles.Start;
 public class Controller {
 
   private final Renderer renderer;
-  private final MovementInteractions movements;
+  private final GetDirections directions;
+  private final GetMovements movements;
   private final World world;
 
   private Floor currentFloor;
 
-  public Controller(UIFactory factory, World world) {
+  public Controller(InteractionsFactory factory, World world) {
     this.renderer = factory.renderer();
+    this.directions = factory.direction();
     this.movements = factory.movement();
     this.world = world;
     this.currentFloor = world.getFirst();
@@ -46,7 +49,7 @@ public class Controller {
   }
 
   private void move() {
-    currentFloor.visitAnimates(new ChooseMove(currentFloor, movements));
+    currentFloor.visitAnimates(new ChooseMove(currentFloor, directions, movements));
   }
 
   private void turn() {

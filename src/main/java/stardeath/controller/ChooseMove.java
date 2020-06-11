@@ -1,24 +1,26 @@
 package stardeath.controller;
 
 import java.util.Random;
-import stardeath.interactions.MovementInteractions;
+import stardeath.interactions.GetDirections;
+import stardeath.interactions.GetMovements;
 import stardeath.participants.Participant;
 import stardeath.animates.movements.Jumper;
 import stardeath.animates.movements.MovementVisitor;
 import stardeath.animates.movements.Walker;
 import stardeath.participants.player.Player;
 import stardeath.participants.weapons.Projectile;
-import stardeath.participants.weapons.Projectile.Direction;
 import stardeath.world.Floor;
 
 public class ChooseMove extends MovementVisitor {
 
   private static final Random sRandom = new Random();
   private final Floor level;
-  private final MovementInteractions interactions;
+  private final GetDirections directions;
+  private final GetMovements interactions;
 
-  public ChooseMove(Floor level, MovementInteractions interactions) {
+  public ChooseMove(Floor level, GetDirections directions, GetMovements interactions) {
     this.level = level;
+    this.directions = directions;
     this.interactions = interactions;
   }
 
@@ -58,7 +60,7 @@ public class ChooseMove extends MovementVisitor {
         player.addAction(player.new MoveAction(1, 0));
         break;
       case FIRE:
-        player.addAction(player.new Fire(Direction.ONE, 1));
+        player.addAction(player.new Fire(directions.requestDirectionsFromPlayer(), 1));
         break;
     }
   }
