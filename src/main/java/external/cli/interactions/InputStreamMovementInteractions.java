@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import stardeath.interactions.GetDirections;
 import stardeath.interactions.GetMovements;
 import stardeath.interactions.Movement;
-import stardeath.participants.weapons.Projectile.Direction;
+import stardeath.participants.weapons.ProjectileDirection;
 
 public class InputStreamMovementInteractions implements GetDirections, GetMovements {
 
@@ -53,16 +53,16 @@ public class InputStreamMovementInteractions implements GetDirections, GetMoveme
   }
 
   @Override
-  public Direction requestDirectionsFromPlayer() {
+  public ProjectileDirection requestDirectionsFromPlayer() {
     System.out.println("Enter a direction (0-9A-F) :");
     BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-    Direction direction = null;
+    ProjectileDirection direction = null;
     try {
       while (true) {
         String line = reader.readLine();
         if (line.length() == 1) {
           char character = line.charAt(0);
-          direction = Direction.fromCharacter(character);
+          direction = ProjectileDirection.fromCharacter(character);
         }
         if (direction != null) {
           return direction;

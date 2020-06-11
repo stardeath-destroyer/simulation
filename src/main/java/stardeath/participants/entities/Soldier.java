@@ -4,7 +4,7 @@ import stardeath.animates.AnimateVisitor;
 import stardeath.participants.actions.Action;
 import stardeath.participants.factions.Faction;
 import stardeath.participants.weapons.Projectile;
-import stardeath.participants.weapons.Projectile.Direction;
+import stardeath.participants.weapons.ProjectileDirection;
 import stardeath.world.Floor;
 
 public class Soldier extends Human {
@@ -34,10 +34,10 @@ public class Soldier extends Human {
 
   public class Fire implements Action {
 
-    private final Direction direction;
+    private final ProjectileDirection direction;
     private final int speed;
 
-    public Fire(Direction direction, int speed) {
+    public Fire(ProjectileDirection direction, int speed) {
       this.direction = direction;
       this.speed = speed;
     }

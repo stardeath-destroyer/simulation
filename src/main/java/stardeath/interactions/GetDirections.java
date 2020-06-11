@@ -1,8 +1,8 @@
 package stardeath.interactions;
 
-import stardeath.participants.weapons.Projectile.Direction;
+import stardeath.participants.weapons.ProjectileDirection;
 
 public interface GetDirections {
 
-  Direction requestDirectionsFromPlayer();
+  ProjectileDirection requestDirectionsFromPlayer();
 }

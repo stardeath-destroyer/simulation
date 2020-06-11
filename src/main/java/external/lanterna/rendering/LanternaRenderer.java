@@ -15,7 +15,7 @@ import java.util.List;
 import stardeath.interactions.GetDirections;
 import stardeath.interactions.Renderer;
 import stardeath.participants.player.Player;
-import stardeath.participants.weapons.Projectile.Direction;
+import stardeath.participants.weapons.ProjectileDirection;
 import stardeath.world.Floor;
 
 public class LanternaRenderer implements GetDirections, Renderer {
@@ -41,7 +41,7 @@ public class LanternaRenderer implements GetDirections, Renderer {
   }
 
   @Override
-  public Direction requestDirectionsFromPlayer() {
+  public ProjectileDirection requestDirectionsFromPlayer() {
     displayOverlay = true;
     listeners.forEach(OnRenderRequestListener::requestRender);
 
@@ -49,7 +49,7 @@ public class LanternaRenderer implements GetDirections, Renderer {
       while (true) {
         KeyStroke stroke = screen.readInput();
         Character character = stroke != null ? stroke.getCharacter() : null;
-        Direction direction = character != null ? Direction.fromCharacter(character) : null;
+        ProjectileDirection direction = character != null ? ProjectileDirection.fromCharacter(character) : null;
         if (direction != null) {
           displayOverlay = false;
           return direction;
