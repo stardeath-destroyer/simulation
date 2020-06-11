@@ -37,7 +37,7 @@ public class MarkVisibility implements BiConsumer<Integer, Integer> {
 
   @Override
   public void accept(Integer x, Integer y) {
-    if (x >= 0 && y >= 0 && x < floor.getWidth() && y < floor.getHeight()) {
+    if (x >= 0 && y >= 0 && x < floor.getWidth() + 1 && y < floor.getHeight() + 1) {
       int distance = distanceTo(player.getX(), player.getY(), x, y);
       if (distance > 10) {
         levels[x][y] = LightingLevel.Dark;
