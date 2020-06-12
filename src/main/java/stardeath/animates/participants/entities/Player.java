@@ -4,6 +4,7 @@ import stardeath.animates.Animate;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.actions.Action;
 import stardeath.animates.participants.Faction;
+import stardeath.animates.visitors.DefaultAnimateVisitor;
 import stardeath.world.Tile;
 import stardeath.world.World;
 import stardeath.world.visibility.RayCasting;
@@ -37,7 +38,7 @@ public class Player extends Soldier {
 
     @Override
     public void execute(World world) {
-      world.current().getParticipants().forEach(Animate::hide);
+      world.current().visitAnimates(new DefaultAnimateVisitor(Animate::hide));
     }
   }
 

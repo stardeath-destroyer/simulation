@@ -65,10 +65,6 @@ public final class Floor {
     }
   }
 
-  public List<Animate> getParticipants() {
-    return Collections.unmodifiableList(animates);
-  }
-
   public void visitAnimates(AnimateVisitor visitor) {
     animates.forEach(a -> a.accept(visitor));
   }
