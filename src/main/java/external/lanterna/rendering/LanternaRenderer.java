@@ -77,8 +77,8 @@ public class LanternaRenderer implements GetDirections, Renderer {
     LightingLevel[][] lighting = shader.withPlayer(player);
 
     // Offset the screen appropriately.
-    int offsetX = player.getX() - currentSize.getColumns() / 2;
-    int offsetY = player.getY() - currentSize.getRows() / 2;
+    int offsetX = player.getPosition().getX() - currentSize.getColumns() / 2;
+    int offsetY = player.getPosition().getY() - currentSize.getRows() / 2;
 
     // Render the buffer with its offset.
     try {
@@ -104,7 +104,9 @@ public class LanternaRenderer implements GetDirections, Renderer {
 
       // We want to display an overlay here as well.
       if (displayOverlay) {
-        renderPlayerOverlay(player.getX() - offsetX, player.getY() - offsetY);
+        renderPlayerOverlay(
+            player.getPosition().getX() - offsetX,
+            player.getPosition().getY() - offsetY);
       }
 
       screen.refresh();

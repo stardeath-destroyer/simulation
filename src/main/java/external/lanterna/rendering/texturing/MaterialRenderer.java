@@ -2,6 +2,7 @@ package external.lanterna.rendering.texturing;
 
 import stardeath.animates.Animate;
 import stardeath.world.Tile;
+import stardeath.world.Vector;
 
 public abstract class MaterialRenderer {
 
@@ -37,39 +38,40 @@ public abstract class MaterialRenderer {
     return drawn;
   }
 
-  private void drawAt(int x, int y, Material f, Material b, char c) {
+  private void drawAt(Vector position, Material f, Material b, char c) {
 
     // Only draw the entity if we are within the bounds.
-    if (inBounds(x, 0, characters.length) && inBounds(y, 0, characters[x].length)) {
+    if (inBounds(position.getX(), 0, characters.length) &&
+        inBounds(position.getY(), 0, characters[position.getX()].length)) {
 
-      foreground[x][y] = Material.Void
-          .overlapped(foreground[x][y])
+      foreground[position.getX()][position.getY()] = Material.Void
+          .overlapped(foreground[position.getX()][position.getY()])
           .overlapped(f);
 
-      background[x][y] = Material.Void
-          .overlapped(background[x][y])
+      background[position.getX()][position.getY()] = Material.Void
+          .overlapped(background[position.getX()][position.getY()])
           .overlapped(b);
 
-      characters[x][y] = c;
-      drawn[x][y] = true;
+      characters[position.getX()][position.getY()] = c;
+      drawn[position.getX()][position.getY()] = true;
     }
   }
 
   protected void drawAnimate(Animate animate, Material f, Material b, char c) {
     if (animate.isVisible()) {
-      drawAnimate(animate, animate.getX(), animate.getY(), f, b, c);
+      drawAnimate(animate, animate.getPosition(), f, b, c);
     }
   }
 
-  protected void drawAnimate(Animate animate, int x, int y, Material f, Material b, char c) {
+  protected void drawAnimate(Animate animate, Vector position, Material f, Material b, char c) {
     if (animate.isVisible()) {
-      drawAt(x, y, f, b, c);
+      drawAt(position, f, b, c);
     }
   }
 
   protected void drawTile(Tile tile, Material f, Material b, char c) {
     if (tile.isDiscovered()) {
-      drawAt(tile.getX(), tile.getY(), f, b, c);
+      drawAt(tile.getPosition(), f, b, c);
     }
   }
 }

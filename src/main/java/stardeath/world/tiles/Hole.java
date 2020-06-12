@@ -1,11 +1,12 @@
 package stardeath.world.tiles;
 
+import stardeath.world.Vector;
 import stardeath.world.visitors.TileVisitor;
 
 public class Hole extends Regular {
 
-  public Hole(int x, int y) {
-    super(x, y);
+  public Hole(Vector vector) {
+    super(vector);
   }
 
   @Override

@@ -1,14 +1,15 @@
 package stardeath.animates.participants.entities;
 
 import stardeath.animates.participants.Faction;
+import stardeath.world.Vector;
 
 public class Trooper extends Soldier {
 
-  protected Trooper(int x, int y, int hp) {
-    super(x, y, Faction.Empire, hp);
+  protected Trooper(Vector position, int hp) {
+    super(position, Faction.Empire, hp);
   }
 
-  public Trooper(int x, int y) {
-    super(x, y, Faction.Empire, 20);
+  public Trooper(Vector position) {
+    super(position, Faction.Empire, 20);
   }
 }

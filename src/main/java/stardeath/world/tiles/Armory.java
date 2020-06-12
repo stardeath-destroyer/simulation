@@ -1,11 +1,12 @@
 package stardeath.world.tiles;
 
+import stardeath.world.Vector;
 import stardeath.world.visitors.TileVisitor;
 
 public class Armory extends Regular {
 
-  public Armory(int x, int y) {
-    super(x, y);
+  public Armory(Vector vector) {
+    super(vector);
   }
 
   @Override

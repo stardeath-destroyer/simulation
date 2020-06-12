@@ -1,7 +1,8 @@
 package stardeath.world.visibility;
 
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import stardeath.world.Vector;
 
 /**
@@ -15,68 +16,60 @@ import stardeath.world.Vector;
   }
 
   /**
-   * Provides a {@link BiFunction} that translates all elements by a certain amount.
+   * Provides a {@link Function} that translates all elements by a certain amount.
    *
-   * @param f   The transformed {@link BiFunction}.
-   * @param x   The x shift amount.
-   * @param y   The y shift amount.
-   * @param <T> The type of return value of the function.
-   * @return The transformed {@link BiFunction}.
-   */
-  public static <T> BiFunction<Integer, Integer, T> translateOrigin(
-      BiFunction<Integer, Integer, T> f,
-      int x, int y) {
-    return (a, b) -> f.apply(a + x, b + y);
-  }
-
-  /**
-   * Provides a {@link BiConsumer} that translates all elements by a certain amount.
-   *
-   * @param f The transformed {@link BiConsumer}.
-   * @param x The x shift amount.
-   * @param y The y shift amount.
-   * @return The transformed {@link BiConsumer}.
-   */
-  public static BiConsumer<Integer, Integer> translateOrigin(
-      BiConsumer<Integer, Integer> f,
-      int x, int y) {
-    return (a, b) -> f.accept(a + x, b + y);
-  }
-
-  /**
-   * Provides a {@link BiFunction} that transforms through horizontal and vertical symmetries some
-   * content in a provided {@link Octant} to be accessible as if it was coming from the {@link
-   * Octant#ZERO}.
-   *
-   * @param octant The origin {@link Octant}.
    * @param f      The transformed {@link BiFunction}.
-   * @param <T>    The type of the return value of the function.
+   * @param vector The shift amount.
+   * @param <T>    The type of return value of the function.
    * @return The transformed {@link BiFunction}.
    */
-  public static <T> BiFunction<Integer, Integer, T> translateOctant(
-      Octant octant,
-      BiFunction<Integer, Integer, T> f) {
-    return (x, y) -> {
-      Vector vector = octant.transformToZero(new Vector(x, y));
-      return f.apply(vector.getX(), vector.getY());
-    };
+  public static <T> Function<Vector, T> translateOrigin(
+      Function<Vector, T> f,
+      Vector vector) {
+    return (a) -> f.apply(a.add(vector));
   }
 
   /**
-   * Provides a {@link BiConsumer} that transforms through horizontal and vertical symmetries some
+   * Provides a {@link Consumer} that translates all elements by a certain amount.
+   *
+   * @param f      The transformed {@link Consumer}.
+   * @param vector The shift amount.
+   * @return The transformed {@link Consumer}.
+   */
+  public static Consumer<Vector> translateOrigin(
+      Consumer<Vector> f,
+      Vector vector) {
+    return (a) -> f.accept(a.add(vector));
+  }
+
+  /**
+   * Provides a {@link Function} that transforms through horizontal and vertical symmetries some
    * content in a provided {@link Octant} to be accessible as if it was coming from the {@link
    * Octant#ZERO}.
    *
    * @param octant The origin {@link Octant}.
-   * @param f      The transformed {@link BiConsumer}.
-   * @return The transformed {@link BiConsumer}.
+   * @param f      The transformed {@link Function}.
+   * @param <T>    The type of the return value of the function.
+   * @return The transformed {@link Function}.
    */
-  public static BiConsumer<Integer, Integer> translateOctant(
+  public static <T> Function<Vector, T> translateOctant(
       Octant octant,
-      BiConsumer<Integer, Integer> f) {
-    return (x, y) -> {
-      Vector vector = octant.transformToZero(new Vector(x, y));
-      f.accept(vector.getX(), vector.getY());
-    };
+      Function<Vector, T> f) {
+    return original -> f.apply(octant.transformToZero(original));
+  }
+
+  /**
+   * Provides a {@link Consumer} that transforms through horizontal and vertical symmetries some
+   * content in a provided {@link Octant} to be accessible as if it was coming from the {@link
+   * Octant#ZERO}.
+   *
+   * @param octant The origin {@link Octant}.
+   * @param f      The transformed {@link Consumer}.
+   * @return The transformed {@link Consumer}.
+   */
+  public static Consumer<Vector> translateOctant(
+      Octant octant,
+      Consumer<Vector> f) {
+    return original -> f.accept(octant.transformToZero(original));
   }
 }

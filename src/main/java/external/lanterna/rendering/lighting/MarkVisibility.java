@@ -4,6 +4,7 @@ import java.util.Arrays;
 import stardeath.animates.participants.entities.Player;
 import stardeath.world.Floor;
 import stardeath.world.Tile;
+import stardeath.world.Vector;
 
 public class MarkVisibility {
 
@@ -25,17 +26,17 @@ public class MarkVisibility {
     }
   }
 
-  private static int distanceTo(int fromX, int fromY, int toX, int toY) {
-    int deltaX = fromX - toX;
-    int deltaY = fromY - toY;
+  private static int distanceTo(Vector from, Vector to) {
+    int deltaX = from.getX() - to.getX();
+    int deltaY = from.getY() - to.getY();
     return (int) Math.ceil(Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2)));
   }
 
   public void withVisibleTile(Tile tile) {
-    int x = tile.getX();
-    int y = tile.getY();
+    int x = tile.getPosition().getX();
+    int y = tile.getPosition().getY();
     if (x >= 0 && y >= 0 && x < floor.getWidth() && y < floor.getHeight()) {
-      int distance = distanceTo(player.getX(), player.getY(), x, y);
+      int distance = distanceTo(player.getPosition(), tile.getPosition());
       if (distance > 10) {
         levels[x][y] = LightingLevel.Dark;
       } else if (distance > 7) {

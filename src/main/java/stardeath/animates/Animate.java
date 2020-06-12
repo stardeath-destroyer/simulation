@@ -7,6 +7,7 @@ import stardeath.Entity;
 import stardeath.animates.actions.Action;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.world.Tile;
+import stardeath.world.Vector;
 import stardeath.world.World;
 
 public abstract class Animate extends Entity {
@@ -15,8 +16,8 @@ public abstract class Animate extends Entity {
   private boolean visible;
   private boolean remove;
 
-  protected Animate(int x, int y) {
-    super(x, y);
+  protected Animate(Vector position) {
+    super(position);
     this.visible = false;
     this.remove = false;
   }
@@ -53,30 +54,26 @@ public abstract class Animate extends Entity {
     return Collections.unmodifiableList(actions);
   }
 
-  public void setPosition(int x, int y) {
-    this.x = x;
-    this.y = y;
+  public void setPosition(Vector position) {
+    this.position = position;
   }
 
   public abstract void accept(AnimateVisitor visitor);
 
   public class MoveAction implements Action {
 
-    private final int deltaX;
-    private final int deltaY;
+    private final Vector delta;
 
-    public MoveAction(int x, int y) {
-      this.deltaX = x;
-      this.deltaY = y;
+    public MoveAction(Vector delta) {
+      this.delta = delta;
     }
 
     @Override
     public void execute(World world) {
-      int newX = getX() + deltaX;
-      int newY = getY() + deltaY;
+      Vector newPosition = getPosition().add(delta);
 
-      if (!world.current().tileAt(newX, newY).map(Tile::isOpaque).orElse(false)) {
-        Animate.this.setPosition(newX, newY);
+      if (!world.current().tileAt(newPosition).map(Tile::isOpaque).orElse(false)) {
+        Animate.this.setPosition(newPosition);
       }
     }
   }

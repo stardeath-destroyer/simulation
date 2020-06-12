@@ -4,11 +4,12 @@ import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.participants.Participant;
 import stardeath.animates.participants.attacks.SplashAttacker;
 import stardeath.animates.participants.Faction;
+import stardeath.world.Vector;
 
 public class Wookie extends Participant implements SplashAttacker {
 
-  public Wookie(int x, int y) {
-    super(x, y, Faction.Rebels, 90);
+  public Wookie(Vector position) {
+    super(position, Faction.Rebels, 90);
   }
 
   @Override

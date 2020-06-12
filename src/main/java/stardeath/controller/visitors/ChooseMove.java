@@ -10,6 +10,7 @@ import stardeath.animates.participants.movements.Walker;
 import stardeath.animates.weapons.entities.LaserBeam;
 import stardeath.controller.interactions.GetDirections;
 import stardeath.controller.interactions.GetMovements;
+import stardeath.world.Vector;
 import stardeath.world.World;
 
 public class ChooseMove extends MovementVisitor {
@@ -31,18 +32,18 @@ public class ChooseMove extends MovementVisitor {
 
   @Override
   public <J extends Participant & Jumper> void visitJumper(J jumper) {
-    jumper.addAction(jumper.new MoveAction(
+    jumper.addAction(jumper.new MoveAction(new Vector(
         random(-jumper.getRange(), jumper.getRange()),
         random(-jumper.getRange(), jumper.getRange())
-    ));
+    )));
   }
 
   @Override
   public <W extends Participant & Walker> void visitWalker(W walker) {
-    walker.addAction(walker.new MoveAction(
+    walker.addAction(walker.new MoveAction(new Vector(
         random(-1, 1),
         random(-1, 1)
-    ));
+    )));
   }
 
   @Override
@@ -50,33 +51,32 @@ public class ChooseMove extends MovementVisitor {
     switch (interactions.requestMovement()) {
       case UP:
         player.addAction(Action.of(
-            player.new MoveAction(0, -1),
+            player.new MoveAction(Vector.NORTH),
             player.new UnveilAction())
         );
         break;
       case LEFT:
         player.addAction(Action.of(
-            player.new MoveAction(-1, 0),
+            player.new MoveAction(Vector.WEST),
             player.new UnveilAction())
         );
         break;
       case DOWN:
         player.addAction(Action.of(
-            player.new MoveAction(0, 1),
+            player.new MoveAction(Vector.SOUTH),
             player.new UnveilAction())
         );
         break;
       case RIGHT:
         player.addAction(Action.of(
-            player.new MoveAction(1, 0),
+            player.new MoveAction(Vector.EAST),
             player.new UnveilAction())
         );
         break;
       case FIRE:
         player.addAction(player.new Fire(
             new LaserBeam(
-                player.getX(),
-                player.getY(),
+                player.getPosition(),
                 directions.requestDirectionsFromPlayer())));
         break;
       case LIFT:

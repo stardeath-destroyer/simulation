@@ -1,20 +1,16 @@
 package stardeath;
 
+import stardeath.world.Vector;
+
 public abstract class Entity {
 
-  protected int x;
-  protected int y;
+  protected Vector position;
 
-  protected Entity(int x, int y) {
-    this.x = x;
-    this.y = y;
+  protected Entity(Vector vector) {
+    this.position = vector;
   }
 
-  public int getX() {
-    return x;
-  }
-
-  public int getY() {
-    return y;
+  public Vector getPosition() {
+    return position;
   }
 }

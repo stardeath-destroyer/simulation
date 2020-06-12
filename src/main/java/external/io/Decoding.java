@@ -15,6 +15,7 @@ import stardeath.animates.participants.entities.Wookie;
 import stardeath.world.Floor;
 import stardeath.world.Floor.Builder;
 import stardeath.world.Tile;
+import stardeath.world.Vector;
 import stardeath.world.World;
 import stardeath.world.tiles.DownwardElevator;
 import stardeath.world.tiles.Hole;
@@ -85,20 +86,20 @@ public class Decoding {
     return builder.build();
   }
 
-  private static Tile tileFromChar(char character, int x, int y) {
+  private static Tile tileFromChar(char character, Vector position) {
     switch (character) {
       case 'H':
-        return new Hole(x, y);
+        return new Hole(position);
       case '.':
-        return new Regular(x, y);
+        return new Regular(position);
       case 'X':
-        return new Start(x, y);
+        return new Start(position);
       case 'w':
-        return new Wall(x, y);
+        return new Wall(position);
       case '^':
-        return new UpwardElevator(x, y);
+        return new UpwardElevator(position);
       case 'v':
-        return new DownwardElevator(x, y);
+        return new DownwardElevator(position);
       default:
         throw new IllegalArgumentException("Unknown tile of type '" + character + "'.");
     }
@@ -111,7 +112,7 @@ public class Decoding {
 
     while ((line = reader.readLine()) != null) {
       for (int x = 0; x < line.length(); ++x) {
-        builder.addTile(tileFromChar(line.charAt(x), x, y));
+        builder.addTile(tileFromChar(line.charAt(x), new Vector(x, y)));
       }
       y++;
     }
@@ -127,19 +128,18 @@ public class Decoding {
 
   private static Participant parseParticipant(String line) {
     String[] tokens = line.split(" ");
-    int x = Integer.parseInt(tokens[0]);
-    int y = Integer.parseInt(tokens[1]);
+    Vector position = new Vector(Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1]));
 
     char type = (tokens[2].charAt(0));
     switch (type) {
       case 'W':
-        return new Wookie(x, y);
+        return new Wookie(position);
       case 'S':
-        return new Soldier(x, y);
+        return new Soldier(position);
       case 'T':
-        return new Trooper(x, y);
+        return new Trooper(position);
       case 'J':
-        return new JumpTrooper(x, y);
+        return new JumpTrooper(position);
       default:
         throw new IllegalStateException("Given map does not follow format.");
     }

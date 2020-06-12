@@ -8,8 +8,8 @@ public abstract class Tile extends Entity {
   private boolean discovered;
   private final boolean opaque;
 
-  protected Tile(int x, int y, boolean opaque) {
-    super(x, y);
+  protected Tile(Vector position, boolean opaque) {
+    super(position);
     this.discovered = false;
     this.opaque = opaque;
   }
@@ -27,8 +27,8 @@ public abstract class Tile extends Entity {
   }
 
   public int distanceTo(int x, int y) {
-    int deltaX = this.getX() - x;
-    int deltaY = this.getY() - y;
+    int deltaX = this.getPosition().getX() - x;
+    int deltaY = this.getPosition().getY() - y;
     return (int) Math.ceil(Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2)));
   }
 

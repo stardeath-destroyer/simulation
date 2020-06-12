@@ -1,6 +1,8 @@
 package stardeath.world;
 
-public class Vector {
+import java.util.Objects;
+
+public final class Vector {
 
   public static final Vector NORTH = new Vector(0, -1);
   public static final Vector EAST = new Vector(1, 0);
@@ -34,5 +36,23 @@ public class Vector {
 
   public Vector inverse() {
     return new Vector(-this.x, -this.y);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Vector vector = (Vector) o;
+    return x == vector.x &&
+        y == vector.y;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(x, y);
   }
 }

@@ -1,11 +1,12 @@
 package stardeath.world.tiles;
 
+import stardeath.world.Vector;
 import stardeath.world.visitors.TileVisitor;
 
 public class UpwardElevator extends Elevator {
 
-  public UpwardElevator(int x, int y) {
-    super(x, y);
+  public UpwardElevator(Vector vector) {
+    super(vector);
   }
 
   @Override

@@ -12,8 +12,8 @@ public abstract class Projectile extends Animate {
   private final int speed;
   private final int damage;
 
-  public Projectile(int x, int y, int damage, ProjectileDirection direction, int speed) {
-    super(x, y);
+  public Projectile(Vector position, int damage, ProjectileDirection direction, int speed) {
+    super(position);
     this.damage = damage;
     this.direction = direction;
     this.speed = speed;
@@ -29,7 +29,7 @@ public abstract class Projectile extends Animate {
 
     @Override
     public void execute(World world) {
-      Vector base = new Vector(getX(), getY());
+      Vector base = getPosition();
       for (int i = 0; i < speed; i++) {
         for (Vector step : direction.getSteps()) {
 
@@ -37,12 +37,11 @@ public abstract class Projectile extends Animate {
           base = base.add(step);
 
           // Update the position of the head of this projectile.
-          x = base.getX();
-          y = base.getY();
+          position = base;
 
           // Apply the damage to whatever is on the path of the projectile.
           ConsumeProjectileVisitor consumeProjectileVisitor = new ConsumeProjectileVisitor(damage);
-          world.current().participantAt(x, y).ifPresent(a -> a.accept(consumeProjectileVisitor));
+          world.current().participantAt(position).ifPresent(a -> a.accept(consumeProjectileVisitor));
 
           // Remove the projectile if it has hit a participant already.
           if (consumeProjectileVisitor.isConsumed() || isDispersed()) {
@@ -51,7 +50,7 @@ public abstract class Projectile extends Animate {
 
           // If no participant was hit, maybe we have actually hit a wall. If so, remove this
           // projectile.
-          world.current().tileAt(base.getX(), base.getY()).ifPresent(tile -> {
+          world.current().tileAt(position).ifPresent(tile -> {
             if (tile.isOpaque()) {
               remove();
             }

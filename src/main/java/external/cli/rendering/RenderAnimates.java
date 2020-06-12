@@ -18,7 +18,7 @@ public class RenderAnimates implements AnimateVisitor {
 
   private void setGrid(Animate animate, char symbol) {
     if (animate.isVisible()) {
-      buffer[animate.getY()][animate.getX()] = symbol;
+      buffer[animate.getPosition().getY()][animate.getPosition().getX()] = symbol;
     }
   }
 

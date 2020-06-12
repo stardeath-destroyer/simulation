@@ -1,11 +1,12 @@
 package stardeath.world.tiles;
 
+import stardeath.world.Vector;
 import stardeath.world.visitors.TileVisitor;
 
 public class Start extends Regular {
 
-  public Start(int x, int y) {
-    super(x, y);
+  public Start(Vector vector) {
+    super(vector);
   }
 
   @Override

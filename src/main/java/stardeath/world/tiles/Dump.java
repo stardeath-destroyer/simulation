@@ -1,11 +1,12 @@
 package stardeath.world.tiles;
 
+import stardeath.world.Vector;
 import stardeath.world.visitors.TileVisitor;
 
 public class Dump extends Regular {
 
-  public Dump(int x, int y) {
-    super(x, y);
+  public Dump(Vector vector) {
+    super(vector);
   }
 
   @Override

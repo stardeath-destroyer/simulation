@@ -19,8 +19,8 @@ public final class Floor {
 
   private Floor(List<Tile> tiles, List<? extends Animate> animates) {
     tiles.forEach(tile -> {
-      width = Math.max(tile.getX() + 1, width);
-      height = Math.max(tile.getY() + 1, height);
+      width = Math.max(tile.getPosition().getX() + 1, width);
+      height = Math.max(tile.getPosition().getY() + 1, height);
     });
 
     this.tiles = new Tile[width][height];
@@ -28,7 +28,7 @@ public final class Floor {
     this.spawned = new ArrayList<>();
 
     for (Tile tile : tiles) {
-      this.tiles[tile.getX()][tile.getY()] = tile;
+      this.tiles[tile.getPosition().getX()][tile.getPosition().getY()] = tile;
     }
   }
 
@@ -50,15 +50,16 @@ public final class Floor {
     animates.removeIf(Animate::shouldRemove);
   }
 
-  public Optional<Animate> participantAt(int x, int y) {
+  public Optional<Animate> participantAt(Vector position) {
     return animates.stream()
-        .filter(p -> p.getX() == x && p.getY() == y)
+        .filter(p -> p.getPosition().equals(position))
         .findFirst();
   }
 
-  public Optional<Tile> tileAt(int x, int y) {
-    if (x >= 0 && y >= 0 && x < tiles.length && y < tiles[x].length) {
-      return Optional.ofNullable(tiles[x][y]);
+  public Optional<Tile> tileAt(Vector position) {
+    if (position.getX() >= 0 && position.getY() >= 0 &&
+        position.getX() < tiles.length && position.getY() < tiles[position.getX()].length) {
+      return Optional.ofNullable(tiles[position.getX()][position.getY()]);
     } else {
       return Optional.empty();
     }

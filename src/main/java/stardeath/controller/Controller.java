@@ -31,7 +31,7 @@ public class Controller {
     ChooseStartTile chooseStart = new ChooseStartTile();
     world.current().visitTiles(chooseStart);
     chooseStart.pickRandom()
-        .map(tile -> new Player(tile.getX(), tile.getY()))
+        .map(tile -> new Player(tile.getPosition()))
         .ifPresent(player -> world.all()
             .forEach(floor -> floor.addAnimate(player)));
     world.current().spawn();

@@ -47,8 +47,8 @@ public class World {
 
   public void visitVisibleTilesFrom(Entity entity, int radius, TileVisitor visitor) {
     RayCasting.compute(entity, radius,
-        (x, y) -> current().tileAt(x, y).map(Tile::isOpaque).orElse(false),
-        (x, y) -> current().tileAt(x, y).ifPresent(t -> t.accept(visitor)));
+        (v) -> current().tileAt(v).map(Tile::isOpaque).orElse(false),
+        (v) -> current().tileAt(v).ifPresent(t -> t.accept(visitor)));
   }
 
   public static class Builder {

@@ -3,8 +3,8 @@ package stardeath.world.visibility;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Optional;
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import stardeath.Entity;
 import stardeath.world.Vector;
 
@@ -12,23 +12,23 @@ public class RayCasting {
 
   public static void compute(
       Entity entity, int radius,
-      BiFunction<Integer, Integer, Boolean> opaque,
-      BiConsumer<Integer, Integer> write
+      Function<Vector, Boolean> opaque,
+      Consumer<Vector> write
   ) {
 
     for (Octant octant : Octant.values()) {
       computeOctant(
           Transforms.translateOctant(octant,
-              Transforms.translateOrigin(opaque, entity.getX(), entity.getY())),
+              Transforms.translateOrigin(opaque, entity.getPosition())),
           Transforms.translateOctant(octant,
-              Transforms.translateOrigin(write, entity.getX(), entity.getY())),
+              Transforms.translateOrigin(write, entity.getPosition())),
           radius);
     }
   }
 
   private static void computeOctant(
-      BiFunction<Integer, Integer, Boolean> opaque,
-      BiConsumer<Integer, Integer> markVisible,
+      Function<Vector, Boolean> opaque,
+      Consumer<Vector> markVisible,
       int radius
   ) {
     Deque<Portion> queue = new ArrayDeque<>();
@@ -51,8 +51,8 @@ public class RayCasting {
   private static void computeColumnPortion(
       int x,
       Vector top, Vector bottom,
-      BiFunction<Integer, Integer, Boolean> opaque,
-      BiConsumer<Integer, Integer> markVisible,
+      Function<Vector, Boolean> opaque,
+      Consumer<Vector> markVisible,
       int radius,
       Deque<Portion> queue) {
 
@@ -88,10 +88,10 @@ public class RayCasting {
     for (int y = topY; y >= bottomY; --y) {
       boolean inRadius = isInRadius(x, y, radius);
       if (inRadius) {
-        markVisible.accept(x, y);
+        markVisible.accept(new Vector(x, y));
       }
 
-      boolean currentIsOpaque = !inRadius || opaque.apply(x, y);
+      boolean currentIsOpaque = !inRadius || opaque.apply(new Vector(x, y));
       if (wasLastCellOpaque.isPresent()) {
         if (currentIsOpaque) {
           if (!wasLastCellOpaque.get()) {

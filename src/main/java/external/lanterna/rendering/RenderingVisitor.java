@@ -95,6 +95,6 @@ public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor
 
   @Override
   public void visitProjectile(LaserBeam projectile) {
-    drawAnimate(projectile, projectile.getX(), projectile.getY(), Material.Laser, Material.Void, '*');
+    drawAnimate(projectile, projectile.getPosition(), Material.Laser, Material.Void, '*');
   }
 }

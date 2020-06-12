@@ -6,6 +6,7 @@ import stardeath.animates.participants.Faction;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.visitors.DefaultAnimateVisitor;
 import stardeath.world.Tile;
+import stardeath.world.Vector;
 import stardeath.world.World;
 import stardeath.world.tiles.DownwardElevator;
 import stardeath.world.tiles.UpwardElevator;
@@ -19,8 +20,8 @@ public class Player extends Soldier {
 
   private int visibilityRange;
 
-  public Player(int x, int y) {
-    super(x, y, Faction.Rebels, 100);
+  public Player(Vector position) {
+    super(position, Faction.Rebels, 100);
     this.visibilityRange = DEFAULT_VISIBILITY_RANGE;
   }
 
@@ -51,8 +52,8 @@ public class Player extends Soldier {
     @Override
     public void execute(World world) {
       RayCasting.compute(Player.this, visibilityRange,
-          (x, y) -> world.current().tileAt(x, y).map(Tile::isOpaque).orElse(false),
-          (x, y) -> world.current().participantAt(x, y).ifPresent(Animate::show));
+          (p) -> world.current().tileAt(p).map(Tile::isOpaque).orElse(false),
+          (p) -> world.current().participantAt(p).ifPresent(Animate::show));
     }
   }
 
@@ -61,8 +62,8 @@ public class Player extends Soldier {
     @Override
     public void execute(World world) {
       RayCasting.compute(Player.this, visibilityRange,
-          (x, y) -> world.current().tileAt(x, y).map(Tile::isOpaque).orElse(false),
-          (x, y) -> world.current().tileAt(x, y).ifPresent(Tile::unveil));
+          (p) -> world.current().tileAt(p).map(Tile::isOpaque).orElse(false),
+          (p) -> world.current().tileAt(p).ifPresent(Tile::unveil));
     }
   }
 
@@ -83,7 +84,7 @@ public class Player extends Soldier {
       };
 
       // TODO : Use a Visitor on a tile at a specific index instead.
-      world.current().tileAt(getX(), getY()).ifPresent(tile -> tile.accept(visitor));
+      world.current().tileAt(getPosition()).ifPresent(tile -> tile.accept(visitor));
     }
   }
 }

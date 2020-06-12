@@ -2,11 +2,12 @@ package stardeath.animates.participants.entities;
 
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.participants.movements.Jumper;
+import stardeath.world.Vector;
 
 public class JumpTrooper extends Trooper implements Jumper {
 
-  public JumpTrooper(int x, int y) {
-    super(x, y, 45);
+  public JumpTrooper(Vector position) {
+    super(position, 45);
   }
 
   @Override

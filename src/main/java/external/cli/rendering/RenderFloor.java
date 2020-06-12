@@ -21,7 +21,7 @@ public class RenderFloor implements TileVisitor {
 
   private void setGrid(Tile tile, char symbol) {
     if (tile.isDiscovered()) {
-      buffer[tile.getY()][tile.getX()] = symbol;
+      buffer[tile.getPosition().getY()][tile.getPosition().getX()] = symbol;
     }
   }
 
