@@ -7,8 +7,6 @@ import java.util.Optional;
 import stardeath.animates.Animate;
 import stardeath.animates.participants.Participant;
 import stardeath.animates.visitors.AnimateVisitor;
-import stardeath.world.tiles.Start;
-import stardeath.world.visitors.NoOpTileVisitor;
 import stardeath.world.visitors.TileVisitor;
 
 public final class Floor {
@@ -87,8 +85,8 @@ public final class Floor {
 
   public static class Builder {
 
-    private List<Tile> tiles = new ArrayList<>();
-    private List<Participant> participants = new ArrayList<>();
+    private final List<Tile> tiles = new ArrayList<>();
+    private final List<Participant> participants = new ArrayList<>();
 
 
     public Builder addTile(Tile tile) {
