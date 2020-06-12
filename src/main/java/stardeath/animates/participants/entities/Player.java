@@ -44,7 +44,7 @@ public class Player extends Soldier {
 
     @Override
     public void execute(World world) {
-      RayCasting.compute(Player.this,
+      RayCasting.compute(Player.this, visibilityRange,
           (x, y) -> world.current().tileAt(x, y).isOpaque(),
           (x, y) -> world.current().getParticipant(x, y).ifPresent(Animate::show));
     }
@@ -54,7 +54,7 @@ public class Player extends Soldier {
 
     @Override
     public void execute(World world) {
-      RayCasting.compute(Player.this,
+      RayCasting.compute(Player.this, visibilityRange,
           (x, y) -> world.current().tileAt(x, y).isOpaque(),
           (x, y) -> world.current().tileAt(x, y).unveil());
     }

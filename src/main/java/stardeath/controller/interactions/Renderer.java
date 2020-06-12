@@ -1,7 +1,7 @@
 package stardeath.controller.interactions;
 
 import stardeath.controller.Controller;
-import stardeath.world.Floor;
+import stardeath.world.World;
 
 /**
  * An interface describing an element that is able to render the game state to the screen and
@@ -10,11 +10,11 @@ import stardeath.world.Floor;
 public interface Renderer {
 
   /**
-   * Renders a certain {@link Floor} to the screen, along with its contents.
+   * Renders a certain {@link World} to the screen, along with its contents.
    *
-   * @param floor The {@link Floor} to be rendered.
+   * @param world The {@link World} to be rendered.
    */
-  void render(Floor floor);
+  void render(World world);
 
 
   /**

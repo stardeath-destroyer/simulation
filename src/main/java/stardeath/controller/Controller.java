@@ -62,6 +62,6 @@ public class Controller {
 
   public void draw() {
     // Draw the contents.
-    renderer.render(world.current());
+    renderer.render(world);
   }
 }

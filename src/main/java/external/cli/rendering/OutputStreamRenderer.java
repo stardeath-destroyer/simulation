@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 import stardeath.controller.interactions.Renderer;
-import stardeath.world.Floor;
+import stardeath.world.World;
 
 public class OutputStreamRenderer implements Renderer {
 
@@ -15,8 +15,8 @@ public class OutputStreamRenderer implements Renderer {
   }
 
   @Override
-  public void render(Floor floor) {
-    char[][] elements = new char[floor.getHeight()][floor.getWidth()];
+  public void render(World world) {
+    char[][] elements = new char[world.current().getHeight()][world.current().getWidth()];
 
     for (char[] element : elements) {
       Arrays.fill(element, ' ');
@@ -25,8 +25,8 @@ public class OutputStreamRenderer implements Renderer {
     RenderFloor renderFloor = new RenderFloor(elements);
     RenderAnimates renderAnimates = new RenderAnimates(elements);
 
-    floor.visitTiles(renderFloor);
-    floor.visitAnimates(renderAnimates);
+    world.current().visitTiles(renderFloor);
+    world.current().visitAnimates(renderAnimates);
 
     try {
       for (char[] line : elements) {

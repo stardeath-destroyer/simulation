@@ -5,25 +5,24 @@ import java.util.Deque;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-import stardeath.animates.participants.entities.Player;
+import stardeath.Entity;
 import stardeath.world.Vector;
 
 public class RayCasting {
 
   public static void compute(
-      Player player,
+      Entity entity, int radius,
       BiFunction<Integer, Integer, Boolean> opaque,
       BiConsumer<Integer, Integer> write
   ) {
 
-
     for (Octant octant : Octant.values()) {
       computeOctant(
           Transforms.translateOctant(octant,
-              Transforms.translateOrigin(opaque, player.getX(), player.getY())),
+              Transforms.translateOrigin(opaque, entity.getX(), entity.getY())),
           Transforms.translateOctant(octant,
-              Transforms.translateOrigin(write, player.getX(), player.getY())),
-          player.getVisibilityRange());
+              Transforms.translateOrigin(write, entity.getX(), entity.getY())),
+          radius);
     }
   }
 

@@ -1,9 +1,9 @@
 package external.lanterna.rendering.lighting;
 
-import stardeath.world.visibility.RayCasting;
 import java.util.function.BiFunction;
 import stardeath.animates.participants.entities.Player;
-import stardeath.world.Floor;
+import stardeath.world.World;
+import stardeath.world.visibility.RayCasting;
 
 public class LightingShader {
 
@@ -12,24 +12,24 @@ public class LightingShader {
   private final int height;
 
   private final BiFunction<Integer, Integer, Boolean> isOpaque;
-  private final Floor floor;
+  private final World world;
 
-  public LightingShader(Floor floor) {
-    this.width = floor.getWidth();
-    this.height = floor.getHeight();
-    this.floor = floor;
+  public LightingShader(World world) {
+    this.width = world.current().getWidth();
+    this.height = world.current().getHeight();
+    this.world = world;
 
     this.opaque = new boolean[width][height];
 
     this.isOpaque = (x, y) -> (x >= 0 && y >= 0 && x < width && y < height && opaque[x][y]);
 
-    floor.getTiles().forEach(t -> opaque[t.getX()][t.getY()] = t.isOpaque());
+    world.current().getTiles().forEach(t -> opaque[t.getX()][t.getY()] = t.isOpaque());
   }
 
 
   public LightingLevel[][] withPlayer(Player player) {
-    MarkVisibility visibility = new MarkVisibility(floor, player);
-    RayCasting.compute(player, isOpaque, visibility);
+    MarkVisibility visibility = new MarkVisibility(world.current(), player);
+    RayCasting.compute(player, player.getVisibilityRange(), isOpaque, visibility);
     return visibility.getLevels();
   }
 }

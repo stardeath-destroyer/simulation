@@ -16,7 +16,7 @@ import stardeath.controller.interactions.GetDirections;
 import stardeath.controller.interactions.Renderer;
 import stardeath.animates.participants.entities.Player;
 import stardeath.animates.weapons.ProjectileDirection;
-import stardeath.world.Floor;
+import stardeath.world.World;
 
 public class LanternaRenderer implements GetDirections, Renderer {
 
@@ -61,14 +61,14 @@ public class LanternaRenderer implements GetDirections, Renderer {
   }
 
   @Override
-  public void render(Floor floor) {
+  public void render(World world) {
 
-    RenderingVisitor render = new RenderingVisitor(floor.getWidth(), floor.getHeight());
-    LightingShader shader = new LightingShader(floor);
+    RenderingVisitor render = new RenderingVisitor(world.current().getWidth(), world.current().getHeight());
+    LightingShader shader = new LightingShader(world);
 
     // Visit the floor and the participants.
-    floor.visitTiles(render);
-    floor.visitAnimates(render);
+    world.current().visitTiles(render);
+    world.current().visitAnimates(render);
 
     // We MUST have at least one player.
     Player player = render.getPlayer().orElseThrow();
@@ -88,7 +88,7 @@ public class LanternaRenderer implements GetDirections, Renderer {
           int by = offsetY + y;
 
           boolean insideBuffer = bx >= 0 && by >= 0 &&
-              bx < floor.getWidth() && by < floor.getHeight();
+              bx < world.current().getWidth() && by < world.current().getHeight();
 
           if (insideBuffer && render.getDrawn()[bx][by]) {
             screen.setCharacter(x, y, new TextCharacter(
