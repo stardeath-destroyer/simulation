@@ -10,19 +10,20 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import stardeath.animates.participants.Participant;
-import stardeath.animates.participants.entities.Soldier;
-import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.participants.entities.JumpTrooper;
+import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.entities.Trooper;
+import stardeath.animates.participants.entities.Wookie;
 import stardeath.world.Floor;
+import stardeath.world.Floor.Builder;
 import stardeath.world.Tile;
+import stardeath.world.World;
 import stardeath.world.tiles.DownwardElevator;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Start;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.tiles.Wall;
-import stardeath.world.World;
 
 public class Decoding {
 
@@ -30,9 +31,9 @@ public class Decoding {
   }
 
 
-  public static World loadWorld(ZipFile worldFile) throws java.io.IOException {
+  public static World loadWorld(ZipFile worldFile) {
 
-    World world = new World();
+    World.Builder builder = new World.Builder();
 
     try {
       Enumeration<? extends ZipEntry> entries = worldFile.entries();
@@ -46,17 +47,21 @@ public class Decoding {
         String type = entry.isDirectory() ? "DIR" : "FILE";
         System.out.println(type + " " + name);
 
-        if(entry.isDirectory()){
+        if (entry.isDirectory()) {
           System.out.println("name: " + entry.getName());
-          //levelNb = Integer.parseInt(entry.getName().substring(5, 6));
-        }else{
-          if(entry.getName().endsWith(".floor")){
+          if (!entry.getName().equals("world/")) {
+            levelNb = Integer.parseInt(entry.getName()
+                .substring(entry.getName().length() - 2, entry.getName().length() - 1));
+            System.out.println(levelNb);
+          }
+        } else {
+          if (entry.getName().endsWith(".floor")) {
             floorFile = worldFile.getInputStream(entry);
-          }else if(entry.getName().endsWith(".enemies")){
+          } else if (entry.getName().endsWith(".enemies")) {
             enemiesFile = worldFile.getInputStream(entry);
           }
-          if(enemiesFile != null && floorFile != null){
-            world.addFloor(readFloor(floorFile, enemiesFile));
+          if (enemiesFile != null && floorFile != null) {
+            builder.addFloor(readFloor(floorFile, enemiesFile));
             floorFile.close();
             floorFile = null;
             enemiesFile.close();
@@ -70,16 +75,17 @@ public class Decoding {
       ex.printStackTrace();
     }
 
-    return world;
+    return builder.build();
   }
 
-  private static Floor readFloor(InputStream floorFile, InputStream enemiesFile) throws IOException {
+  private static Floor readFloor(InputStream floorFile, InputStream enemiesFile)
+      throws IOException {
+    Floor.Builder builder = new Builder();
 
-    Floor floor = new Floor(readTiles(floorFile).toArray(new Tile[0]));
-    List<Participant> enemies = readEnemies(enemiesFile);
-    floor.addParticipants(enemies);
+    readTiles(floorFile).forEach(builder::addTile);
+    readEnemies(enemiesFile).forEach(builder::addParticipant);
 
-    return floor;
+    return builder.build();
   }
 
   private static Tile from(char character, int x, int y) {
@@ -107,10 +113,10 @@ public class Decoding {
     int y = 0;
 
     String line;
-    while((line = reader.readLine()) != null){
+    while ((line = reader.readLine()) != null) {
       y++;
-      for(int x = 0; x < line.length(); ++x) {
-          tiles.add(from(line.charAt(x), x, y));
+      for (int x = 0; x < line.length(); ++x) {
+        tiles.add(from(line.charAt(x), x, y));
       }
     }
     return tiles;
@@ -121,19 +127,19 @@ public class Decoding {
     BufferedReader reader = new BufferedReader(new InputStreamReader(input));
     final List<Participant> enemies = new ArrayList<>();
     String line;
-    while((line = reader.readLine()) != null){
-        enemies.add(parseParticipant(line));
+    while ((line = reader.readLine()) != null) {
+      enemies.add(parseParticipant(line));
     }
     return enemies;
   }
 
-  private static Participant parseParticipant(String line){
+  private static Participant parseParticipant(String line) {
     String[] tokens = line.split(" ");
     int x = Integer.parseInt(tokens[0]);
     int y = Integer.parseInt(tokens[1]);
 
     char type = (tokens[2].charAt(0));
-    switch (type){
+    switch (type) {
       case 'W':
         return new Wookie(x, y);
       case 'S':

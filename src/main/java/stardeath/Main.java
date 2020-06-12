@@ -13,14 +13,7 @@ import stardeath.world.World;
  */
 public class Main {
 
-  public static void main(String[] args) throws IOException, URISyntaxException {
-
-    String level = "visibility.floor";
-
-    if (args.length >= 1) {
-      level = args[0];
-    }
-
+  public static void main(String[] args) throws IOException {
     World world = Decoding.loadWorld(new ZipFile("src/main/resources/world3.stardeath"));
 
     Controller controller = new Controller(new Lanterna(), world);

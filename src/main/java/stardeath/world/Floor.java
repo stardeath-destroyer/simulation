@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import stardeath.animates.Animate;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.participants.Participant;
@@ -19,14 +17,12 @@ public final class Floor {
   private final List<Animate> animates;
   private final List<Animate> spawned;
 
-  private Floor previous;
-  private Floor next;
   private int width;
   private int height;
 
-  public Floor(Tile... tiles) {
-    this.tiles = Stream.of(tiles).collect(Collectors.toList());
-    this.animates = new ArrayList<>();
+  private Floor(List<Tile> tiles, List<? extends Animate> animates) {
+    this.tiles = Collections.unmodifiableList(tiles);
+    this.animates = new ArrayList<>(animates);
     this.spawned = new ArrayList<>();
     this.tiles.forEach(tile -> {
       width = Math.max(tile.getX(), width);
@@ -44,14 +40,6 @@ public final class Floor {
 
   public void addAnimate(Animate animate) {
     spawned.add(animate);
-  }
-
-  public void addParticipants(List<Participant> newParticipants){
-    spawned.addAll(newParticipants);
-  }
-
-  public void removeParticipant(Participant participant) {
-    animates.remove(participant);
   }
 
   public void spawn() {
@@ -102,6 +90,26 @@ public final class Floor {
   public void visitTiles(TileVisitor visitor) {
     for (Tile tile : tiles) {
       tile.accept(visitor);
+    }
+  }
+
+  public static class Builder {
+    private List<Tile> tiles = new ArrayList<>();
+    private List<Participant> participants = new ArrayList<>();
+
+
+    public Builder addTile(Tile tile) {
+      tiles.add(tile);
+      return this;
+    }
+
+    public Builder addParticipant(Participant participant) {
+      participants.add(participant);
+      return this;
+    }
+
+    public Floor build() {
+      return new Floor(tiles, participants);
     }
   }
 }
