@@ -1,17 +1,15 @@
 package stardeath.controller;
 
-import java.util.List;
-import java.util.Random;
 import stardeath.animates.actions.ExecuteActions;
 import stardeath.animates.participants.entities.Player;
-import stardeath.controller.visitors.ChooseMove;
-import stardeath.controller.visitors.UnveilVisitor;
-import stardeath.controller.visitors.UpdateVisibility;
-import stardeath.world.World;
-import stardeath.world.tiles.Start;
 import stardeath.controller.interactions.GetDirections;
 import stardeath.controller.interactions.GetMovements;
 import stardeath.controller.interactions.Renderer;
+import stardeath.controller.visitors.ChooseMove;
+import stardeath.controller.visitors.ChooseStartTile;
+import stardeath.controller.visitors.UnveilVisitor;
+import stardeath.controller.visitors.UpdateVisibility;
+import stardeath.world.World;
 
 public class Controller {
 
@@ -29,10 +27,11 @@ public class Controller {
     // Register this Controller's ability to render things NOW to the Renderer.
     this.renderer.registerRenderRequestListener(this::draw);
 
-    List<Start> startingTiles = world.current().getStartTiles();
-    Start startingTile = startingTiles.get(new Random().nextInt(startingTiles.size()));
-
-    world.current().addAnimate(new Player(startingTile.getX(), startingTile.getY()));
+    // Choose a random start tile for the player.
+    ChooseStartTile chooseStart = new ChooseStartTile();
+    world.current().visitTiles(chooseStart);
+    chooseStart.pickRandom()
+        .ifPresent(t -> world.current().addAnimate(new Player(t.getX(), t.getY())));
     world.current().spawn();
 
     discover();

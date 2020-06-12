@@ -71,17 +71,6 @@ public final class Floor {
     return Collections.unmodifiableList(animates);
   }
 
-  public final List<Start> getStartTiles() {
-    List<Start> tiles = new ArrayList<>();
-    visitTiles(new NoOpTileVisitor() {
-      @Override
-      public void visitTile(Start start) {
-        tiles.add(start);
-      }
-    });
-    return tiles;
-  }
-
   public void visitAnimates(AnimateVisitor visitor) {
     animates.forEach(a -> a.accept(visitor));
   }
