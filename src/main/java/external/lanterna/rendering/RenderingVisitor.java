@@ -9,6 +9,8 @@ import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.participants.entities.JumpTrooper;
 import stardeath.animates.participants.entities.Player;
 import stardeath.animates.weapons.entities.LaserBeam;
+import stardeath.world.tiles.DownwardElevator;
+import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.visitors.TileVisitor;
 import stardeath.world.tiles.Armory;
 import stardeath.world.tiles.Dump;
@@ -41,7 +43,7 @@ public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor
   }
 
   @Override
-  public void visitTile(Elevator elevator) {
+  public void visitTile(DownwardElevator elevator) {
     throw new IllegalStateException("Elevators are not supported yet.");
   }
 
@@ -58,6 +60,11 @@ public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor
   @Override
   public void visitTile(Start start) {
     drawTile(start, Material.Iron, Material.Void, '.');
+  }
+
+  @Override
+  public void visitTile(UpwardElevator elevator) {
+    throw new IllegalStateException("Elevators are not supported yet.");
   }
 
   @Override

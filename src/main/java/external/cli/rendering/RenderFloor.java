@@ -1,10 +1,11 @@
 package external.cli.rendering;
 
 import stardeath.world.Tile;
+import stardeath.world.tiles.DownwardElevator;
+import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.visitors.TileVisitor;
 import stardeath.world.tiles.Armory;
 import stardeath.world.tiles.Dump;
-import stardeath.world.tiles.Elevator;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Start;
@@ -35,13 +36,13 @@ public class RenderFloor implements TileVisitor {
   }
 
   @Override
-  public void visitTile(Regular regular) {
-    setGrid(regular, '.');
+  public void visitTile(DownwardElevator elevator) {
+    setGrid(elevator, 'v');
   }
 
   @Override
-  public void visitTile(Elevator elevator) {
-    setGrid(elevator, '_');
+  public void visitTile(Regular regular) {
+    setGrid(regular, '.');
   }
 
   @Override
@@ -52,6 +53,11 @@ public class RenderFloor implements TileVisitor {
   @Override
   public void visitTile(Start start) {
     // Ignored.
+  }
+
+  @Override
+  public void visitTile(UpwardElevator elevator) {
+    setGrid(elevator, '^');
   }
 
   @Override

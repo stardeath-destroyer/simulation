@@ -1,11 +1,13 @@
 package stardeath.world.visitors;
 
 import stardeath.world.tiles.Armory;
+import stardeath.world.tiles.DownwardElevator;
 import stardeath.world.tiles.Dump;
 import stardeath.world.tiles.Elevator;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Start;
+import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.tiles.Wall;
 
 public abstract class NoOpTileVisitor implements TileVisitor {
@@ -21,7 +23,7 @@ public abstract class NoOpTileVisitor implements TileVisitor {
   }
 
   @Override
-  public void visitTile(Elevator elevator) {
+  public void visitTile(DownwardElevator elevator) {
 
   }
 
@@ -37,6 +39,11 @@ public abstract class NoOpTileVisitor implements TileVisitor {
 
   @Override
   public void visitTile(Start start) {
+
+  }
+
+  @Override
+  public void visitTile(UpwardElevator elevator) {
 
   }
 
