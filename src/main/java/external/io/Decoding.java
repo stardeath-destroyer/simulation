@@ -16,9 +16,11 @@ import stardeath.animates.participants.entities.JumpTrooper;
 import stardeath.animates.participants.entities.Trooper;
 import stardeath.world.Floor;
 import stardeath.world.Tile;
+import stardeath.world.tiles.DownwardElevator;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Start;
+import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.tiles.Wall;
 import stardeath.world.World;
 
@@ -90,6 +92,10 @@ public class Decoding {
         return new Start(x, y);
       case 'w':
         return new Wall(x, y);
+      case '^':
+        return new UpwardElevator(x, y);
+      case 'v':
+        return new DownwardElevator(x, y);
       default:
         throw new IllegalArgumentException("Unknown tile of type '" + character + "'.");
     }

@@ -6,6 +6,6 @@ import stardeath.world.visitors.TileVisitor;
 public abstract class Elevator extends Tile {
 
   public Elevator(int x, int y) {
-    super(x, y, true);
+    super(x, y, false);
   }
 }

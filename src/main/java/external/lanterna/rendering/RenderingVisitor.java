@@ -44,7 +44,7 @@ public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor
 
   @Override
   public void visitTile(DownwardElevator elevator) {
-    throw new IllegalStateException("Elevators are not supported yet.");
+    drawTile(elevator, Material.Iron, Material.Void, 'v');
   }
 
   @Override
@@ -64,7 +64,7 @@ public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor
 
   @Override
   public void visitTile(UpwardElevator elevator) {
-    throw new IllegalStateException("Elevators are not supported yet.");
+    drawTile(elevator, Material.Iron, Material.Void, '^');
   }
 
   @Override
