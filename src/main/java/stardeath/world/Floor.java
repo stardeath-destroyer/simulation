@@ -5,15 +5,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import stardeath.animates.Animate;
-import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.participants.Participant;
+import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.world.tiles.Start;
 import stardeath.world.visitors.NoOpTileVisitor;
 import stardeath.world.visitors.TileVisitor;
 
 public final class Floor {
 
-  private final List<Tile> tiles;
+  private final Tile[][] tiles;
   private final List<Animate> animates;
   private final List<Animate> spawned;
 
@@ -21,13 +21,18 @@ public final class Floor {
   private int height;
 
   private Floor(List<Tile> tiles, List<? extends Animate> animates) {
-    this.tiles = Collections.unmodifiableList(tiles);
-    this.animates = new ArrayList<>(animates);
-    this.spawned = new ArrayList<>();
-    this.tiles.forEach(tile -> {
+    tiles.forEach(tile -> {
       width = Math.max(tile.getX() + 1, width);
       height = Math.max(tile.getY() + 1, height);
     });
+
+    this.tiles = new Tile[width][height];
+    this.animates = new ArrayList<>(animates);
+    this.spawned = new ArrayList<>();
+
+    for (Tile tile : tiles) {
+      this.tiles[tile.getX()][tile.getY()] = tile;
+    }
   }
 
   public final int getWidth() {
@@ -54,18 +59,12 @@ public final class Floor {
         .findFirst();
   }
 
-  public Optional<Tile> getTile(int x, int y) {
-    return tiles.stream()
-        .filter(t -> t.getX() == x && t.getY() == y)
-        .findFirst();
-  }
-
-  public Tile tileAt(int x, int y) {
-    return tiles.stream().filter(t -> t.getX() == x && t.getY() == y).findFirst().get();
-  }
-
-  public final List<Tile> getTiles() {
-    return Collections.unmodifiableList(tiles);
+  public Optional<Tile> tileAt(int x, int y) {
+    if (x >= 0 && y >= 0 && x < tiles.length && y < tiles[x].length) {
+      return Optional.ofNullable(tiles[x][y]);
+    } else {
+      return Optional.empty();
+    }
   }
 
   public List<Animate> getParticipants() {
@@ -88,12 +87,17 @@ public final class Floor {
   }
 
   public void visitTiles(TileVisitor visitor) {
-    for (Tile tile : tiles) {
-      tile.accept(visitor);
+    for (Tile[] row : tiles) {
+      for (Tile tile : row) {
+        if (tile != null) {
+          tile.accept(visitor);
+        }
+      }
     }
   }
 
   public static class Builder {
+
     private List<Tile> tiles = new ArrayList<>();
     private List<Participant> participants = new ArrayList<>();
 

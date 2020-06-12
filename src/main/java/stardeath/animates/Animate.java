@@ -6,6 +6,7 @@ import java.util.List;
 import stardeath.Entity;
 import stardeath.animates.actions.Action;
 import stardeath.animates.visitors.AnimateVisitor;
+import stardeath.world.Tile;
 import stardeath.world.World;
 
 public abstract class Animate extends Entity {
@@ -74,7 +75,7 @@ public abstract class Animate extends Entity {
       int newX = getX() + deltaX;
       int newY = getY() + deltaY;
 
-      if (!world.current().tileAt(newX, newY).isOpaque()) {
+      if (!world.current().tileAt(newX, newY).map(Tile::isOpaque).orElse(false)) {
         Animate.this.setPosition(newX, newY);
       }
     }

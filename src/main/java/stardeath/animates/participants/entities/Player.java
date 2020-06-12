@@ -4,6 +4,7 @@ import stardeath.animates.Animate;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.actions.Action;
 import stardeath.animates.participants.Faction;
+import stardeath.world.Tile;
 import stardeath.world.World;
 import stardeath.world.visibility.RayCasting;
 
@@ -45,7 +46,7 @@ public class Player extends Soldier {
     @Override
     public void execute(World world) {
       RayCasting.compute(Player.this, visibilityRange,
-          (x, y) -> world.current().tileAt(x, y).isOpaque(),
+          (x, y) -> world.current().tileAt(x, y).map(Tile::isOpaque).orElse(false),
           (x, y) -> world.current().getParticipant(x, y).ifPresent(Animate::show));
     }
   }
@@ -55,8 +56,8 @@ public class Player extends Soldier {
     @Override
     public void execute(World world) {
       RayCasting.compute(Player.this, visibilityRange,
-          (x, y) -> world.current().tileAt(x, y).isOpaque(),
-          (x, y) -> world.current().tileAt(x, y).unveil());
+          (x, y) -> world.current().tileAt(x, y).map(Tile::isOpaque).orElse(false),
+          (x, y) -> world.current().tileAt(x, y).ifPresent(Tile::unveil));
     }
   }
 }

@@ -51,7 +51,7 @@ public abstract class Projectile extends Animate {
 
           // If no participant was hit, maybe we have actually hit a wall. If so, remove this
           // projectile.
-          world.current().getTile(base.getX(), base.getY()).ifPresent(tile -> {
+          world.current().tileAt(base.getX(), base.getY()).ifPresent(tile -> {
             if (tile.isOpaque()) {
               remove();
             }
