@@ -11,4 +11,10 @@ public class World {
   public void addFloor(Floor newFloor){
     floors.add(newFloor);
   }
+
+  public static class Builder {
+    public World build() {
+      return new World();
+    }
+  }
 }
