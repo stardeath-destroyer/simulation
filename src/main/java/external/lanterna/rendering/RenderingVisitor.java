@@ -44,7 +44,7 @@ public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor
 
   @Override
   public void visitTile(DownwardElevator elevator) {
-    drawTile(elevator, Material.Iron, Material.Void, 'v');
+    drawTile(elevator, Material.Iron, Material.ElevatorCarpet, 'v');
   }
 
   @Override
@@ -64,7 +64,7 @@ public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor
 
   @Override
   public void visitTile(UpwardElevator elevator) {
-    drawTile(elevator, Material.Iron, Material.Void, '^');
+    drawTile(elevator, Material.Iron, Material.ElevatorCarpet, '^');
   }
 
   @Override

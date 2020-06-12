@@ -9,6 +9,13 @@ import external.lanterna.rendering.lighting.LightingLevel;
  * information as to how it should be rendered with different lighting levels.
  */
 public enum Material {
+  ElevatorCarpet(
+      new TextColor.Indexed(52),
+      new TextColor.Indexed(53),
+      new TextColor.Indexed(54),
+      new TextColor.Indexed(55),
+      new TextColor.Indexed(56)
+  ),
   Laser(new TextColor.Indexed(196), new TextColor.Indexed(196)),
   Iron(
       new TextColor.Indexed(235),
