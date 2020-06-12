@@ -21,23 +21,20 @@ public class Controller {
   private final GetMovements movements;
   private final World world;
 
-  private Floor currentFloor;
-
   public Controller(InteractionsFactory factory, World world) {
     this.renderer = factory.renderer();
     this.directions = factory.direction();
     this.movements = factory.movement();
     this.world = world;
-    this.currentFloor = world.getFirst();
-    
+
     // Register this Controller's ability to render things NOW to the Renderer.
     this.renderer.registerRenderRequestListener(this::draw);
 
-    List<Start> startingTiles = this.currentFloor.getStartTiles();
+    List<Start> startingTiles = world.current().getStartTiles();
     Start startingTile = startingTiles.get(new Random().nextInt(startingTiles.size()));
 
-    currentFloor.addAnimate(new Player(startingTile.getX(), startingTile.getY()));
-    currentFloor.spawn();
+    world.current().addAnimate(new Player(startingTile.getX(), startingTile.getY()));
+    world.current().spawn();
 
     discover();
     turn();
@@ -45,17 +42,17 @@ public class Controller {
   }
 
   private void discover() {
-    currentFloor.visitAnimates(new UnveilVisitor());
+    world.current().visitAnimates(new UnveilVisitor());
   }
 
   private void move() {
-    currentFloor.visitAnimates(new ChooseMove(currentFloor, directions, movements));
+    world.current().visitAnimates(new ChooseMove(world.current(), directions, movements));
   }
 
   private void turn() {
-    currentFloor.visitAnimates(new ExecuteActions(this.currentFloor));
-    currentFloor.spawn();
-    currentFloor.visitAnimates(new UpdateVisibility());
+    world.current().visitAnimates(new ExecuteActions(world.current()));
+    world.current().spawn();
+    world.current().visitAnimates(new UpdateVisibility());
   }
 
   public void step() {
@@ -65,8 +62,7 @@ public class Controller {
   }
 
   public void draw() {
-
     // Draw the contents.
-    renderer.render(currentFloor);
+    renderer.render(world.current());
   }
 }
