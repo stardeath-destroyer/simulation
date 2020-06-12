@@ -42,7 +42,7 @@ public abstract class Projectile extends Animate {
 
           // Apply the damage to whatever is on the path of the projectile.
           ConsumeProjectileVisitor consumeProjectileVisitor = new ConsumeProjectileVisitor(damage);
-          world.current().getParticipant(x, y).ifPresent(a -> a.accept(consumeProjectileVisitor));
+          world.current().participantAt(x, y).ifPresent(a -> a.accept(consumeProjectileVisitor));
 
           // Remove the projectile if it has hit a participant already.
           if (consumeProjectileVisitor.isConsumed() || isDispersed()) {

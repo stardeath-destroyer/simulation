@@ -47,7 +47,7 @@ public class Player extends Soldier {
     public void execute(World world) {
       RayCasting.compute(Player.this, visibilityRange,
           (x, y) -> world.current().tileAt(x, y).map(Tile::isOpaque).orElse(false),
-          (x, y) -> world.current().getParticipant(x, y).ifPresent(Animate::show));
+          (x, y) -> world.current().participantAt(x, y).ifPresent(Animate::show));
     }
   }
 

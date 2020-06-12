@@ -51,7 +51,7 @@ public final class Floor {
     animates.removeIf(Animate::shouldRemove);
   }
 
-  public Optional<Animate> getParticipant(int x, int y) {
+  public Optional<Animate> participantAt(int x, int y) {
     return animates.stream()
         .filter(p -> p.getX() == x && p.getY() == y)
         .findFirst();
