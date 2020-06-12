@@ -25,9 +25,7 @@ import stardeath.world.tiles.Wall;
 
 public class Decoding {
 
-  private Decoding() {
-  }
-
+  private Decoding() {}
 
   public static World loadWorld(ZipFile worldFile) {
 
@@ -39,6 +37,7 @@ public class Decoding {
       int levelNb = 0;
       InputStream floorFile = null;
       InputStream enemiesFile = null;
+
       while (entries.hasMoreElements()) {
         ZipEntry entry = entries.nextElement();
         String name = entry.getName();
