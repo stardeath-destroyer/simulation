@@ -5,7 +5,6 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import stardeath.controller.interactions.Renderer;
 import stardeath.world.Floor;
-import stardeath.world.Tile;
 
 public class OutputStreamRenderer implements Renderer {
 
@@ -17,13 +16,7 @@ public class OutputStreamRenderer implements Renderer {
 
   @Override
   public void render(Floor floor) {
-    int maxX = 0, maxY = 0;
-    for (Tile tile : floor.getTiles()) {
-      maxX = Math.max(maxX, tile.getX() + 1);
-      maxY = Math.max(maxY, tile.getY() + 1);
-    }
-
-    char[][] elements = new char[maxY][maxX];
+    char[][] elements = new char[floor.getHeight()][floor.getWidth()];
 
     for (char[] element : elements) {
       Arrays.fill(element, ' ');

@@ -63,7 +63,7 @@ public class LanternaRenderer implements GetDirections, Renderer {
   @Override
   public void render(Floor floor) {
 
-    RenderingVisitor render = new RenderingVisitor(floor.getWidth() + 1, floor.getHeight() + 1);
+    RenderingVisitor render = new RenderingVisitor(floor.getWidth(), floor.getHeight());
     LightingShader shader = new LightingShader(floor);
 
     // Visit the floor and the participants.
@@ -88,7 +88,7 @@ public class LanternaRenderer implements GetDirections, Renderer {
           int by = offsetY + y;
 
           boolean insideBuffer = bx >= 0 && by >= 0 &&
-              bx < floor.getWidth() + 1 && by < floor.getHeight() + 1;
+              bx < floor.getWidth() && by < floor.getHeight();
 
           if (insideBuffer && render.getDrawn()[bx][by]) {
             screen.setCharacter(x, y, new TextCharacter(

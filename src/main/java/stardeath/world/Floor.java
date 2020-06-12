@@ -25,8 +25,8 @@ public final class Floor {
     this.animates = new ArrayList<>(animates);
     this.spawned = new ArrayList<>();
     this.tiles.forEach(tile -> {
-      width = Math.max(tile.getX(), width);
-      height = Math.max(tile.getY(), height);
+      width = Math.max(tile.getX() + 1, width);
+      height = Math.max(tile.getY() + 1, height);
     });
   }
 

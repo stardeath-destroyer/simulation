@@ -17,7 +17,7 @@ public class MarkVisibility implements BiConsumer<Integer, Integer> {
   ) {
     this.floor = floor;
     this.player = player;
-    this.levels = new LightingLevel[floor.getWidth() + 1][floor.getHeight() + 1];
+    this.levels = new LightingLevel[floor.getWidth()][floor.getHeight()];
 
     // By default, everything is hidden.
     for (LightingLevel[] levels : levels) {
@@ -37,7 +37,7 @@ public class MarkVisibility implements BiConsumer<Integer, Integer> {
 
   @Override
   public void accept(Integer x, Integer y) {
-    if (x >= 0 && y >= 0 && x < floor.getWidth() + 1 && y < floor.getHeight() + 1) {
+    if (x >= 0 && y >= 0 && x < floor.getWidth() && y < floor.getHeight()) {
       int distance = distanceTo(player.getX(), player.getY(), x, y);
       if (distance > 10) {
         levels[x][y] = LightingLevel.Dark;

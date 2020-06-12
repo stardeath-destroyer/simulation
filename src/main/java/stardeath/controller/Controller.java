@@ -7,7 +7,6 @@ import stardeath.animates.participants.entities.Player;
 import stardeath.controller.visitors.ChooseMove;
 import stardeath.controller.visitors.UnveilVisitor;
 import stardeath.controller.visitors.UpdateVisibility;
-import stardeath.world.Floor;
 import stardeath.world.World;
 import stardeath.world.tiles.Start;
 import stardeath.controller.interactions.GetDirections;

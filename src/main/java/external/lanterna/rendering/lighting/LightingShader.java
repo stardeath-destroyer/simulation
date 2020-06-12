@@ -15,8 +15,8 @@ public class LightingShader {
   private final Floor floor;
 
   public LightingShader(Floor floor) {
-    this.width = floor.getWidth() + 1;
-    this.height = floor.getHeight() + 1;
+    this.width = floor.getWidth();
+    this.height = floor.getHeight();
     this.floor = floor;
 
     this.opaque = new boolean[width][height];
