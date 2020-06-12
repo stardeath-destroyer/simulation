@@ -1,11 +1,11 @@
 package external.lanterna.rendering.lighting;
 
 import java.util.Arrays;
-import java.util.function.BiConsumer;
 import stardeath.animates.participants.entities.Player;
 import stardeath.world.Floor;
+import stardeath.world.Tile;
 
-public class MarkVisibility implements BiConsumer<Integer, Integer> {
+public class MarkVisibility {
 
   private final Floor floor;
   private final Player player;
@@ -31,12 +31,9 @@ public class MarkVisibility implements BiConsumer<Integer, Integer> {
     return (int) Math.ceil(Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2)));
   }
 
-  public LightingLevel[][] getLevels() {
-    return levels;
-  }
-
-  @Override
-  public void accept(Integer x, Integer y) {
+  public void withVisibleTile(Tile tile) {
+    int x = tile.getX();
+    int y = tile.getY();
     if (x >= 0 && y >= 0 && x < floor.getWidth() && y < floor.getHeight()) {
       int distance = distanceTo(player.getX(), player.getY(), x, y);
       if (distance > 10) {
@@ -49,5 +46,9 @@ public class MarkVisibility implements BiConsumer<Integer, Integer> {
         levels[x][y] = LightingLevel.Brightest;
       }
     }
+  }
+
+  public LightingLevel[][] getLevels() {
+    return levels;
   }
 }
