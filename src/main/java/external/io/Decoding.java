@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import stardeath.animates.participants.Participant;
@@ -82,13 +80,13 @@ public class Decoding {
       throws IOException {
     Floor.Builder builder = new Builder();
 
-    readTiles(floorFile).forEach(builder::addTile);
-    readEnemies(enemiesFile).forEach(builder::addParticipant);
+    readTiles(floorFile, builder);
+    readEnemies(enemiesFile, builder);
 
     return builder.build();
   }
 
-  private static Tile from(char character, int x, int y) {
+  private static Tile tileFromChar(char character, int x, int y) {
     switch (character) {
       case 'H':
         return new Hole(x, y);
@@ -107,30 +105,25 @@ public class Decoding {
     }
   }
 
-  public static List<Tile> readTiles(InputStream input) throws IOException {
+  public static void readTiles(InputStream input, Floor.Builder builder) throws IOException {
     BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-    final List<Tile> tiles = new ArrayList<>();
     int y = 0;
-
     String line;
+
     while ((line = reader.readLine()) != null) {
-      y++;
       for (int x = 0; x < line.length(); ++x) {
-        tiles.add(from(line.charAt(x), x, y));
+        builder.addTile(tileFromChar(line.charAt(x), x, y));
       }
+      y++;
     }
-    return tiles;
   }
 
-
-  public static List<Participant> readEnemies(InputStream input) throws IOException {
+  public static void readEnemies(InputStream input, Floor.Builder builder) throws IOException {
     BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-    final List<Participant> enemies = new ArrayList<>();
     String line;
     while ((line = reader.readLine()) != null) {
-      enemies.add(parseParticipant(line));
+      builder.addParticipant(parseParticipant(line));
     }
-    return enemies;
   }
 
   private static Participant parseParticipant(String line) {
@@ -149,7 +142,7 @@ public class Decoding {
       case 'J':
         return new JumpTrooper(x, y);
       default:
-        return null;
+        throw new IllegalStateException("Given map does not follow format.");
     }
   }
 }
