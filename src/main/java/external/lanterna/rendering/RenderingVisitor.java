@@ -3,13 +3,13 @@ package external.lanterna.rendering;
 import external.lanterna.rendering.texturing.Material;
 import external.lanterna.rendering.texturing.MaterialRenderer;
 import java.util.Optional;
-import stardeath.animates.AnimateVisitor;
-import stardeath.participants.entities.Soldier;
-import stardeath.participants.entities.Wookie;
-import stardeath.participants.entities.empire.JumpTrooper;
-import stardeath.participants.player.Player;
-import stardeath.participants.weapons.Projectile;
-import stardeath.world.TileVisitor;
+import stardeath.animates.visitors.AnimateVisitor;
+import stardeath.animates.participants.entities.Soldier;
+import stardeath.animates.participants.entities.Wookie;
+import stardeath.animates.participants.entities.JumpTrooper;
+import stardeath.animates.participants.entities.Player;
+import stardeath.animates.weapons.entities.LaserBeam;
+import stardeath.world.visitors.TileVisitor;
 import stardeath.world.tiles.Armory;
 import stardeath.world.tiles.Dump;
 import stardeath.world.tiles.Elevator;
@@ -68,7 +68,7 @@ public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor
   @Override
   public void visitParticipant(Player player) {
     this.player = player;
-    drawParticipant(player, Material.Player, Material.Void, 'P');
+    drawAnimate(player, Material.Player, Material.Void, 'P');
   }
 
   @Override
@@ -83,11 +83,11 @@ public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor
 
   @Override
   public void visitParticipant(Wookie wookie) {
-    drawParticipant(wookie, Material.WookieWool, Material.Void, 'W');
+    drawAnimate(wookie, Material.WookieWool, Material.Void, 'W');
   }
 
   @Override
-  public void visitProjectile(Projectile projectile) {
-    throw new IllegalArgumentException("Projectile not supported yet.");
+  public void visitProjectile(LaserBeam projectile) {
+    drawAnimate(projectile, projectile.getX(), projectile.getY(), Material.Laser, Material.Void, '*');
   }
 }

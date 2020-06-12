@@ -2,14 +2,20 @@ package external.cli;
 
 import external.cli.interactions.InputStreamMovementInteractions;
 import external.cli.rendering.OutputStreamRenderer;
-import stardeath.UIFactory;
-import stardeath.interactions.MovementInteractions;
-import stardeath.interactions.Renderer;
+import stardeath.controller.InteractionsFactory;
+import stardeath.controller.interactions.GetDirections;
+import stardeath.controller.interactions.GetMovements;
+import stardeath.controller.interactions.Renderer;
 
-public class CLI implements UIFactory {
+public class CLI implements InteractionsFactory {
 
   @Override
-  public MovementInteractions movement() {
+  public GetDirections direction() {
+    return new InputStreamMovementInteractions(System.in);
+  }
+
+  @Override
+  public GetMovements movement() {
     return new InputStreamMovementInteractions(System.in);
   }
 

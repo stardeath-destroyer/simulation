@@ -1,12 +1,12 @@
 package external.cli.rendering;
 
 import stardeath.animates.Animate;
-import stardeath.animates.AnimateVisitor;
-import stardeath.participants.entities.Soldier;
-import stardeath.participants.entities.Wookie;
-import stardeath.participants.entities.empire.JumpTrooper;
-import stardeath.participants.player.Player;
-import stardeath.participants.weapons.Projectile;
+import stardeath.animates.visitors.AnimateVisitor;
+import stardeath.animates.participants.entities.Soldier;
+import stardeath.animates.participants.entities.Wookie;
+import stardeath.animates.participants.entities.JumpTrooper;
+import stardeath.animates.participants.entities.Player;
+import stardeath.animates.weapons.entities.LaserBeam;
 
 public class RenderAnimates implements AnimateVisitor {
 
@@ -43,7 +43,7 @@ public class RenderAnimates implements AnimateVisitor {
   }
 
   @Override
-  public void visitProjectile(Projectile projectile) {
+  public void visitProjectile(LaserBeam projectile) {
     setGrid(projectile, '*');
   }
 }

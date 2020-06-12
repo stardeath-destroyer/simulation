@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import stardeath.Entity;
-import stardeath.participants.actions.Action;
+import stardeath.animates.actions.Action;
+import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.world.Floor;
 import stardeath.world.Tile;
 
@@ -12,14 +13,24 @@ public abstract class Animate extends Entity {
 
   private final List<Action> actions = new ArrayList<>();
   private boolean visible;
+  private boolean remove;
 
   protected Animate(int x, int y) {
     super(x, y);
     this.visible = false;
+    this.remove = false;
   }
 
   public boolean isVisible() {
     return visible;
+  }
+
+  public void remove() {
+    this.remove = true;
+  }
+
+  public boolean shouldRemove() {
+    return remove;
   }
 
   public void hide() {
