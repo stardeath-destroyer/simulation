@@ -31,7 +31,9 @@ public class Controller {
     ChooseStartTile chooseStart = new ChooseStartTile();
     world.current().visitTiles(chooseStart);
     chooseStart.pickRandom()
-        .ifPresent(t -> world.current().addAnimate(new Player(t.getX(), t.getY())));
+        .map(tile -> new Player(tile.getX(), tile.getY()))
+        .ifPresent(player -> world.all()
+            .forEach(floor -> floor.addAnimate(player)));
     world.current().spawn();
 
     discover();
@@ -44,11 +46,12 @@ public class Controller {
   }
 
   private void move() {
-    world.current().visitAnimates(new ChooseMove(world.current(), directions, movements));
+    world.current().visitAnimates(new ChooseMove(world, directions, movements));
   }
 
   private void turn() {
     world.current().visitAnimates(new ExecuteActions(world));
+    world.current().visitAnimates(new UnveilVisitor());
     world.current().spawn();
     world.current().visitAnimates(new UpdateVisibility());
   }

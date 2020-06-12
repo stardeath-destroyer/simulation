@@ -19,7 +19,7 @@ public class InputStreamMovementInteractions implements GetDirections, GetMoveme
 
   @Override
   public Movement requestMovement() {
-    System.out.print("Enter your move (w, a, s, d, f-ire) : ");
+    System.out.print("Enter your move (w, a, s, d, f-ire, e-levator) : ");
     BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
     Movement movement = null;
     try {
@@ -39,6 +39,9 @@ public class InputStreamMovementInteractions implements GetDirections, GetMoveme
             break;
           case "f":
             movement = Movement.FIRE;
+            break;
+          case "e":
+            movement = Movement.LIFT;
             break;
           default:
             System.out.print("Wrong command. Please enter a valid move (w, a, s, d) : ");

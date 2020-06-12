@@ -33,6 +33,8 @@ public class LanternaGetMovements implements GetMovements {
             movement = Movement.RIGHT;
           } else if (stroke.getKeyType() == KeyType.Enter) {
             movement = Movement.FIRE;
+          } else if (Objects.equals('e', stroke.getCharacter())) {
+            movement = Movement.LIFT;
           }
         }
       } catch (IOException any) {

@@ -1,13 +1,17 @@
 package stardeath.animates.participants.entities;
 
 import stardeath.animates.Animate;
-import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.actions.Action;
 import stardeath.animates.participants.Faction;
+import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.visitors.DefaultAnimateVisitor;
 import stardeath.world.Tile;
 import stardeath.world.World;
+import stardeath.world.tiles.DownwardElevator;
+import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.visibility.RayCasting;
+import stardeath.world.visitors.NoOpTileVisitor;
+import stardeath.world.visitors.TileVisitor;
 
 public class Player extends Soldier {
 
@@ -59,6 +63,27 @@ public class Player extends Soldier {
       RayCasting.compute(Player.this, visibilityRange,
           (x, y) -> world.current().tileAt(x, y).map(Tile::isOpaque).orElse(false),
           (x, y) -> world.current().tileAt(x, y).ifPresent(Tile::unveil));
+    }
+  }
+
+  public class TakeLift implements Action {
+
+    @Override
+    public void execute(World world) {
+      TileVisitor visitor = new NoOpTileVisitor() {
+        @Override
+        public void visitTile(DownwardElevator elevator) {
+          world.moveDown();
+        }
+
+        @Override
+        public void visitTile(UpwardElevator elevator) {
+          world.moveUp();
+        }
+      };
+
+      // TODO : Use a Visitor on a tile at a specific index instead.
+      world.current().tileAt(getX(), getY()).ifPresent(tile -> tile.accept(visitor));
     }
   }
 }

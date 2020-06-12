@@ -9,17 +9,17 @@ import stardeath.animates.participants.movements.Walker;
 import stardeath.animates.weapons.entities.LaserBeam;
 import stardeath.controller.interactions.GetDirections;
 import stardeath.controller.interactions.GetMovements;
-import stardeath.world.Floor;
+import stardeath.world.World;
 
 public class ChooseMove extends MovementVisitor {
 
   private static final Random sRandom = new Random();
-  private final Floor level;
+  private final World world;
   private final GetDirections directions;
   private final GetMovements interactions;
 
-  public ChooseMove(Floor level, GetDirections directions, GetMovements interactions) {
-    this.level = level;
+  public ChooseMove(World world, GetDirections directions, GetMovements interactions) {
+    this.world = world;
     this.directions = directions;
     this.interactions = interactions;
   }
@@ -65,6 +65,9 @@ public class ChooseMove extends MovementVisitor {
                 player.getX(),
                 player.getY(),
                 directions.requestDirectionsFromPlayer())));
+        break;
+      case LIFT:
+        player.addAction(player.new TakeLift());
         break;
     }
   }

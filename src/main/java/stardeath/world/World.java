@@ -19,6 +19,28 @@ public class World {
     this.current = 0;
   }
 
+  public boolean moveUp() {
+    if (current < floors.size() - 1) {
+      current++;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public boolean moveDown() {
+    if (current > 0) {
+      current--;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public List<Floor> all() {
+    return floors;
+  }
+
   public Floor current() {
     return floors.get(current);
   }
