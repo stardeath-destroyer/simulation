@@ -4,7 +4,7 @@ import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.participants.entities.JumpTrooper;
 import stardeath.animates.participants.entities.Player;
-import stardeath.animates.weapons.Projectile;
+import stardeath.animates.weapons.entities.LaserBeam;
 
 public interface AnimateVisitor {
 
@@ -16,5 +16,5 @@ public interface AnimateVisitor {
 
   void visitParticipant(Wookie wookie);
 
-  void visitProjectile(Projectile projectile);
+  void visitProjectile(LaserBeam projectile);
 }

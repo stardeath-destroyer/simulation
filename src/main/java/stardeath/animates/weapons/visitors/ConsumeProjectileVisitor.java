@@ -1,4 +1,4 @@
-package stardeath.animates.weapons;
+package stardeath.animates.weapons.visitors;
 
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.participants.Participant;
@@ -6,6 +6,7 @@ import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.participants.entities.JumpTrooper;
 import stardeath.animates.participants.entities.Player;
+import stardeath.animates.weapons.entities.LaserBeam;
 
 public class ConsumeProjectileVisitor implements AnimateVisitor {
 
@@ -49,7 +50,7 @@ public class ConsumeProjectileVisitor implements AnimateVisitor {
   }
 
   @Override
-  public void visitProjectile(Projectile projectile) {
+  public void visitProjectile(LaserBeam projectile) {
     // Standard projectiles do not collide.
   }
 }

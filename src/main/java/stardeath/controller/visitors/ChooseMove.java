@@ -1,14 +1,14 @@
 package stardeath.controller.visitors;
 
 import java.util.Random;
-import stardeath.controller.interactions.GetDirections;
-import stardeath.controller.interactions.GetMovements;
 import stardeath.animates.participants.Participant;
+import stardeath.animates.participants.entities.Player;
 import stardeath.animates.participants.movements.Jumper;
 import stardeath.animates.participants.movements.MovementVisitor;
 import stardeath.animates.participants.movements.Walker;
-import stardeath.animates.participants.entities.Player;
-import stardeath.animates.weapons.Projectile;
+import stardeath.animates.weapons.entities.LaserBeam;
+import stardeath.controller.interactions.GetDirections;
+import stardeath.controller.interactions.GetMovements;
 import stardeath.world.Floor;
 
 public class ChooseMove extends MovementVisitor {
@@ -60,13 +60,17 @@ public class ChooseMove extends MovementVisitor {
         player.addAction(player.new MoveAction(1, 0));
         break;
       case FIRE:
-        player.addAction(player.new Fire(directions.requestDirectionsFromPlayer(), 1));
+        player.addAction(player.new Fire(
+            new LaserBeam(
+                player.getX(),
+                player.getY(),
+                directions.requestDirectionsFromPlayer())));
         break;
     }
   }
 
   @Override
-  public void visitProjectile(Projectile projectile) {
+  public void visitProjectile(LaserBeam projectile) {
     projectile.addAction(projectile.new MoveAndHit());
   }
 }

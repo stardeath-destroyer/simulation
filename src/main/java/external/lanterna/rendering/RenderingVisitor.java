@@ -8,7 +8,7 @@ import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.participants.entities.JumpTrooper;
 import stardeath.animates.participants.entities.Player;
-import stardeath.animates.weapons.Projectile;
+import stardeath.animates.weapons.entities.LaserBeam;
 import stardeath.world.visitors.TileVisitor;
 import stardeath.world.tiles.Armory;
 import stardeath.world.tiles.Dump;
@@ -87,7 +87,7 @@ public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor
   }
 
   @Override
-  public void visitProjectile(Projectile projectile) {
+  public void visitProjectile(LaserBeam projectile) {
     drawAnimate(projectile, projectile.getX(), projectile.getY(), Material.Laser, Material.Void, '*');
   }
 }

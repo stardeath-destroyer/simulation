@@ -6,7 +6,7 @@ import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.participants.entities.JumpTrooper;
 import stardeath.animates.participants.entities.Player;
-import stardeath.animates.weapons.Projectile;
+import stardeath.animates.weapons.entities.LaserBeam;
 import stardeath.world.Floor;
 
 public class ExecuteActions implements AnimateVisitor {
@@ -45,7 +45,7 @@ public class ExecuteActions implements AnimateVisitor {
   }
 
   @Override
-  public void visitProjectile(Projectile projectile) {
+  public void visitProjectile(LaserBeam projectile) {
     visit(projectile);
   }
 }

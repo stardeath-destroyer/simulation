@@ -6,7 +6,7 @@ import stardeath.animates.participants.attacks.AttackVisitor;
 import stardeath.animates.participants.attacks.Attacker;
 import stardeath.animates.participants.attacks.SplashAttacker;
 import stardeath.animates.participants.entities.Player;
-import stardeath.animates.weapons.Projectile;
+import stardeath.animates.weapons.entities.LaserBeam;
 import stardeath.world.Floor;
 
 public class ChooseAttack extends AttackVisitor {
@@ -34,7 +34,7 @@ public class ChooseAttack extends AttackVisitor {
   }
 
   @Override
-  public void visitProjectile(Projectile projectile) {
+  public void visitProjectile(LaserBeam projectile) {
 
   }
 }

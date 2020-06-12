@@ -1,5 +1,7 @@
 package stardeath.animates.participants.entities;
 
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.actions.Action;
 import stardeath.animates.participants.Faction;
@@ -34,23 +36,23 @@ public class Soldier extends Human {
 
   public class Fire implements Action {
 
-    private final ProjectileDirection direction;
-    private final int speed;
+    private final Projectile projectile;
 
-    public Fire(ProjectileDirection direction, int speed) {
-      this.direction = direction;
-      this.speed = speed;
+    public Fire(Projectile projectile) {
+     this.projectile = projectile;
     }
 
     @Override
     public void execute(Floor level) {
       // Make the projectile leave the player before adding it, to make sure the Player does not
       // shoot himself by mistake.
-      int startX = direction.getSteps().get(0).getX() + getX();
-      int startY = direction.getSteps().get(0).getY() + getY();
+      int startX = projectile.getDirection().getSteps().get(0).getX() + getX();
+      int startY = projectile.getDirection().getSteps().get(0).getY() + getY();
+
+      projectile.setPosition(startX, startY);
 
       // Add the projectile.
-      level.addAnimate(new Projectile(startX, startY, 10, direction, speed));
+      level.addAnimate(projectile);
     }
   }
 }

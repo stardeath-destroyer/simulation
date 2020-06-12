@@ -1,12 +1,12 @@
 package stardeath.animates.weapons;
 
 import stardeath.animates.Animate;
-import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.actions.Action;
+import stardeath.animates.weapons.visitors.ConsumeProjectileVisitor;
 import stardeath.world.Floor;
 import stardeath.world.Vector;
 
-public class Projectile extends Animate {
+public abstract class Projectile extends Animate {
 
   private final ProjectileDirection direction;
   private final int speed;
@@ -19,13 +19,10 @@ public class Projectile extends Animate {
     this.speed = speed;
   }
 
+  protected abstract boolean isDispersed();
+
   public ProjectileDirection getDirection() {
     return direction;
-  }
-
-  @Override
-  public void accept(AnimateVisitor visitor) {
-    visitor.visitProjectile(this);
   }
 
   public class MoveAndHit implements Action {
@@ -48,7 +45,7 @@ public class Projectile extends Animate {
           level.getParticipant(x, y).ifPresent(a -> a.accept(consumeProjectileVisitor));
 
           // Remove the projectile if it has hit a participant already.
-          if (consumeProjectileVisitor.isConsumed()) {
+          if (consumeProjectileVisitor.isConsumed() || isDispersed()) {
             remove();
           }
 
