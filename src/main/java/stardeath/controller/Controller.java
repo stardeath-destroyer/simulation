@@ -50,7 +50,7 @@ public class Controller {
   }
 
   private void turn() {
-    world.current().visitAnimates(new ExecuteActions(world.current()));
+    world.current().visitAnimates(new ExecuteActions(world));
     world.current().spawn();
     world.current().visitAnimates(new UpdateVisibility());
   }

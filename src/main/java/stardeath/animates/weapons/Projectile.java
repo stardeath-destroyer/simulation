@@ -3,8 +3,8 @@ package stardeath.animates.weapons;
 import stardeath.animates.Animate;
 import stardeath.animates.actions.Action;
 import stardeath.animates.weapons.visitors.ConsumeProjectileVisitor;
-import stardeath.world.Floor;
 import stardeath.world.Vector;
+import stardeath.world.World;
 
 public abstract class Projectile extends Animate {
 
@@ -28,7 +28,7 @@ public abstract class Projectile extends Animate {
   public class MoveAndHit implements Action {
 
     @Override
-    public void execute(Floor level) {
+    public void execute(World world) {
       Vector base = new Vector(getX(), getY());
       for (int i = 0; i < speed; i++) {
         for (Vector step : direction.getSteps()) {
@@ -42,7 +42,7 @@ public abstract class Projectile extends Animate {
 
           // Apply the damage to whatever is on the path of the projectile.
           ConsumeProjectileVisitor consumeProjectileVisitor = new ConsumeProjectileVisitor(damage);
-          level.getParticipant(x, y).ifPresent(a -> a.accept(consumeProjectileVisitor));
+          world.current().getParticipant(x, y).ifPresent(a -> a.accept(consumeProjectileVisitor));
 
           // Remove the projectile if it has hit a participant already.
           if (consumeProjectileVisitor.isConsumed() || isDispersed()) {
@@ -51,7 +51,7 @@ public abstract class Projectile extends Animate {
 
           // If no participant was hit, maybe we have actually hit a wall. If so, remove this
           // projectile.
-          level.getTile(base.getX(), base.getY()).ifPresent(tile -> {
+          world.current().getTile(base.getX(), base.getY()).ifPresent(tile -> {
             if (tile.isOpaque()) {
               remove();
             }

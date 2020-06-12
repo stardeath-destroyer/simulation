@@ -7,19 +7,19 @@ import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.participants.entities.JumpTrooper;
 import stardeath.animates.participants.entities.Player;
 import stardeath.animates.weapons.entities.LaserBeam;
-import stardeath.world.Floor;
+import stardeath.world.World;
 
 public class ExecuteActions implements AnimateVisitor {
 
-  private Floor floor;
+  private final World world;
 
-  public ExecuteActions(Floor floor) {
-    this.floor = floor;
+  public ExecuteActions(World world) {
+    this.world = world;
   }
 
   private void visit(Animate animate) {
     for (Action action : animate.getActions()) {
-      action.execute(floor);
+      action.execute(world);
     }
     animate.clearActions();
   }

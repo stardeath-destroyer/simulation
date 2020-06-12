@@ -6,8 +6,8 @@ import java.util.List;
 import stardeath.Entity;
 import stardeath.animates.actions.Action;
 import stardeath.animates.visitors.AnimateVisitor;
-import stardeath.world.Floor;
 import stardeath.world.Tile;
+import stardeath.world.World;
 
 public abstract class Animate extends Entity {
 
@@ -71,11 +71,11 @@ public abstract class Animate extends Entity {
     }
 
     @Override
-    public void execute(Floor level) {
+    public void execute(World world) {
       int newX = getX() + deltaX;
       int newY = getY() + deltaY;
 
-      if (level.getTiles().stream()
+      if (world.current().getTiles().stream()
           .filter(tile -> tile.getX() == newX && tile.getY() == newY)
           .noneMatch(Tile::isOpaque)) {
         Animate.this.setPosition(getX() + deltaX, getY() + deltaY);

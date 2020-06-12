@@ -1,13 +1,10 @@
 package stardeath.animates.participants.entities;
 
-import java.util.function.BiFunction;
-import java.util.function.Function;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.actions.Action;
 import stardeath.animates.participants.Faction;
 import stardeath.animates.weapons.Projectile;
-import stardeath.animates.weapons.ProjectileDirection;
-import stardeath.world.Floor;
+import stardeath.world.World;
 
 public class Soldier extends Human {
 
@@ -43,7 +40,7 @@ public class Soldier extends Human {
     }
 
     @Override
-    public void execute(Floor level) {
+    public void execute(World world) {
       // Make the projectile leave the player before adding it, to make sure the Player does not
       // shoot himself by mistake.
       int startX = projectile.getDirection().getSteps().get(0).getX() + getX();
@@ -52,7 +49,7 @@ public class Soldier extends Human {
       projectile.setPosition(startX, startY);
 
       // Add the projectile.
-      level.addAnimate(projectile);
+      world.current().addAnimate(projectile);
     }
   }
 }

@@ -4,7 +4,7 @@ import stardeath.animates.Animate;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.actions.Action;
 import stardeath.animates.participants.Faction;
-import stardeath.world.Floor;
+import stardeath.world.World;
 import stardeath.world.visibility.RayCasting;
 
 public class Player extends Soldier {
@@ -35,28 +35,28 @@ public class Player extends Soldier {
   public static class MaskAllParticipants implements Action {
 
     @Override
-    public void execute(Floor level) {
-      level.getParticipants().forEach(Animate::hide);
+    public void execute(World world) {
+      world.current().getParticipants().forEach(Animate::hide);
     }
   }
 
   public class ShowCloseParticipants implements Action {
 
     @Override
-    public void execute(Floor level) {
+    public void execute(World world) {
       RayCasting.compute(Player.this,
-          (x, y) -> level.tileAt(x, y).isOpaque(),
-          (x, y) -> level.getParticipant(x, y).ifPresent(Animate::show));
+          (x, y) -> world.current().tileAt(x, y).isOpaque(),
+          (x, y) -> world.current().getParticipant(x, y).ifPresent(Animate::show));
     }
   }
 
   public class UnveilAction implements Action {
 
     @Override
-    public void execute(Floor level) {
+    public void execute(World world) {
       RayCasting.compute(Player.this,
-          (x, y) -> level.tileAt(x, y).isOpaque(),
-          (x, y) -> level.tileAt(x, y).unveil());
+          (x, y) -> world.current().tileAt(x, y).isOpaque(),
+          (x, y) -> world.current().tileAt(x, y).unveil());
     }
   }
 }

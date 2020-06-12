@@ -1,16 +1,16 @@
 package stardeath.animates.actions;
 
-import stardeath.world.Floor;
+import stardeath.world.World;
 
 public interface Action {
 
   static Action of(Action... actions) {
-    return level -> {
+    return world -> {
       for (Action action : actions) {
-        action.execute(level);
+        action.execute(world);
       }
     };
   }
 
-  void execute(Floor level);
+  void execute(World world);
 }
