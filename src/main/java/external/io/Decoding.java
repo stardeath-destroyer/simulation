@@ -58,7 +58,7 @@ public class Decoding {
             enemiesFile = worldFile.getInputStream(entry);
           }
           if (enemiesFile != null && floorFile != null) {
-            builder.addFloor(readFloor(floorFile, enemiesFile));
+            builder.addFloor(levelNb, readFloor(floorFile, enemiesFile));
             floorFile.close();
             floorFile = null;
             enemiesFile.close();

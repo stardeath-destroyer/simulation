@@ -1,21 +1,26 @@
 package stardeath.world;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 import stardeath.Entity;
 import stardeath.world.visibility.RayCasting;
 import stardeath.world.visitors.TileVisitor;
 
 public class World {
+
   private final List<Floor> floors;
+  private int current;
 
   private World(List<Floor> floors) {
-    this.floors = Collections.unmodifiableList(floors);
+    this.floors = floors;
+    this.current = 0;
   }
 
   public Floor current() {
-    return floors.get(0);
+    return floors.get(current);
   }
 
   public void visitVisibleTilesFrom(Entity entity, int radius, TileVisitor visitor) {
@@ -25,14 +30,18 @@ public class World {
   }
 
   public static class Builder {
-    private List<Floor> floors = new ArrayList<>();
 
-    public void addFloor(Floor floor) {
-      floors.add(floor);
+    private Map<Integer, Floor> floors = new TreeMap<>();
+
+    public void addFloor(int index, Floor floor) {
+      floors.put(index, floor);
     }
 
     public World build() {
-      return new World(floors);
+      return new World(floors.entrySet().stream()
+          .sorted(Entry.comparingByKey())
+          .map(Entry::getValue)
+          .collect(Collectors.toList()));
     }
   }
 }
