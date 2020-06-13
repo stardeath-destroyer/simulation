@@ -6,14 +6,15 @@ import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.participants.entities.JumpTrooper;
 import stardeath.animates.participants.entities.Player;
+import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
 
-public class ConsumeProjectileVisitor implements AnimateVisitor {
+public class HitDamageVisitor implements AnimateVisitor {
 
   private boolean consumed;
   private final int force;
 
-  public ConsumeProjectileVisitor(int force) {
+  public HitDamageVisitor(int force) {
     this.force = force;
   }
 
@@ -52,5 +53,10 @@ public class ConsumeProjectileVisitor implements AnimateVisitor {
   @Override
   public void visitProjectile(LaserBeam projectile) {
     // Standard projectiles do not collide.
+  }
+
+  @Override
+  public void visitProjectile(Grenade grenade) {
+    // It's not possible to detonate grenades remotely, sorry.
   }
 }

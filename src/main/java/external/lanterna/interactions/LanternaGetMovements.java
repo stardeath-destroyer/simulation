@@ -31,10 +31,12 @@ public class LanternaGetMovements implements GetMovements {
             movement = Movement.DOWN;
           } else if (stroke.getKeyType() == KeyType.ArrowRight || Objects.equals('d', stroke.getCharacter())) {
             movement = Movement.RIGHT;
-          } else if (stroke.getKeyType() == KeyType.Enter) {
+          } else if (stroke.getKeyType() == KeyType.Enter || Objects.equals('f', stroke.getCharacter())) {
             movement = Movement.FIRE;
           } else if (Objects.equals('e', stroke.getCharacter())) {
             movement = Movement.LIFT;
+          } else if (Objects.equals('g', stroke.getCharacter())) {
+            movement = Movement.GRENADE;
           }
         }
       } catch (IOException any) {

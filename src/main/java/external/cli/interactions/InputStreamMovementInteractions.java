@@ -40,6 +40,9 @@ public class InputStreamMovementInteractions implements GetDirections, GetMoveme
           case "f":
             movement = Movement.FIRE;
             break;
+          case "g":
+            movement = Movement.GRENADE;
+            break;
           case "e":
             movement = Movement.LIFT;
             break;

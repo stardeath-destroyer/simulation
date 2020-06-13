@@ -6,6 +6,7 @@ import stardeath.animates.participants.entities.JumpTrooper;
 import stardeath.animates.participants.entities.Player;
 import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.entities.Wookie;
+import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
 
 public class DefaultAnimateVisitor implements AnimateVisitor {
@@ -39,5 +40,10 @@ public class DefaultAnimateVisitor implements AnimateVisitor {
   @Override
   public void visitProjectile(LaserBeam projectile) {
     consumer.accept(projectile);
+  }
+
+  @Override
+  public void visitProjectile(Grenade grenade) {
+    consumer.accept(grenade);
   }
 }
