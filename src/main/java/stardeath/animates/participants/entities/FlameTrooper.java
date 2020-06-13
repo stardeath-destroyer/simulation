@@ -6,6 +6,6 @@ import stardeath.world.Vector;
 public class FlameTrooper extends Trooper implements SplashAttacker {
 
   public FlameTrooper(Vector position) {
-    super(position, 45);
+    super(position, 45, 7);
   }
 }

@@ -6,7 +6,10 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 import stardeath.Entity;
+import stardeath.animates.participants.Participant;
+import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.world.visibility.RayCasting;
+import stardeath.world.visitors.DefaultTileVisitor;
 import stardeath.world.visitors.TileVisitor;
 
 public class World {
@@ -43,6 +46,22 @@ public class World {
 
   public Floor current() {
     return floors.get(current);
+  }
+
+  public void visitVisibleAnimatesFrom(Entity entity, int radius, AnimateVisitor visitor) {
+    visitVisibleTilesFrom(entity, radius, new DefaultTileVisitor(t ->
+            current().participantAt(t.getPosition())
+                .ifPresent(p -> p.accept(visitor))
+        )
+    );
+  }
+
+  public void visitVisibleAnimatesFrom(Participant participant, AnimateVisitor visitor) {
+    visitVisibleAnimatesFrom(participant, participant.getVisibilityRange(), visitor);
+  }
+
+  public void visitVisibleTilesFrom(Participant participant, TileVisitor visitor) {
+    visitVisibleTilesFrom(participant, participant.getVisibilityRange(), visitor);
   }
 
   public void visitVisibleTilesFrom(Entity entity, int radius, TileVisitor visitor) {

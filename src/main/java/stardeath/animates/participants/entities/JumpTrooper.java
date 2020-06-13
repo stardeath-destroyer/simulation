@@ -7,7 +7,7 @@ import stardeath.world.Vector;
 public class JumpTrooper extends Trooper implements Jumper {
 
   public JumpTrooper(Vector position) {
-    super(position, 45);
+    super(position, 45, 10);
   }
 
   @Override

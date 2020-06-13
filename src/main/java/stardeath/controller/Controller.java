@@ -1,6 +1,6 @@
 package stardeath.controller;
 
-import stardeath.animates.actions.ExecuteActions;
+import stardeath.controller.visitors.ExecuteActions;
 import stardeath.animates.participants.entities.Player;
 import stardeath.controller.interactions.GetDirections;
 import stardeath.controller.interactions.GetMovements;
@@ -36,13 +36,9 @@ public class Controller {
             .forEach(floor -> floor.addAnimate(player)));
     world.current().spawn();
 
-    discover();
+    world.current().visitAnimates(new UnveilVisitor());
     turn();
     draw();
-  }
-
-  private void discover() {
-    world.current().visitAnimates(new UnveilVisitor());
   }
 
   private void move() {
@@ -51,13 +47,11 @@ public class Controller {
 
   private void turn() {
     world.current().visitAnimates(new ExecuteActions(world));
-    world.current().visitAnimates(new UnveilVisitor());
     world.current().spawn();
     world.current().visitAnimates(new UpdateVisibility());
   }
 
   public void step() {
-    discover();
     move();
     turn();
   }

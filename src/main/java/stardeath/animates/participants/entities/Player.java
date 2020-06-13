@@ -11,6 +11,7 @@ import stardeath.world.World;
 import stardeath.world.tiles.DownwardElevator;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.visibility.RayCasting;
+import stardeath.world.visitors.DefaultTileVisitor;
 import stardeath.world.visitors.NoOpTileVisitor;
 import stardeath.world.visitors.TileVisitor;
 
@@ -18,15 +19,10 @@ public class Player extends Soldier {
 
   private static final int DEFAULT_VISIBILITY_RANGE = 13;
 
-  private int visibilityRange;
+
 
   public Player(Vector position) {
-    super(position, Faction.Rebels, 100);
-    this.visibilityRange = DEFAULT_VISIBILITY_RANGE;
-  }
-
-  public int getVisibilityRange() {
-    return this.visibilityRange;
+    super(position, Faction.Rebels, 100, DEFAULT_VISIBILITY_RANGE);
   }
 
   @Override
@@ -51,9 +47,7 @@ public class Player extends Soldier {
 
     @Override
     public void execute(World world) {
-      RayCasting.compute(Player.this, visibilityRange,
-          (p) -> world.current().tileAt(p).map(Tile::isOpaque).orElse(false),
-          (p) -> world.current().participantAt(p).ifPresent(Animate::show));
+      world.visitVisibleAnimatesFrom(Player.this, new DefaultAnimateVisitor(Animate::show));
     }
   }
 
@@ -61,9 +55,7 @@ public class Player extends Soldier {
 
     @Override
     public void execute(World world) {
-      RayCasting.compute(Player.this, visibilityRange,
-          (p) -> world.current().tileAt(p).map(Tile::isOpaque).orElse(false),
-          (p) -> world.current().tileAt(p).ifPresent(Tile::unveil));
+      world.visitVisibleTilesFrom(Player.this, new DefaultTileVisitor(Tile::unveil));
     }
   }
 

@@ -1,6 +1,7 @@
-package stardeath.animates.actions;
+package stardeath.controller.visitors;
 
 import stardeath.animates.Animate;
+import stardeath.animates.actions.Action;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.entities.Wookie;

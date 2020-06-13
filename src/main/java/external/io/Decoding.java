@@ -107,14 +107,15 @@ public class Decoding {
 
   public static void readTiles(InputStream input, Floor.Builder builder) throws IOException {
     BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-    int y = 0;
     String line;
+    Vector position = new Vector(0, 0);
 
     while ((line = reader.readLine()) != null) {
-      for (int x = 0; x < line.length(); ++x) {
-        builder.addTile(tileFromChar(line.charAt(x), new Vector(x, y)));
+      while (position.getX() < line.length()) {
+        builder.addTile(tileFromChar(line.charAt(position.getX()), position));
+        position = position.add(Vector.EAST);
       }
-      y++;
+      position = position.add(Vector.SOUTH).withX(0);
     }
   }
 

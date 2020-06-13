@@ -9,7 +9,7 @@ import stardeath.world.Vector;
 public class Wookie extends Participant implements SplashAttacker {
 
   public Wookie(Vector position) {
-    super(position, Faction.Rebels, 90);
+    super(position, Faction.Rebels, 90, 6);
   }
 
   @Override

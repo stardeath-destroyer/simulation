@@ -9,12 +9,12 @@ import stardeath.world.World;
 
 public class Soldier extends Human {
 
-  protected Soldier(Vector position, Faction faction, int hp) {
-    super(position, faction, hp);
+  protected Soldier(Vector position, Faction faction, int hp, int visibilityRange) {
+    super(position, faction, hp, visibilityRange);
   }
 
   public Soldier(Vector position) {
-    super(position, Faction.Rebels, 70);
+    super(position, Faction.Rebels, 70, 4);
   }
 
   @Override

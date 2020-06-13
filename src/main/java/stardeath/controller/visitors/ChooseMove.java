@@ -1,7 +1,6 @@
 package stardeath.controller.visitors;
 
 import java.util.Random;
-import stardeath.animates.actions.Action;
 import stardeath.animates.participants.Participant;
 import stardeath.animates.participants.entities.Player;
 import stardeath.animates.participants.movements.Jumper;
@@ -50,28 +49,16 @@ public class ChooseMove extends MovementVisitor {
   public <P extends Player> void visitPlayer(P player) {
     switch (interactions.requestMovement()) {
       case UP:
-        player.addAction(Action.of(
-            player.new MoveAction(Vector.NORTH),
-            player.new UnveilAction())
-        );
+        player.addAction(player.new MoveAction(Vector.NORTH));
         break;
       case LEFT:
-        player.addAction(Action.of(
-            player.new MoveAction(Vector.WEST),
-            player.new UnveilAction())
-        );
+        player.addAction(player.new MoveAction(Vector.WEST));
         break;
       case DOWN:
-        player.addAction(Action.of(
-            player.new MoveAction(Vector.SOUTH),
-            player.new UnveilAction())
-        );
+        player.addAction(player.new MoveAction(Vector.SOUTH));
         break;
       case RIGHT:
-        player.addAction(Action.of(
-            player.new MoveAction(Vector.EAST),
-            player.new UnveilAction())
-        );
+        player.addAction(player.new MoveAction(Vector.EAST));
         break;
       case FIRE:
         player.addAction(player.new Fire(
@@ -80,12 +67,10 @@ public class ChooseMove extends MovementVisitor {
                 directions.requestDirectionsFromPlayer())));
         break;
       case LIFT:
-        player.addAction(Action.of(
-            player.new TakeLift(),
-            player.new UnveilAction()
-        ));
+        player.addAction(player.new TakeLift());
         break;
     }
+    player.addAction(player.new UnveilAction());
   }
 
   @Override

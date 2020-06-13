@@ -7,7 +7,7 @@ import stardeath.world.Vector;
 
 public abstract class Human extends Participant implements Attacker {
 
-  public Human(Vector position, Faction faction, int hp) {
-    super(position, faction, hp);
+  public Human(Vector position, Faction faction, int hp, int visibilityRange) {
+    super(position, faction, hp, visibilityRange);
   }
 }

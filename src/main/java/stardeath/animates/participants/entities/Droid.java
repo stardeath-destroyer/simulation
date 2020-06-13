@@ -6,7 +6,7 @@ import stardeath.world.Vector;
 
 public abstract class Droid extends Participant {
 
-  public Droid(Vector position, Faction faction, int hp) {
-    super(position, faction, hp);
+  public Droid(Vector position, Faction faction, int hp, int visibilityRange) {
+    super(position, faction, hp, visibilityRange);
   }
 }

@@ -34,6 +34,14 @@ public final class Vector {
     return new Vector(this.x + other.x, this.y + other.y);
   }
 
+  public Vector withX(int x) {
+    return new Vector(x, this.y);
+  }
+
+  public Vector withY(int y) {
+    return new Vector(this.x, y);
+  }
+
   public Vector inverse() {
     return new Vector(-this.x, -this.y);
   }
