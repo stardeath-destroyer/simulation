@@ -16,12 +16,22 @@ import stardeath.world.visitors.TileVisitor;
 
 public class World {
 
+  public enum State {
+    DESTROYED,
+    SAVED,
+    UNDER_ATTACK,
+  }
+
   private final List<Floor> floors;
   private int current;
 
   private World(List<Floor> floors) {
     this.floors = floors;
     this.current = 0;
+  }
+
+  public State getState() {
+    return State.UNDER_ATTACK;
   }
 
   public boolean moveUp() {
