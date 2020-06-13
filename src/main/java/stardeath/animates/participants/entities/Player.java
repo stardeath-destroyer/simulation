@@ -10,16 +10,13 @@ import stardeath.world.Vector;
 import stardeath.world.World;
 import stardeath.world.tiles.DownwardElevator;
 import stardeath.world.tiles.UpwardElevator;
-import stardeath.world.visibility.RayCasting;
 import stardeath.world.visitors.DefaultTileVisitor;
 import stardeath.world.visitors.NoOpTileVisitor;
 import stardeath.world.visitors.TileVisitor;
 
 public class Player extends Soldier {
 
-  private static final int DEFAULT_VISIBILITY_RANGE = 13;
-
-
+  private static final int DEFAULT_VISIBILITY_RANGE = 8;
 
   public Player(Vector position) {
     super(position, Faction.Rebels, 100, DEFAULT_VISIBILITY_RANGE);

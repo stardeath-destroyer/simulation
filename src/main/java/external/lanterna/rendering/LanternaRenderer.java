@@ -66,15 +66,18 @@ public class LanternaRenderer implements GetDirections, Renderer {
     RenderingVisitor render = new RenderingVisitor(world.getWidth(), world.getHeight());
     LightingShader shader = new LightingShader(world);
 
-    // Visit the floor and the participants.
+    // Render the floor and the participants.
     world.visitTiles(render);
     world.visitAnimates(render);
+
+    // Light the level.
+    world.visitAnimates(shader);
 
     // We MUST have at least one player.
     Player player = render.getPlayer().orElseThrow();
 
     // Calculate the lighting.
-    LightingLevel[][] lighting = shader.withPlayer(player);
+    LightingLevel[][] lighting = shader.getLevels();
 
     // Offset the screen appropriately.
     int offsetX = player.getPosition().getX() - currentSize.getColumns() / 2;
@@ -118,7 +121,7 @@ public class LanternaRenderer implements GetDirections, Renderer {
   private void renderPlayerOverlay(int centerX, int centerY) {
     if (currentSize.getRows() < 5 || currentSize.getColumns() < 5) {
       // We won't be able to display the player overlay if the size of the terminal is smaller
-      // than 5 rows.
+      // than 5 lines.
       return;
     }
 

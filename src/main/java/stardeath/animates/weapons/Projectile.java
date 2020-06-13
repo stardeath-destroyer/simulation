@@ -55,7 +55,7 @@ public abstract class Projectile extends Animate {
             }
           });
 
-          if (isDispersed()) {
+          if (isDispersed() || shouldRemove()) {
             remove();
             return;
           }

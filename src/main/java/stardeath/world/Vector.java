@@ -46,6 +46,12 @@ public final class Vector {
     return new Vector(-this.x, -this.y);
   }
 
+  public int distanceTo(Vector other) {
+    int deltaX = getX() - other.getX();
+    int deltaY = getY() - other.getY();
+    return (int) Math.ceil(Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2)));
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {

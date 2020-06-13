@@ -11,7 +11,7 @@ import stardeath.world.World;
 
 public class Grenade extends Projectile {
 
-  private static final int RANGE = 5;
+  private static final int RANGE = 3;
   private static final int DAMAGE = 150;
   private static final int SPEED_FACTOR = 1;
 
@@ -22,12 +22,12 @@ public class Grenade extends Projectile {
     super(position, direction, SPEED_FACTOR);
   }
 
-  public boolean willExplode() {
-    return willExplode;
+  public int getRange() {
+    return RANGE;
   }
 
-  public boolean isExploding() {
-    return exploding;
+  public boolean willExplode() {
+    return willExplode;
   }
 
   @Override
@@ -52,7 +52,6 @@ public class Grenade extends Projectile {
     @Override
     public void execute(World world) {
       Grenade.this.willExplode = false;
-      Grenade.this.exploding = true;
       world.visitVisibleAnimatesFrom(Grenade.this, Grenade.RANGE, new ParticipantVisitor() {
         @Override
         public void visit(Participant participant) {
