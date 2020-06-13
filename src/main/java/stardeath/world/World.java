@@ -3,9 +3,11 @@ package stardeath.world;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 import stardeath.Entity;
+import stardeath.animates.Animate;
 import stardeath.animates.participants.Participant;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.world.visibility.RayCasting;
@@ -44,8 +46,32 @@ public class World {
     return floors;
   }
 
-  public Floor current() {
+  private Floor current() {
     return floors.get(current);
+  }
+
+  public final int getWidth() {
+    return current().getWidth();
+  }
+
+  public final int getHeight() {
+    return current().getHeight();
+  }
+
+  public void addAnimate(Animate animate) {
+    current().addAnimate(animate);
+  }
+
+  public void spawn() {
+    current().spawn();
+  }
+
+  public Optional<Animate> participantAt(Vector position) {
+    return current().participantAt(position);
+  }
+
+  public Optional<Tile> tileAt(Vector position) {
+    return current().tileAt(position);
   }
 
   public void visitVisibleAnimatesFrom(Entity entity, int radius, AnimateVisitor visitor) {
@@ -68,6 +94,14 @@ public class World {
     RayCasting.compute(entity, radius,
         (v) -> current().tileAt(v).map(Tile::isOpaque).orElse(false),
         (v) -> current().tileAt(v).ifPresent(t -> t.accept(visitor)));
+  }
+
+  public void visitAnimates(AnimateVisitor visitor) {
+    current().visitAnimates(visitor);
+  }
+
+  public void visitTiles(TileVisitor visitor) {
+    current().visitTiles(visitor);
   }
 
   public static class Builder {

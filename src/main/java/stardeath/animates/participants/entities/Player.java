@@ -39,7 +39,7 @@ public class Player extends Soldier {
 
     @Override
     public void execute(World world) {
-      world.current().visitAnimates(new DefaultAnimateVisitor(Animate::hide));
+      world.visitAnimates(new DefaultAnimateVisitor(Animate::hide));
     }
   }
 
@@ -76,7 +76,7 @@ public class Player extends Soldier {
       };
 
       // TODO : Use a Visitor on a tile at a specific index instead.
-      world.current().tileAt(getPosition()).ifPresent(tile -> tile.accept(visitor));
+      world.tileAt(getPosition()).ifPresent(tile -> tile.accept(visitor));
     }
   }
 }

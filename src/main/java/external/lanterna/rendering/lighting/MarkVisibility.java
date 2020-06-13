@@ -5,20 +5,21 @@ import stardeath.animates.participants.entities.Player;
 import stardeath.world.Floor;
 import stardeath.world.Tile;
 import stardeath.world.Vector;
+import stardeath.world.World;
 
 public class MarkVisibility {
 
-  private final Floor floor;
+  private final World world;
   private final Player player;
   private final LightingLevel[][] levels;
 
   public MarkVisibility(
-      Floor floor,
+      World world,
       Player player
   ) {
-    this.floor = floor;
+    this.world = world;
     this.player = player;
-    this.levels = new LightingLevel[floor.getWidth()][floor.getHeight()];
+    this.levels = new LightingLevel[world.getWidth()][world.getHeight()];
 
     // By default, everything is hidden.
     for (LightingLevel[] levels : levels) {
@@ -35,7 +36,7 @@ public class MarkVisibility {
   public void withVisibleTile(Tile tile) {
     int x = tile.getPosition().getX();
     int y = tile.getPosition().getY();
-    if (x >= 0 && y >= 0 && x < floor.getWidth() && y < floor.getHeight()) {
+    if (x >= 0 && y >= 0 && x < world.getWidth() && y < world.getHeight()) {
       int distance = distanceTo(player.getPosition(), tile.getPosition());
       if (distance > 10) {
         levels[x][y] = LightingLevel.Dark;

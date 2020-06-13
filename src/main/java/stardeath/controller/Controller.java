@@ -29,26 +29,26 @@ public class Controller {
 
     // Choose a random start tile for the player.
     ChooseStartTile chooseStart = new ChooseStartTile();
-    world.current().visitTiles(chooseStart);
+    world.visitTiles(chooseStart);
     chooseStart.pickRandom()
         .map(tile -> new Player(tile.getPosition()))
         .ifPresent(player -> world.all()
             .forEach(floor -> floor.addAnimate(player)));
-    world.current().spawn();
+    world.spawn();
 
-    world.current().visitAnimates(new UnveilVisitor());
+    world.visitAnimates(new UnveilVisitor());
     turn();
     draw();
   }
 
   private void move() {
-    world.current().visitAnimates(new ChooseMove(world, directions, movements));
+    world.visitAnimates(new ChooseMove(world, directions, movements));
   }
 
   private void turn() {
-    world.current().visitAnimates(new ExecuteActions(world));
-    world.current().spawn();
-    world.current().visitAnimates(new UpdateVisibility());
+    world.visitAnimates(new ExecuteActions(world));
+    world.spawn();
+    world.visitAnimates(new UpdateVisibility());
   }
 
   public void step() {

@@ -14,7 +14,7 @@ public class LightingShader {
   }
 
   public LightingLevel[][] withPlayer(Player player) {
-    MarkVisibility visibility = new MarkVisibility(world.current(), player);
+    MarkVisibility visibility = new MarkVisibility(world, player);
     TileVisitor visitor = new DefaultTileVisitor(visibility::withVisibleTile);
     world.visitVisibleTilesFrom(player, player.getVisibilityRange(), visitor);
     return visibility.getLevels();

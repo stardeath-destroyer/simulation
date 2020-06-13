@@ -63,12 +63,12 @@ public class LanternaRenderer implements GetDirections, Renderer {
   @Override
   public void render(World world) {
 
-    RenderingVisitor render = new RenderingVisitor(world.current().getWidth(), world.current().getHeight());
+    RenderingVisitor render = new RenderingVisitor(world.getWidth(), world.getHeight());
     LightingShader shader = new LightingShader(world);
 
     // Visit the floor and the participants.
-    world.current().visitTiles(render);
-    world.current().visitAnimates(render);
+    world.visitTiles(render);
+    world.visitAnimates(render);
 
     // We MUST have at least one player.
     Player player = render.getPlayer().orElseThrow();
@@ -88,7 +88,7 @@ public class LanternaRenderer implements GetDirections, Renderer {
           int by = offsetY + y;
 
           boolean insideBuffer = bx >= 0 && by >= 0 &&
-              bx < world.current().getWidth() && by < world.current().getHeight();
+              bx < world.getWidth() && by < world.getHeight();
 
           if (insideBuffer && render.getDrawn()[bx][by]) {
             screen.setCharacter(x, y, new TextCharacter(

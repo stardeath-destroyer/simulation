@@ -16,7 +16,7 @@ public class OutputStreamRenderer implements Renderer {
 
   @Override
   public void render(World world) {
-    char[][] elements = new char[world.current().getHeight()][world.current().getWidth()];
+    char[][] elements = new char[world.getHeight()][world.getWidth()];
 
     for (char[] element : elements) {
       Arrays.fill(element, ' ');
@@ -25,8 +25,8 @@ public class OutputStreamRenderer implements Renderer {
     RenderFloor renderFloor = new RenderFloor(elements);
     RenderAnimates renderAnimates = new RenderAnimates(elements);
 
-    world.current().visitTiles(renderFloor);
-    world.current().visitAnimates(renderAnimates);
+    world.visitTiles(renderFloor);
+    world.visitAnimates(renderAnimates);
 
     try {
       for (char[] line : elements) {

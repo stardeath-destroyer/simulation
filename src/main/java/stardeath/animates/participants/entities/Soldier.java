@@ -49,7 +49,7 @@ public class Soldier extends Human {
           .add(getPosition()));
 
       // Add the projectile.
-      world.current().addAnimate(projectile);
+      world.addAnimate(projectile);
     }
   }
 }
