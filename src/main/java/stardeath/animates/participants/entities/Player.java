@@ -9,6 +9,7 @@ import stardeath.world.Tile;
 import stardeath.world.Vector;
 import stardeath.world.World;
 import stardeath.world.tiles.DownwardElevator;
+import stardeath.world.tiles.Terminal;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.visitors.DefaultTileVisitor;
 import stardeath.world.visitors.NoOpTileVisitor;
@@ -71,6 +72,10 @@ public class Player extends Soldier {
           world.moveUp();
         }
 
+        @Override
+        public void visitTile(Terminal terminal) {
+          world.destroyTerminal(terminal);
+        }
       };
 
       // TODO : Use a Visitor on a tile at a specific index instead.

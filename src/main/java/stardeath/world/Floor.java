@@ -6,6 +6,7 @@ import java.util.Optional;
 import stardeath.animates.Animate;
 import stardeath.animates.participants.Participant;
 import stardeath.animates.visitors.AnimateVisitor;
+import stardeath.world.tiles.Terminal;
 import stardeath.world.visitors.TileVisitor;
 
 public final class Floor {
@@ -16,13 +17,15 @@ public final class Floor {
 
   private int width;
   private int height;
+  private int nbTerminalsOnline;
 
-  private Floor(List<Tile> tiles, List<? extends Animate> animates) {
+  private Floor(List<Tile> tiles, List<? extends Animate> animates, int nbTerminals) {
     tiles.forEach(tile -> {
       width = Math.max(tile.getPosition().getX() + 1, width);
       height = Math.max(tile.getPosition().getY() + 1, height);
     });
 
+    this.nbTerminalsOnline = nbTerminals;
     this.tiles = new Tile[width][height];
     this.animates = new ArrayList<>(animates);
     this.spawned = new ArrayList<>();
@@ -38,6 +41,17 @@ public final class Floor {
 
   public final int getHeight() {
     return height;
+  }
+
+  public void destroyTerminal(Terminal terminal) {
+    if (terminal.isOnline()) {
+      terminal.destroy();
+      nbTerminalsOnline--;
+    }
+  }
+
+  public int getNbTerminalsOnline() {
+    return nbTerminalsOnline;
   }
 
   public void addAnimate(Animate animate) {
@@ -83,7 +97,7 @@ public final class Floor {
 
     private final List<Tile> tiles = new ArrayList<>();
     private final List<Participant> participants = new ArrayList<>();
-
+    private int nbTerminals = 0;
 
     public Builder addTile(Tile tile) {
       tiles.add(tile);
@@ -95,8 +109,13 @@ public final class Floor {
       return this;
     }
 
+    public Builder addNbTerminal() {
+      nbTerminals++;
+      return this;
+    }
+
     public Floor build() {
-      return new Floor(tiles, participants);
+      return new Floor(tiles, participants, nbTerminals);
     }
   }
 }

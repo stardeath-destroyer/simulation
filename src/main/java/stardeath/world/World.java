@@ -10,6 +10,7 @@ import stardeath.Entity;
 import stardeath.animates.Animate;
 import stardeath.animates.participants.Participant;
 import stardeath.animates.visitors.AnimateVisitor;
+import stardeath.world.tiles.Terminal;
 import stardeath.world.visibility.RayCasting;
 import stardeath.world.visitors.DefaultTileVisitor;
 import stardeath.world.visitors.TileVisitor;
@@ -24,14 +25,16 @@ public class World {
 
   private final List<Floor> floors;
   private int current;
+  private State state;
 
   private World(List<Floor> floors) {
     this.floors = floors;
     this.current = 0;
+    state = State.UNDER_ATTACK;
   }
 
   public State getState() {
-    return State.UNDER_ATTACK;
+    return state;
   }
 
   public boolean moveUp() {
@@ -74,6 +77,21 @@ public class World {
 
   public void spawn() {
     current().spawn();
+  }
+
+  public void destroyTerminal(Terminal terminal) {
+    current().destroyTerminal(terminal);
+    updateState();
+  }
+
+  private void updateState() {
+    final int onlineTerminals = floors.stream()
+        .mapToInt(Floor::getNbTerminalsOnline)
+        .sum();
+
+    if (onlineTerminals == 0) {
+      state = State.DESTROYED;
+    }
   }
 
   public Optional<Animate> participantAt(Vector position) {

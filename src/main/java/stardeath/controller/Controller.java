@@ -10,6 +10,7 @@ import stardeath.controller.visitors.ChooseStartTile;
 import stardeath.controller.visitors.UnveilVisitor;
 import stardeath.controller.visitors.UpdateVisibility;
 import stardeath.world.World;
+import stardeath.world.World.State;
 
 public class Controller {
 
@@ -59,5 +60,9 @@ public class Controller {
   public void draw() {
     // Draw the contents.
     renderer.render(world);
+  }
+
+  public boolean isEndGame() {
+    return world.getState() != State.UNDER_ATTACK;
   }
 }

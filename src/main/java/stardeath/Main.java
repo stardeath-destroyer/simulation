@@ -34,9 +34,11 @@ public class Main {
         Decoding.loadWorld(new ZipFile("src/main/resources/world.stardeath")
         ));
 
-    while (true) {
+    while (!controller.isEndGame()) {
       controller.step();
       controller.draw();
     }
+
+    System.out.println("End of game");
   }
 }
