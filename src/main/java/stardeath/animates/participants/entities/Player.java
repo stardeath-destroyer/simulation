@@ -9,7 +9,6 @@ import stardeath.world.Tile;
 import stardeath.world.Vector;
 import stardeath.world.World;
 import stardeath.world.tiles.DownwardElevator;
-import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.visitors.DefaultTileVisitor;
 import stardeath.world.visitors.NoOpTileVisitor;
@@ -57,7 +56,7 @@ public class Player extends Soldier {
     }
   }
 
-  public class TakeLift implements Action {
+  public class Interact implements Action {
 
     @Override
     public void execute(World world) {

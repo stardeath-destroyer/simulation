@@ -2,5 +2,5 @@ package stardeath.controller.interactions;
 
 public enum Movement {
   UP, DOWN, RIGHT, LEFT,
-  FIRE, GRENADE, LIFT,
+  FIRE, GRENADE, INTERACT,
 }

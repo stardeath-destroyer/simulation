@@ -12,7 +12,6 @@ import stardeath.controller.interactions.GetDirections;
 import stardeath.controller.interactions.GetMovements;
 import stardeath.world.Vector;
 import stardeath.world.World;
-import stardeath.world.tiles.Hole;
 
 public class ChooseMove extends MovementVisitor {
 
@@ -73,8 +72,8 @@ public class ChooseMove extends MovementVisitor {
             new Grenade(player.getPosition(), directions.requestDirectionsFromPlayer())
         ));
         break;
-      case LIFT:
-        player.addAction(player.new TakeLift());
+      case INTERACT:
+        player.addAction(player.new Interact());
         break;
     }
 

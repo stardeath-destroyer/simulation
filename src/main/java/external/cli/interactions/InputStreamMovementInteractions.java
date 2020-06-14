@@ -44,7 +44,7 @@ public class InputStreamMovementInteractions implements GetDirections, GetMoveme
             movement = Movement.GRENADE;
             break;
           case "e":
-            movement = Movement.LIFT;
+            movement = Movement.INTERACT;
             break;
           default:
             System.out.print("Wrong command. Please enter a valid move (w, a, s, d) : ");

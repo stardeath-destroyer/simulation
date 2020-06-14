@@ -34,7 +34,7 @@ public class LanternaGetMovements implements GetMovements {
           } else if (stroke.getKeyType() == KeyType.Enter || Objects.equals('f', stroke.getCharacter())) {
             movement = Movement.FIRE;
           } else if (Objects.equals('e', stroke.getCharacter())) {
-            movement = Movement.LIFT;
+            movement = Movement.INTERACT;
           } else if (Objects.equals('g', stroke.getCharacter())) {
             movement = Movement.GRENADE;
           }
