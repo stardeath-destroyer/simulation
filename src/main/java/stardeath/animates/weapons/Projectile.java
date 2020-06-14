@@ -1,8 +1,8 @@
 package stardeath.animates.weapons;
 
-import java.util.function.BiConsumer;
 import stardeath.animates.Animate;
 import stardeath.animates.actions.Action;
+import stardeath.animates.weapons.visitors.ConsumableVisitor;
 import stardeath.world.Vector;
 import stardeath.world.World;
 
@@ -17,18 +17,16 @@ public abstract class Projectile extends Animate {
     this.speed = speed;
   }
 
-  protected abstract boolean isDispersed();
-
   public ProjectileDirection getDirection() {
     return direction;
   }
 
-  public abstract class MoveAndConsume implements Action {
+  public class MoveAndConsume implements Action {
 
-    private final BiConsumer<World, Vector> hitConsumer;
+    private final ConsumableVisitor consumableVisitor;
 
-    public MoveAndConsume(BiConsumer<World, Vector> hitConsumer) {
-      this.hitConsumer = hitConsumer;
+    public MoveAndConsume(ConsumableVisitor consumableVisitor) {
+      this.consumableVisitor = consumableVisitor;
     }
 
     @Override
@@ -46,16 +44,16 @@ public abstract class Projectile extends Animate {
           // Apply the damage to whatever is on the path of the projectile.
           world.participantAt(position).ifPresent(animate -> {
             if (animate != Projectile.this) {
-              hitConsumer.accept(world, animate.getPosition());
-            }
-          });
-          world.tileAt(position).ifPresent(tile -> {
-            if (tile.isOpaque()) {
-              hitConsumer.accept(world, tile.getPosition());
+              animate.accept(consumableVisitor);
             }
           });
 
-          if (isDispersed() || shouldRemove()) {
+          // If the visitor hasn't been consumed yet, continue
+          if (! consumableVisitor.isConsumed()) {
+            world.tileAt(position).ifPresent(tile -> tile.accept(consumableVisitor));
+          }
+
+          if (consumableVisitor.isConsumed() || shouldRemove()) {
             remove();
             return;
           }

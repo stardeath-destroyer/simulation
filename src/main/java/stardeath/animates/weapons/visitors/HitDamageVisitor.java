@@ -8,7 +8,6 @@ import stardeath.animates.participants.entities.Player;
 import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.entities.Trooper;
 import stardeath.animates.participants.entities.Wookie;
-import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
 import stardeath.world.Tile;
@@ -21,22 +20,15 @@ import stardeath.world.tiles.Start;
 import stardeath.world.tiles.Terminal;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.tiles.Wall;
-import stardeath.world.visitors.TileVisitor;
 
-// TODO: add a EntityVisitor with a default implementation...
-// maybe giving it two default methods, one for animates and the other for tiles
-public class HitDamageVisitor implements AnimateVisitor, TileVisitor {
+public class HitDamageVisitor extends ConsumableVisitor {
 
   private static final Random random = new Random();
-  private boolean consumed;
   private final int force;
 
   public HitDamageVisitor(int force) {
+    super();
     this.force = force;
-  }
-
-  public boolean isConsumed() {
-    return consumed;
   }
 
   private void hit(Participant participant) {

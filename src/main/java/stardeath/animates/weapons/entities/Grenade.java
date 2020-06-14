@@ -6,6 +6,7 @@ import stardeath.animates.participants.ParticipantVisitor;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.weapons.Projectile;
 import stardeath.animates.weapons.ProjectileDirection;
+import stardeath.animates.weapons.visitors.ConsumableVisitor;
 import stardeath.world.Vector;
 import stardeath.world.World;
 
@@ -31,20 +32,22 @@ public class Grenade extends Projectile {
   }
 
   @Override
-  protected boolean isDispersed() {
-    return exploding;
-  }
-
-  @Override
   public void accept(AnimateVisitor visitor) {
     visitor.visitProjectile(this);
   }
 
   public class MoveAndTrigger extends MoveAndConsume {
 
+    public MoveAndTrigger(ConsumableVisitor consumableVisitor) {
+      super(consumableVisitor);
+    }
+
+    /*
     public MoveAndTrigger() {
       super((world, vector) -> willExplode = true);
     }
+
+     */
   }
 
   public class Explode implements Action {

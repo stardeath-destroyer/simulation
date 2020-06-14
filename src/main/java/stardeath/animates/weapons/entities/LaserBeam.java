@@ -1,10 +1,13 @@
 package stardeath.animates.weapons.entities;
 
+import stardeath.animates.actions.Action;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.weapons.Projectile;
 import stardeath.animates.weapons.ProjectileDirection;
+import stardeath.animates.weapons.visitors.ConsumableVisitor;
 import stardeath.animates.weapons.visitors.HitDamageVisitor;
 import stardeath.world.Vector;
+import stardeath.world.World;
 
 public class LaserBeam extends Projectile {
 
@@ -22,13 +25,18 @@ public class LaserBeam extends Projectile {
     visitor.visitProjectile(this);
   }
 
-  @Override
-  protected boolean isDispersed() {
-    return dispersed;
-  }
+  public class MoveAndHit implements Action {
 
-  public class MoveAndHit extends MoveAndConsume {
+    @Override
+    public void execute(World world) {
+      ConsumableVisitor visitor = new HitDamageVisitor(DAMAGE);
+      MoveAndConsume moveAndConsume = new Projectile.MoveAndConsume(visitor);
+      moveAndConsume.execute(world);
+    }
 
+
+    /*
+    // TODO: Fix this weird behaviour... does not work on tiles
     public MoveAndHit() {
       super((world, position) -> {
         HitDamageVisitor visitor = new HitDamageVisitor(LaserBeam.DAMAGE);
@@ -44,5 +52,6 @@ public class LaserBeam extends Projectile {
         dispersed = dispersed || visitor.isConsumed();
       });
     }
+     */
   }
 }

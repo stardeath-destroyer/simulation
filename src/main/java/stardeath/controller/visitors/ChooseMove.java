@@ -40,10 +40,13 @@ public class ChooseMove extends MovementVisitor {
 
   @Override
   public <W extends Participant & Walker> void visitWalker(W walker) {
+    /*
     walker.addAction(walker.new MoveAction(new Vector(
         random(-1, 1),
         random(-1, 1)
     )));
+
+     */
   }
 
   @Override
@@ -90,7 +93,7 @@ public class ChooseMove extends MovementVisitor {
     if (grenade.willExplode()) {
       grenade.addAction(grenade.new Explode());
     } else {
-      grenade.addAction(grenade.new MoveAndTrigger());
+      //grenade.addAction(grenade.new MoveAndTrigger());
     }
   }
 }
