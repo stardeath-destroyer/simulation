@@ -95,14 +95,14 @@ public class Decoding {
 
     while ((line = reader.readLine()) != null) {
       while (position.getX() < line.length()) {
-        tileFromChar(builder, line.charAt(position.getX()), position);
+        builder.addTile(tileFromChar(line.charAt(position.getX()), position));
         position = position.add(Vector.EAST);
       }
       position = position.add(Vector.SOUTH).withX(0);
     }
   }
 
-  private static void tileFromChar(Floor.Builder builder, char character, Vector position) {
+  private static Tile tileFromChar(char character, Vector position) {
     Tile tile;
     switch (character) {
       case 'H':
@@ -129,7 +129,7 @@ public class Decoding {
       default:
         throw new IllegalArgumentException("Unknown tile of type '" + character + "'.");
     }
-    builder.addTile(tile);
+    return tile;
   }
 
   public static void readEnemies(InputStream input, Floor.Builder builder) throws IOException {
