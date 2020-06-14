@@ -1,8 +1,8 @@
 package stardeath.animates.weapons;
 
+import java.util.function.BiConsumer;
 import stardeath.animates.Animate;
 import stardeath.animates.actions.Action;
-import stardeath.animates.weapons.visitors.ConsumeProjectileVisitor;
 import stardeath.world.Vector;
 import stardeath.world.World;
 
@@ -10,11 +10,9 @@ public abstract class Projectile extends Animate {
 
   private final ProjectileDirection direction;
   private final int speed;
-  private final int damage;
 
-  public Projectile(Vector position, int damage, ProjectileDirection direction, int speed) {
+  public Projectile(Vector position, ProjectileDirection direction, int speed) {
     super(position);
-    this.damage = damage;
     this.direction = direction;
     this.speed = speed;
   }
@@ -25,7 +23,13 @@ public abstract class Projectile extends Animate {
     return direction;
   }
 
-  public class MoveAndHit implements Action {
+  public abstract class MoveAndConsume implements Action {
+
+    private final BiConsumer<World, Vector> hitConsumer;
+
+    public MoveAndConsume(BiConsumer<World, Vector> hitConsumer) {
+      this.hitConsumer = hitConsumer;
+    }
 
     @Override
     public void execute(World world) {
@@ -40,21 +44,21 @@ public abstract class Projectile extends Animate {
           position = base;
 
           // Apply the damage to whatever is on the path of the projectile.
-          ConsumeProjectileVisitor consumeProjectileVisitor = new ConsumeProjectileVisitor(damage);
-          world.participantAt(position).ifPresent(a -> a.accept(consumeProjectileVisitor));
-
-          // Remove the projectile if it has hit a participant already.
-          if (consumeProjectileVisitor.isConsumed() || isDispersed()) {
-            remove();
-          }
-
-          // If no participant was hit, maybe we have actually hit a wall. If so, remove this
-          // projectile.
-          world.tileAt(position).ifPresent(tile -> {
-            if (tile.isOpaque()) {
-              remove();
+          world.participantAt(position).ifPresent(animate -> {
+            if (animate != Projectile.this) {
+              hitConsumer.accept(world, animate.getPosition());
             }
           });
+          world.tileAt(position).ifPresent(tile -> {
+            if (tile.isOpaque()) {
+              hitConsumer.accept(world, tile.getPosition());
+            }
+          });
+
+          if (isDispersed() || shouldRemove()) {
+            remove();
+            return;
+          }
         }
       }
     }

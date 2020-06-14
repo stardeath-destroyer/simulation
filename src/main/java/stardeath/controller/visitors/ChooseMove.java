@@ -6,6 +6,7 @@ import stardeath.animates.participants.entities.Player;
 import stardeath.animates.participants.movements.Jumper;
 import stardeath.animates.participants.movements.MovementVisitor;
 import stardeath.animates.participants.movements.Walker;
+import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
 import stardeath.controller.interactions.GetDirections;
 import stardeath.controller.interactions.GetMovements;
@@ -67,6 +68,11 @@ public class ChooseMove extends MovementVisitor {
                 player.getPosition(),
                 directions.requestDirectionsFromPlayer())));
         break;
+      case GRENADE:
+        player.addAction(player.new Fire(
+            new Grenade(player.getPosition(), directions.requestDirectionsFromPlayer())
+        ));
+        break;
       case LIFT:
         player.addAction(player.new TakeLift());
         break;
@@ -78,5 +84,14 @@ public class ChooseMove extends MovementVisitor {
   @Override
   public void visitProjectile(LaserBeam projectile) {
     projectile.addAction(projectile.new MoveAndHit());
+  }
+
+  @Override
+  public void visitProjectile(Grenade grenade) {
+    if (grenade.willExplode()) {
+      grenade.addAction(grenade.new Explode());
+    } else {
+      grenade.addAction(grenade.new MoveAndTrigger());
+    }
   }
 }
