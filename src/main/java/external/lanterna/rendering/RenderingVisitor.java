@@ -13,6 +13,7 @@ import stardeath.animates.participants.entities.Player;
 import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
 import stardeath.world.tiles.DownwardElevator;
+import stardeath.world.tiles.Terminal;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.visitors.TileVisitor;
 import stardeath.world.tiles.Armory;
@@ -62,6 +63,15 @@ public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor
   @Override
   public void visitTile(Start start) {
     drawTile(start, Material.Iron, Material.Void, '.');
+  }
+
+  @Override
+  public void visitTile(Terminal terminal) {
+    if (terminal.isOnline()) {
+      drawTile(terminal, Material.FancyPlastic, Material.Void, '@');
+    } else {
+      drawTile(terminal, Material.BurnedPlastic, Material.Void, '@');
+    }
   }
 
   @Override

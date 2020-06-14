@@ -8,6 +8,7 @@ import stardeath.world.tiles.Dump;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Start;
+import stardeath.world.tiles.Terminal;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.tiles.Wall;
 
@@ -47,6 +48,11 @@ public class DefaultTileVisitor implements TileVisitor {
   @Override
   public void visitTile(Start start) {
     consumer.accept(start);
+  }
+
+  @Override
+  public void visitTile(Terminal terminal) {
+    consumer.accept(terminal);
   }
 
   @Override
