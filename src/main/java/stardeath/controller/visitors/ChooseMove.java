@@ -11,6 +11,7 @@ import stardeath.controller.interactions.GetDirections;
 import stardeath.controller.interactions.GetMovements;
 import stardeath.world.Vector;
 import stardeath.world.World;
+import stardeath.world.tiles.Hole;
 
 public class ChooseMove extends MovementVisitor {
 
@@ -70,6 +71,7 @@ public class ChooseMove extends MovementVisitor {
         player.addAction(player.new TakeLift());
         break;
     }
+
     player.addAction(player.new UnveilAction());
   }
 

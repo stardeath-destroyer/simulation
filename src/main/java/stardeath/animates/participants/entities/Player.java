@@ -9,6 +9,7 @@ import stardeath.world.Tile;
 import stardeath.world.Vector;
 import stardeath.world.World;
 import stardeath.world.tiles.DownwardElevator;
+import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.visibility.RayCasting;
 import stardeath.world.visitors.DefaultTileVisitor;
@@ -73,6 +74,7 @@ public class Player extends Soldier {
         public void visitTile(UpwardElevator elevator) {
           world.moveUp();
         }
+
       };
 
       // TODO : Use a Visitor on a tile at a specific index instead.

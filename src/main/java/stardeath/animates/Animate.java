@@ -72,6 +72,8 @@ public abstract class Animate extends Entity {
     public void execute(World world) {
       Vector newPosition = getPosition().add(delta);
 
+
+
       if (!world.tileAt(newPosition).map(Tile::isOpaque).orElse(false)) {
         Animate.this.setPosition(newPosition);
       }
