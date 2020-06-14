@@ -19,7 +19,7 @@ public class InputStreamMovementInteractions implements GetDirections, GetMoveme
 
   @Override
   public Movement requestMovement() {
-    System.out.print("Enter your move (w, a, s, d, f-ire, e-levator) : ");
+    System.out.print("Enter your move (w, a, s, d, [f]ire, [e]levator) : ");
     BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
     Movement movement = null;
     try {
