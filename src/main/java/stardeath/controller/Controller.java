@@ -49,7 +49,6 @@ public class Controller {
   private void turn() {
     world.visitAnimates(new ExecuteActions(world));
     world.spawn();
-    world.visitAnimates(new UpdateVisibility());
   }
 
   public void step() {
@@ -60,6 +59,8 @@ public class Controller {
 
   public void draw() {
     // Draw the contents.
+    world.visitAnimates(new UpdateVisibility());
+    world.visitAnimates(new ExecuteActions(world));
     renderer.render(world);
   }
 

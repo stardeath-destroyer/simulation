@@ -31,15 +31,8 @@ public abstract class Projectile extends Animate {
 
     @Override
     public void execute(World world) {
-      Vector base = getPosition();
       for (int i = 0; i < speed; i++) {
         for (Vector step : direction.getSteps()) {
-
-          // Move by one of the internal direction step vectors.
-          base = base.add(step);
-
-          // Update the position of the head of this projectile.
-          position = base;
 
           // Apply the damage to whatever is on the path of the projectile.
           world.participantAt(position).ifPresent(animate -> {
@@ -57,6 +50,9 @@ public abstract class Projectile extends Animate {
             remove();
             return;
           }
+
+          // Move by one of the internal direction step vectors.
+          position = getPosition().add(step);
         }
       }
     }

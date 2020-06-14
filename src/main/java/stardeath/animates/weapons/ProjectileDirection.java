@@ -41,4 +41,8 @@ public enum ProjectileDirection {
   public List<Vector> getSteps() {
     return steps;
   }
+
+  public Vector getVector() {
+    return steps.stream().reduce(Vector.EMPTY, Vector::add);
+  }
 }
