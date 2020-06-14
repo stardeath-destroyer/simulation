@@ -1,6 +1,5 @@
 package stardeath.animates.weapons.entities;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.weapons.Projectile;
 import stardeath.animates.weapons.ProjectileDirection;
@@ -15,6 +14,7 @@ public class LaserBeam extends Projectile {
 
   public LaserBeam(Vector position, ProjectileDirection direction) {
     super(position, direction, 1);
+    dispersed = false;
   }
 
   @Override
@@ -32,12 +32,15 @@ public class LaserBeam extends Projectile {
     public MoveAndHit() {
       super((world, position) -> {
         HitDamageVisitor visitor = new HitDamageVisitor(LaserBeam.DAMAGE);
+
+        // Effects on participants
         world.participantAt(position).ifPresent(p -> p.accept(visitor));
-        world.tileAt(position).ifPresent(t -> {
-          if (t.isOpaque()) {
-            dispersed = true;
-          }
-        });
+        dispersed = dispersed || visitor.isConsumed();
+
+        // Effects on tiles
+        if (! dispersed) {
+          world.tileAt(position).ifPresent(t -> t.accept(visitor));
+        }
         dispersed = dispersed || visitor.isConsumed();
       });
     }

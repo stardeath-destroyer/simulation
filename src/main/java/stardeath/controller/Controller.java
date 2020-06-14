@@ -55,6 +55,7 @@ public class Controller {
   public void step() {
     move();
     turn();
+    world.updateState();
   }
 
   public void draw() {

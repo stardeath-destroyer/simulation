@@ -125,7 +125,6 @@ public class Decoding {
         break;
       case '@':
         tile =  new Terminal(position);
-        builder.addNbTerminal();
         break;
       default:
         throw new IllegalArgumentException("Unknown tile of type '" + character + "'.");

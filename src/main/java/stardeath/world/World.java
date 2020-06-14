@@ -79,17 +79,27 @@ public class World {
     current().spawn();
   }
 
+  /*
   public void destroyTerminal(Terminal terminal) {
     current().destroyTerminal(terminal);
     updateState();
   }
+  */
 
-  private void updateState() {
-    final int onlineTerminals = floors.stream()
-        .mapToInt(Floor::getNbTerminalsOnline)
-        .sum();
+  public void updateState() {
+    final int[] onlineTerminals = {0};
+    floors.forEach(f -> f.visitTiles(
+        new DefaultTileVisitor(t -> {}) {
+          @Override
+          public void visitTile(Terminal terminal) {
+            if (terminal.isOnline()) {
+              ++onlineTerminals[0];
+            }
+          }
+        }
+    ));
 
-    if (onlineTerminals == 0) {
+    if (onlineTerminals[0] == 0) {
       state = State.DESTROYED;
     }
   }

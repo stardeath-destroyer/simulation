@@ -1,18 +1,33 @@
 package stardeath.animates.weapons.visitors;
 
-import stardeath.animates.participants.entities.FlameTrooper;
-import stardeath.animates.participants.entities.Trooper;
-import stardeath.animates.visitors.AnimateVisitor;
+import java.util.Random;
 import stardeath.animates.participants.Participant;
-import stardeath.animates.participants.entities.Soldier;
-import stardeath.animates.participants.entities.Wookie;
+import stardeath.animates.participants.entities.FlameTrooper;
 import stardeath.animates.participants.entities.JumpTrooper;
 import stardeath.animates.participants.entities.Player;
+import stardeath.animates.participants.entities.Soldier;
+import stardeath.animates.participants.entities.Trooper;
+import stardeath.animates.participants.entities.Wookie;
+import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
+import stardeath.world.Tile;
+import stardeath.world.tiles.Armory;
+import stardeath.world.tiles.DownwardElevator;
+import stardeath.world.tiles.Dump;
+import stardeath.world.tiles.Hole;
+import stardeath.world.tiles.Regular;
+import stardeath.world.tiles.Start;
+import stardeath.world.tiles.Terminal;
+import stardeath.world.tiles.UpwardElevator;
+import stardeath.world.tiles.Wall;
+import stardeath.world.visitors.TileVisitor;
 
-public class HitDamageVisitor implements AnimateVisitor {
+// TODO: add a EntityVisitor with a default implementation...
+// maybe giving it two default methods, one for animates and the other for tiles
+public class HitDamageVisitor implements AnimateVisitor, TileVisitor {
 
+  private static final Random random = new Random();
   private boolean consumed;
   private final int force;
 
@@ -26,6 +41,11 @@ public class HitDamageVisitor implements AnimateVisitor {
 
   private void hit(Participant participant) {
     participant.damage(this.force);
+  }
+
+  private void hit(Tile tile) {
+    if (tile.isOpaque())
+      consumed = true;
   }
 
   @Override
@@ -72,5 +92,53 @@ public class HitDamageVisitor implements AnimateVisitor {
   @Override
   public void visitProjectile(Grenade grenade) {
     // It's not possible to detonate grenades remotely, sorry.
+  }
+
+  @Override
+  public void visitTile(Armory armory) {
+    hit(armory);
+  }
+
+  @Override
+  public void visitTile(Dump dump) {
+    hit(dump);
+  }
+
+  @Override
+  public void visitTile(DownwardElevator elevator) {
+    hit(elevator);
+  }
+
+  @Override
+  public void visitTile(Hole hole) {
+    hit(hole);
+  }
+
+  @Override
+  public void visitTile(Regular regular) {
+    hit(regular);
+  }
+
+  @Override
+  public void visitTile(Start start) {
+    hit(start);
+  }
+
+  @Override
+  public void visitTile(Terminal terminal) {
+    if (random.nextInt(100) < 15) {
+      terminal.destroy();
+    }
+    consumed = true;
+  }
+
+  @Override
+  public void visitTile(UpwardElevator elevator) {
+    hit(elevator);
+  }
+
+  @Override
+  public void visitTile(Wall wall) {
+    hit(wall);
   }
 }

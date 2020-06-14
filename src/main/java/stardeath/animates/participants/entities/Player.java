@@ -74,7 +74,7 @@ public class Player extends Soldier {
 
         @Override
         public void visitTile(Terminal terminal) {
-          world.destroyTerminal(terminal);
+          terminal.destroy();
         }
       };
 
