@@ -10,7 +10,7 @@ import stardeath.Entity;
 import stardeath.animates.Animate;
 import stardeath.animates.participants.Participant;
 import stardeath.animates.visitors.AnimateVisitor;
-import stardeath.world.tiles.Terminal;
+import stardeath.controller.visitors.GameStateVisitor;
 import stardeath.world.visibility.RayCasting;
 import stardeath.world.visitors.DefaultTileVisitor;
 import stardeath.world.visitors.TileVisitor;
@@ -79,28 +79,15 @@ public class World {
     current().spawn();
   }
 
-  /*
-  public void destroyTerminal(Terminal terminal) {
-    current().destroyTerminal(terminal);
-    updateState();
-  }
-  */
-
   public void updateState() {
-    final int[] onlineTerminals = {0};
-    floors.forEach(f -> f.visitTiles(
-        new DefaultTileVisitor(t -> {}) {
-          @Override
-          public void visitTile(Terminal terminal) {
-            if (terminal.isOnline()) {
-              ++onlineTerminals[0];
-            }
-          }
-        }
-    ));
+    final GameStateVisitor stateVisitor = new GameStateVisitor();
+    floors.forEach(f -> f.visitTiles(stateVisitor));
 
-    if (onlineTerminals[0] == 0) {
+    // Bias towards player, i.e. we accept suicide missions
+    if (stateVisitor.onlineTerminals() == 0) {
       state = State.DESTROYED;
+    } else if (stateVisitor.isPlayerDead()) {
+      state = State.SAVED;
     }
   }
 
