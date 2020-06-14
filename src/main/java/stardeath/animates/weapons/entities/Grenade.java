@@ -6,7 +6,7 @@ import stardeath.animates.participants.ParticipantVisitor;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.weapons.Projectile;
 import stardeath.animates.weapons.ProjectileDirection;
-import stardeath.animates.weapons.visitors.ConsumableVisitor;
+import stardeath.animates.weapons.visitors.WillExplodeVisitor;
 import stardeath.world.Vector;
 import stardeath.world.World;
 
@@ -27,6 +27,15 @@ public class Grenade extends Projectile {
     return RANGE;
   }
 
+  public void trigger() {
+    willExplode = true;
+  }
+
+  @Override
+  public boolean shouldRemove() {
+    return exploding;
+  }
+
   public boolean willExplode() {
     return willExplode;
   }
@@ -38,16 +47,9 @@ public class Grenade extends Projectile {
 
   public class MoveAndTrigger extends MoveAndConsume {
 
-    public MoveAndTrigger(ConsumableVisitor consumableVisitor) {
-      super(consumableVisitor);
-    }
-
-    /*
     public MoveAndTrigger() {
-      super((world, vector) -> willExplode = true);
+      super(new WillExplodeVisitor(Grenade.this));
     }
-
-     */
   }
 
   public class Explode implements Action {
@@ -55,13 +57,13 @@ public class Grenade extends Projectile {
     @Override
     public void execute(World world) {
       Grenade.this.willExplode = false;
+      Grenade.this.exploding = true;
       world.visitVisibleAnimatesFrom(Grenade.this, Grenade.RANGE, new ParticipantVisitor() {
         @Override
         public void visit(Participant participant) {
           participant.damage(DAMAGE);
         }
       });
-      remove();
     }
   }
 }

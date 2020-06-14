@@ -35,19 +35,21 @@ public abstract class Projectile extends Animate {
         for (Vector step : direction.getSteps()) {
 
           // Apply the damage to whatever is on the path of the projectile.
-          world.participantAt(position).ifPresent(animate -> {
-            if (animate != Projectile.this) {
-              animate.accept(consumableVisitor);
-            }
-          });
+          if (!consumableVisitor.isConsumed()) {
+            world.participantAt(position).ifPresent(animate -> {
+              if (animate != Projectile.this) {
+                animate.accept(consumableVisitor);
+              }
 
+            });
+          }
+          
           // If the visitor hasn't been consumed yet, continue
           if (!consumableVisitor.isConsumed()) {
             world.tileAt(position).ifPresent(tile -> tile.accept(consumableVisitor));
           }
 
-          if (consumableVisitor.isConsumed() || shouldRemove()) {
-            remove();
+          if (consumableVisitor.isConsumed()) {
             return;
           }
 

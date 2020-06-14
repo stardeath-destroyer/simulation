@@ -8,6 +8,7 @@ import stardeath.animates.participants.entities.Player;
 import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.entities.Trooper;
 import stardeath.animates.participants.entities.Wookie;
+import stardeath.animates.weapons.Projectile;
 import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
 import stardeath.world.Tile;
@@ -25,19 +26,24 @@ public class HitDamageVisitor extends ConsumableVisitor {
 
   private static final Random random = new Random();
   private final int force;
+  private final Projectile projectile;
 
-  public HitDamageVisitor(int force) {
+  public HitDamageVisitor(Projectile projectile, int force) {
     super();
+    this.projectile = projectile;
     this.force = force;
   }
 
   private void hit(Participant participant) {
+    projectile.remove();
     participant.damage(this.force);
   }
 
   private void hit(Tile tile) {
-    if (tile.isOpaque())
+    if (tile.isOpaque()) {
+      projectile.remove();
       consumed = true;
+    }
   }
 
   @Override
@@ -122,6 +128,7 @@ public class HitDamageVisitor extends ConsumableVisitor {
       terminal.destroy();
     }
     consumed = true;
+    projectile.remove();
   }
 
   @Override

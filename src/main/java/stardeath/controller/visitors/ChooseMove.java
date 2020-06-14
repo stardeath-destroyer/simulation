@@ -93,7 +93,7 @@ public class ChooseMove extends MovementVisitor {
     if (grenade.willExplode()) {
       grenade.addAction(grenade.new Explode());
     } else {
-      //grenade.addAction(grenade.new MoveAndTrigger());
+      grenade.addAction(grenade.new MoveAndTrigger());
     }
   }
 }

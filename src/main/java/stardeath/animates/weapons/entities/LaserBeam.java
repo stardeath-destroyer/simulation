@@ -25,7 +25,7 @@ public class LaserBeam extends Projectile {
   public class MoveAndHit extends MoveAndConsume {
 
     public MoveAndHit() {
-      super(new HitDamageVisitor(DAMAGE));
+      super(new HitDamageVisitor(LaserBeam.this, DAMAGE));
     }
 
     /*
