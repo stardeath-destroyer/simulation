@@ -7,6 +7,7 @@ import stardeath.controller.interactions.GetMovements;
 import stardeath.controller.interactions.Renderer;
 import stardeath.controller.visitors.ChooseMove;
 import stardeath.controller.visitors.ChooseStartTile;
+import stardeath.controller.visitors.FallThroughHoles;
 import stardeath.controller.visitors.UnveilVisitor;
 import stardeath.controller.visitors.UpdateVisibility;
 import stardeath.world.World;
@@ -48,6 +49,7 @@ public class Controller {
 
   private void turn() {
     world.visitAnimates(new ExecuteActions(world));
+    world.visitTiles(new FallThroughHoles(world));
     world.spawn();
   }
 
