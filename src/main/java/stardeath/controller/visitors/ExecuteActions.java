@@ -2,6 +2,8 @@ package stardeath.controller.visitors;
 
 import stardeath.animates.Animate;
 import stardeath.animates.actions.Action;
+import stardeath.animates.participants.entities.FlameTrooper;
+import stardeath.animates.participants.entities.Trooper;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.entities.Wookie;
@@ -32,6 +34,16 @@ public class ExecuteActions implements AnimateVisitor {
 
   @Override
   public void visitParticipant(JumpTrooper trooper) {
+    visit(trooper);
+  }
+
+  @Override
+  public void visitParticipant(FlameTrooper trooper) {
+    visit(trooper);
+  }
+
+  @Override
+  public void visitParticipant(Trooper trooper) {
     visit(trooper);
   }
 

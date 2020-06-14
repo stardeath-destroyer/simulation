@@ -1,6 +1,8 @@
 package external.cli.rendering;
 
 import stardeath.animates.Animate;
+import stardeath.animates.participants.entities.FlameTrooper;
+import stardeath.animates.participants.entities.Trooper;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.entities.Wookie;
@@ -29,6 +31,16 @@ public class RenderAnimates implements AnimateVisitor {
 
   @Override
   public void visitParticipant(JumpTrooper trooper) {
+    setGrid(trooper, 'J');
+  }
+
+  @Override
+  public void visitParticipant(FlameTrooper trooper) {
+    setGrid(trooper, 'F');
+  }
+
+  @Override
+  public void visitParticipant(Trooper trooper) {
     setGrid(trooper, 'T');
   }
 

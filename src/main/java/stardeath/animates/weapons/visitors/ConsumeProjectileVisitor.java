@@ -1,5 +1,7 @@
 package stardeath.animates.weapons.visitors;
 
+import stardeath.animates.participants.entities.FlameTrooper;
+import stardeath.animates.participants.entities.Trooper;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.participants.Participant;
 import stardeath.animates.participants.entities.Soldier;
@@ -33,6 +35,18 @@ public class ConsumeProjectileVisitor implements AnimateVisitor {
 
   @Override
   public void visitParticipant(JumpTrooper trooper) {
+    hit(trooper);
+    consumed = true;
+  }
+
+  @Override
+  public void visitParticipant(FlameTrooper trooper) {
+    hit(trooper);
+    consumed = true;
+  }
+
+  @Override
+  public void visitParticipant(Trooper trooper) {
     hit(trooper);
     consumed = true;
   }

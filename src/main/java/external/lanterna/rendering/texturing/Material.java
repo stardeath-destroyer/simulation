@@ -2,6 +2,7 @@ package external.lanterna.rendering.texturing;
 
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.TextColor.ANSI;
+import com.googlecode.lanterna.TextColor.Indexed;
 import external.lanterna.rendering.lighting.LightingLevel;
 
 /**
@@ -24,6 +25,10 @@ public enum Material {
       new TextColor.Indexed(250),
       new TextColor.Indexed(255)
   ),
+
+  TrooperArmor(new TextColor.Indexed(124), new TextColor.Indexed(88)),
+  RebelArmor(new TextColor.Indexed(11), new TextColor.Indexed(184)),
+
   Player(ANSI.GREEN, ANSI.GREEN),
   WookieWool(new TextColor.Indexed(235), new TextColor.Indexed(130)),
   Void(ANSI.BLACK, ANSI.BLACK);

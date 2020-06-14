@@ -8,6 +8,7 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import stardeath.animates.participants.Participant;
+import stardeath.animates.participants.entities.FlameTrooper;
 import stardeath.animates.participants.entities.JumpTrooper;
 import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.entities.Trooper;
@@ -141,6 +142,8 @@ public class Decoding {
         return new Trooper(position);
       case 'J':
         return new JumpTrooper(position);
+      case 'F':
+        return new FlameTrooper(position);
       default:
         throw new IllegalStateException("Given map does not follow format.");
     }

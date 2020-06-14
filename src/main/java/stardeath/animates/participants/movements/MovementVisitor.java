@@ -1,5 +1,7 @@
 package stardeath.animates.participants.movements;
 
+import stardeath.animates.participants.entities.FlameTrooper;
+import stardeath.animates.participants.entities.Trooper;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.participants.Participant;
 import stardeath.animates.participants.entities.Soldier;
@@ -21,6 +23,16 @@ public abstract class MovementVisitor implements AnimateVisitor {
   @Override
   public void visitParticipant(JumpTrooper trooper) {
     visitJumper(trooper);
+    visitWalker(trooper);
+  }
+
+  @Override
+  public void visitParticipant(FlameTrooper trooper) {
+    visitWalker(trooper);
+  }
+
+  @Override
+  public void visitParticipant(Trooper trooper) {
     visitWalker(trooper);
   }
 

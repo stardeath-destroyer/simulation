@@ -3,6 +3,8 @@ package external.lanterna.rendering;
 import external.lanterna.rendering.texturing.Material;
 import external.lanterna.rendering.texturing.MaterialRenderer;
 import java.util.Optional;
+import stardeath.animates.participants.entities.FlameTrooper;
+import stardeath.animates.participants.entities.Trooper;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.entities.Wookie;
@@ -80,12 +82,22 @@ public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor
 
   @Override
   public void visitParticipant(JumpTrooper trooper) {
-    throw new IllegalStateException("JumpTroopers are not supported yet.");
+    drawAnimate(trooper, Material.TrooperArmor, Material.Void, 'J');
+  }
+
+  @Override
+  public void visitParticipant(FlameTrooper trooper) {
+    drawAnimate(trooper, Material.TrooperArmor, Material.Void, 'F');
+  }
+
+  @Override
+  public void visitParticipant(Trooper trooper) {
+    drawAnimate(trooper, Material.TrooperArmor, Material.Void, 'T');
   }
 
   @Override
   public void visitParticipant(Soldier soldier) {
-    throw new IllegalStateException("Soldiers are not supported yet.");
+    drawAnimate(soldier, Material.RebelArmor, Material.Void, 'S');
   }
 
   @Override
