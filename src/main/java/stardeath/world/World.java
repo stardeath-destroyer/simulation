@@ -82,6 +82,7 @@ public class World {
   public void updateState() {
     final GameStateVisitor stateVisitor = new GameStateVisitor();
     floors.forEach(f -> f.visitTiles(stateVisitor));
+    floors.forEach(f -> f.visitAnimates(stateVisitor));
 
     // Bias towards player, i.e. we accept suicide missions
     if (stateVisitor.onlineTerminals() == 0) {

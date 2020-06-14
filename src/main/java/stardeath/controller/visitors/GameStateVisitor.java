@@ -5,12 +5,16 @@ import stardeath.world.tiles.Terminal;
 import stardeath.world.visitors.NoOpEntityVisitor;
 
 public class GameStateVisitor extends NoOpEntityVisitor {
-  boolean isPlayerDead = false;
-  int onlineTerminals = 0;
+
+  private boolean isPlayerDead = true;
+  private int onlineTerminals = 0;
 
   @Override
   public void visitParticipant(Player player) {
-    isPlayerDead = player.shouldRemove();
+    // Do we have at least one player who should not be removed ?
+    if (!player.shouldRemove()) {
+      isPlayerDead = false;
+    }
   }
 
   @Override
