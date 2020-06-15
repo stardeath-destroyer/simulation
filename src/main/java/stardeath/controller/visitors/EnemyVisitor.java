@@ -6,8 +6,12 @@ import java.util.List;
 import java.util.Optional;
 import stardeath.animates.participants.Faction;
 import stardeath.animates.participants.Participant;
+import stardeath.animates.participants.entities.FlameTrooper;
+import stardeath.animates.participants.entities.JumpTrooper;
 import stardeath.animates.participants.entities.Player;
+import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.entities.Trooper;
+import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.visitors.NoOpAnimateVisitor;
 
 public class EnemyVisitor extends NoOpAnimateVisitor {
@@ -23,18 +27,42 @@ public class EnemyVisitor extends NoOpAnimateVisitor {
     this.friends = new ArrayList<>();
   }
 
+  private void defaultEnemyVerification(Participant p) {
+    if (p.getFaction().equals(faction)) {
+      friends.add(p);
+    } else {
+      enemies.add(p);
+    }
+  }
+
   @Override
   public void visitParticipant(Player player) {
     this.player = player;
   }
 
   @Override
+  public void visitParticipant(JumpTrooper trooper) {
+    super.visitParticipant(trooper);
+  }
+
+  @Override
+  public void visitParticipant(FlameTrooper trooper) {
+    defaultEnemyVerification(trooper);
+  }
+
+  @Override
   public void visitParticipant(Trooper trooper) {
-    if (trooper.getFaction().equals(faction)) {
-      friends.add(trooper);
-    } else {
-      enemies.add(trooper);
-    }
+    defaultEnemyVerification(trooper);
+  }
+
+  @Override
+  public void visitParticipant(Soldier soldier) {
+    defaultEnemyVerification(soldier);
+  }
+
+  @Override
+  public void visitParticipant(Wookie wookie) {
+    defaultEnemyVerification(wookie);
   }
 
   public Optional<Player> getPlayerPos() {
