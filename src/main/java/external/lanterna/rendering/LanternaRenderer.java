@@ -2,13 +2,12 @@ package external.lanterna.rendering;
 
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextCharacter;
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.TextColor.ANSI;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.Terminal;
 import external.lanterna.rendering.lighting.LightingLevel;
 import external.lanterna.rendering.lighting.LightingShader;
+import external.lanterna.rendering.overlays.AimingOverlay;
 import external.lanterna.rendering.overlays.EndingTextOverlay;
 import external.lanterna.rendering.overlays.HealthOverlay;
 import java.io.IOException;
@@ -21,20 +20,21 @@ import stardeath.controller.interactions.Renderer;
 import stardeath.world.Vector;
 import stardeath.world.World;
 
-public class LanternaRenderer implements GetDirections, Renderer {
+public class LanternaRenderer implements GetDirections, AimingOverlay.Aiming, Renderer {
 
   private final Screen screen;
   private final List<OnRenderRequestListener> listeners = new ArrayList<>();
   private final List<RenderingOverlay> overlays = new ArrayList<>();
   private TerminalSize currentSize;
-  private boolean displayOverlay;
+  private boolean isAiming;
 
   public LanternaRenderer(Terminal terminal, Screen screen) throws IOException {
     this.screen = screen;
     this.screen.startScreen();
     this.currentSize = terminal.getTerminalSize();
-    this.displayOverlay = false;
+    this.isAiming = false;
 
+    this.overlays.add(new AimingOverlay(this));
     this.overlays.add(new HealthOverlay());
     this.overlays.add(new EndingTextOverlay());
 
@@ -49,7 +49,7 @@ public class LanternaRenderer implements GetDirections, Renderer {
 
   @Override
   public ProjectileDirection requestDirectionsFromPlayer() {
-    displayOverlay = true;
+    isAiming = true;
     listeners.forEach(OnRenderRequestListener::requestRender);
 
     try {
@@ -59,7 +59,7 @@ public class LanternaRenderer implements GetDirections, Renderer {
         ProjectileDirection direction =
             character != null ? ProjectileDirection.fromCharacter(character) : null;
         if (direction != null) {
-          displayOverlay = false;
+          isAiming = false;
           return direction;
         }
       }
@@ -114,13 +114,6 @@ public class LanternaRenderer implements GetDirections, Renderer {
         }
       }
 
-      // We want to display an overlay here as well.
-      if (displayOverlay) {
-        renderPlayerOverlay(
-            player.getPosition().getX() - offsetX,
-            player.getPosition().getY() - offsetY);
-      }
-
       for (RenderingOverlay overlay : overlays) {
         overlay.render(screen, world);
       }
@@ -128,36 +121,6 @@ public class LanternaRenderer implements GetDirections, Renderer {
       screen.refresh();
     } catch (IOException exception) {
       exception.printStackTrace();
-    }
-  }
-
-  private void renderPlayerOverlay(int centerX, int centerY) {
-    if (currentSize.getRows() < 5 || currentSize.getColumns() < 5) {
-      // We won't be able to display the player overlay if the size of the terminal is smaller
-      // than 5 lines.
-      return;
-    }
-
-    Character[][] overlay = {
-        {'6', '5', '4', '3', '2'},
-        {'7', null, null, null, '1'},
-        {'8', null, null, null, '0'},
-        {'9', null, null, null, 'F'},
-        {'A', 'B', 'C', 'D', 'E'}
-    };
-
-    for (int i = 0; i < 5; i++) {
-      for (int j = 0; j < 5; j++) {
-        int x = centerX - 2 + j;
-        int y = centerY - 2 + i;
-        if (overlay[i][j] != null && (i + j) % 2 == 0) {
-          screen.setCharacter(x, y,
-              new TextCharacter(overlay[i][j], new TextColor.Indexed(196), ANSI.DEFAULT));
-        } else if (overlay[i][j] != null) {
-          screen.setCharacter(x, y,
-              new TextCharacter(overlay[i][j], new TextColor.Indexed(200), ANSI.DEFAULT));
-        }
-      }
     }
   }
 
@@ -173,5 +136,10 @@ public class LanternaRenderer implements GetDirections, Renderer {
     if (listeners.contains(listener)) {
       listeners.add(listener);
     }
+  }
+
+  @Override
+  public boolean isAiming() {
+    return isAiming;
   }
 }
