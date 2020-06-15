@@ -38,11 +38,12 @@ public class EnemyVisitor extends NoOpAnimateVisitor {
   @Override
   public void visitParticipant(Player player) {
     this.player = player;
+    defaultEnemyVerification(player);
   }
 
   @Override
   public void visitParticipant(JumpTrooper trooper) {
-    super.visitParticipant(trooper);
+    defaultEnemyVerification(trooper);
   }
 
   @Override

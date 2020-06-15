@@ -31,7 +31,7 @@ public class Main {
 
     Controller controller = new Controller(
         interactions(args),
-        Decoding.loadWorld(new ZipFile("src/main/resources/testEnding.stardeath")
+        Decoding.loadWorld(new ZipFile("src/main/resources/world.stardeath")
         ));
 
     while (!controller.isEndGame()) {

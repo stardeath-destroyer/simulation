@@ -72,7 +72,31 @@ public class ChooseMove extends MovementVisitor {
 
   @Override
   public void visitParticipant(FlameTrooper trooper) {
-    visitParticipant((Trooper) trooper);
+    EnemyVisitor enemyVisitor = new EnemyVisitor(trooper.getFaction());
+    TileDetectionVisitor detectionVisitor = new TileDetectionVisitor();
+
+    world.visitVisibleAnimatesFrom(trooper, trooper.getVisibilityRange(), enemyVisitor);
+    world.visitVisibleTilesFrom(trooper, detectionVisitor);
+
+    ActionReducer reducer = baseTrooperReducer(trooper, enemyVisitor, detectionVisitor);
+
+    if (!enemyVisitor.getEnemies().isEmpty()) {
+      List<Participant> enemies = new ArrayList<>(enemyVisitor.getEnemies());
+      Collections.shuffle(enemies);
+      Vector enemyPosition = enemies.get(0).getPosition();
+
+      reducer.add(new Pair<>(
+          10,
+          trooper.new Fire(
+              new Grenade(
+                  trooper.getPosition(),
+                  ProjectileDirection.getDirectionsFrom(enemyPosition.sub(trooper.getPosition()))
+              )
+          )
+      ));
+    }
+
+    trooper.addAction(reducer.resolve());
   }
 
   @Override
@@ -100,7 +124,7 @@ public class ChooseMove extends MovementVisitor {
     }
 
     if (! enemyVisitor.getEnemies().isEmpty()) {
-      reducer.add(new Pair<>(15, attackRandomFromList(trooper, enemyVisitor.getEnemies())));
+      reducer.add(new Pair<>(20, attackRandomFromList(trooper, enemyVisitor.getEnemies())));
     }
 
     if (! enemyVisitor.getFriends().isEmpty()) {
