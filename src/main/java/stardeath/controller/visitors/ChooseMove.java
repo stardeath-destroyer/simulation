@@ -3,6 +3,7 @@ package stardeath.controller.visitors;
 import java.util.Random;
 import stardeath.animates.participants.Participant;
 import stardeath.animates.participants.entities.Player;
+import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.movements.Jumper;
 import stardeath.animates.participants.movements.MovementVisitor;
 import stardeath.animates.participants.movements.Walker;
@@ -40,13 +41,24 @@ public class ChooseMove extends MovementVisitor {
 
   @Override
   public <W extends Participant & Walker> void visitWalker(W walker) {
-    /*
-    walker.addAction(walker.new MoveAction(new Vector(
-        random(-1, 1),
-        random(-1, 1)
-    )));
+    walker.addAction(walker.new MoveAction(randomMove()));
+  }
 
-     */
+  @Override
+  public void visitParticipant(Soldier soldier) {
+    EnnemyVisitor ennemyVisitor = new EnnemyVisitor(soldier.getFaction());
+    world.visitVisibleAnimatesFrom(soldier, soldier.getVisibilityRange(), ennemyVisitor);
+
+    Vector move;
+
+    if (ennemyVisitor.getPlayerPos().isPresent()) {
+      Player player = ennemyVisitor.getPlayerPos().get();
+      move = soldier.getPosition().directionTo(player.getPosition());
+    } else {
+      move = randomMove();
+    }
+
+    soldier.addAction(soldier.new MoveAction(move));
   }
 
   @Override
@@ -95,5 +107,12 @@ public class ChooseMove extends MovementVisitor {
     } else {
       grenade.addAction(grenade.new MoveAndTrigger());
     }
+  }
+
+  private Vector randomMove() {
+    return new Vector(
+        random(-1, 1),
+        random(-1, 1)
+    );
   }
 }
