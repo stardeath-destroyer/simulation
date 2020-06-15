@@ -4,12 +4,12 @@ import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.TextColor.ANSI;
-import com.googlecode.lanterna.TextColor.Indexed;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.Terminal;
 import external.lanterna.rendering.lighting.LightingLevel;
 import external.lanterna.rendering.lighting.LightingShader;
+import external.lanterna.rendering.overlays.EndingTextOverlay;
 import external.lanterna.rendering.overlays.HealthOverlay;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ import stardeath.animates.participants.entities.Player;
 import stardeath.animates.weapons.ProjectileDirection;
 import stardeath.controller.interactions.GetDirections;
 import stardeath.controller.interactions.Renderer;
+import stardeath.world.Vector;
 import stardeath.world.World;
 
 public class LanternaRenderer implements GetDirections, Renderer {
@@ -35,6 +36,7 @@ public class LanternaRenderer implements GetDirections, Renderer {
     this.displayOverlay = false;
 
     this.overlays.add(new HealthOverlay());
+    this.overlays.add(new EndingTextOverlay());
 
     terminal.addResizeListener((t, size) -> {
       LanternaRenderer.this.currentSize = size;
@@ -66,52 +68,8 @@ public class LanternaRenderer implements GetDirections, Renderer {
     }
   }
 
-  private void renderText(int[][] text) {
-    boolean[][] data = TextUtils.renderMostlyCentered(
-        text,
-        currentSize.getColumns(),
-        currentSize.getRows());
-
-    for (int x = 0; x < currentSize.getColumns(); x++) {
-      for (int y = 0; y < currentSize.getRows(); y++) {
-        if (data[x][y]) {
-          if ((x + y) % 2 == 0) {
-            screen.setCharacter(x, y, new TextCharacter(' ', new Indexed(190), new Indexed(190)));
-          } else {
-            screen.setCharacter(x, y, new TextCharacter(' ', new Indexed(191) ,new Indexed(191)));
-          }
-        } else {
-          screen.setCharacter(x, y, new TextCharacter(' '));
-        }
-      }
-    }
-
-    try {
-      screen.refresh();
-    } catch (IOException exception) {
-      exception.printStackTrace();
-    }
-  }
-
-  private void renderLost() {
-    renderText(TextUtils.YOU_LOST);
-  }
-
-  private void renderWon() {
-    renderText(TextUtils.YOU_WON);
-  }
-
   @Override
   public void render(World world) {
-
-    switch (world.getState()) {
-      case DESTROYED:
-        renderWon();
-        return;
-      case SAVED:
-        renderLost();
-        return;
-    }
 
     RenderingVisitor render = new RenderingVisitor(world.getWidth(), world.getHeight());
     LightingShader shader = new LightingShader(world);
@@ -123,8 +81,9 @@ public class LanternaRenderer implements GetDirections, Renderer {
     // Light the level.
     world.visitAnimates(shader);
 
-    // We MUST have at least one player.
-    Player player = render.getPlayer().orElseThrow();
+    // We MUST have at least one player. Otherwise, default to a player at (0, 0) for shade
+    // computations.
+    Player player = render.getPlayer().orElse(new Player(Vector.EMPTY));
 
     // Calculate the lighting.
     LightingLevel[][] lighting = shader.getLevels();
