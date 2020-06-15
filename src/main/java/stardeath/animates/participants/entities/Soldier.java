@@ -14,7 +14,7 @@ public class Soldier extends Human {
   }
 
   public Soldier(Vector position) {
-    super(position, Faction.Rebels, 70, 4);
+    super(position, Faction.Rebels, 70, 7);
   }
 
   @Override

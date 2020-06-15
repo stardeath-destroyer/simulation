@@ -10,11 +10,8 @@ public class LaserBeam extends Projectile {
 
   private static final int DAMAGE = 50;
 
-  private boolean dispersed;
-
   public LaserBeam(Vector position, ProjectileDirection direction) {
     super(position, direction, 1);
-    dispersed = false;
   }
 
   @Override
@@ -27,24 +24,5 @@ public class LaserBeam extends Projectile {
     public MoveAndHit() {
       super(new HitDamageVisitor(LaserBeam.this, DAMAGE));
     }
-
-    /*
-    // TODO: Fix this weird behaviour... does not work on tiles
-    public MoveAndHit() {
-      super((world, position) -> {
-        HitDamageVisitor visitor = new HitDamageVisitor(LaserBeam.DAMAGE);
-
-        // Effects on participants
-        world.participantAt(position).ifPresent(p -> p.accept(visitor));
-        dispersed = dispersed || visitor.isConsumed();
-
-        // Effects on tiles
-        if (! dispersed) {
-          world.tileAt(position).ifPresent(t -> t.accept(visitor));
-        }
-        dispersed = dispersed || visitor.isConsumed();
-      });
-    }
-     */
   }
 }
