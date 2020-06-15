@@ -7,9 +7,11 @@ import stardeath.controller.interactions.GetMovements;
 import stardeath.controller.interactions.Renderer;
 import stardeath.controller.visitors.ChooseMove;
 import stardeath.controller.visitors.ChooseStartTile;
+import stardeath.controller.visitors.FallThroughHoles;
 import stardeath.controller.visitors.UnveilVisitor;
 import stardeath.controller.visitors.UpdateVisibility;
 import stardeath.world.World;
+import stardeath.world.World.State;
 
 public class Controller {
 
@@ -47,17 +49,24 @@ public class Controller {
 
   private void turn() {
     world.visitAnimates(new ExecuteActions(world));
+    world.visitTiles(new FallThroughHoles(world));
     world.spawn();
-    world.visitAnimates(new UpdateVisibility());
   }
 
   public void step() {
     move();
     turn();
+    world.updateState();
   }
 
   public void draw() {
     // Draw the contents.
+    world.visitAnimates(new UpdateVisibility());
+    world.visitAnimates(new ExecuteActions(world));
     renderer.render(world);
+  }
+
+  public boolean isEndGame() {
+    return world.getState() != State.UNDER_ATTACK;
   }
 }

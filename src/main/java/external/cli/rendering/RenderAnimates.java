@@ -8,6 +8,7 @@ import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.participants.entities.JumpTrooper;
 import stardeath.animates.participants.entities.Player;
+import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
 
 public class RenderAnimates implements AnimateVisitor {
@@ -57,5 +58,10 @@ public class RenderAnimates implements AnimateVisitor {
   @Override
   public void visitProjectile(LaserBeam projectile) {
     setGrid(projectile, '*');
+  }
+
+  @Override
+  public void visitProjectile(Grenade grenade) {
+    setGrid(grenade, 'ó');
   }
 }

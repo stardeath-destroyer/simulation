@@ -2,7 +2,6 @@ package external.lanterna.rendering.texturing;
 
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.TextColor.ANSI;
-import com.googlecode.lanterna.TextColor.Indexed;
 import external.lanterna.rendering.lighting.LightingLevel;
 
 /**
@@ -24,6 +23,20 @@ public enum Material {
       new TextColor.Indexed(245),
       new TextColor.Indexed(250),
       new TextColor.Indexed(255)
+  ),
+  FancyPlastic(
+      new TextColor.RGB(128, 0, 94),
+      new TextColor.RGB(153, 0, 112),
+      new TextColor.RGB(179, 0, 131),
+      new TextColor.RGB(204, 0, 150),
+      new TextColor.RGB(230, 0, 168)
+  ),
+  BurnedPlastic(
+      new TextColor.RGB(26, 9, 0),
+      new TextColor.RGB(51, 18, 0),
+      new TextColor.RGB(77, 27, 0),
+      new TextColor.RGB(102, 36, 0),
+      new TextColor.RGB(128, 43, 0)
   ),
 
   TrooperArmor(new TextColor.Indexed(124), new TextColor.Indexed(88)),

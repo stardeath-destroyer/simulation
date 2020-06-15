@@ -14,7 +14,7 @@ public class Soldier extends Human {
   }
 
   public Soldier(Vector position) {
-    super(position, Faction.Rebels, 70, 4);
+    super(position, Faction.Rebels, 70, 7);
   }
 
   @Override
@@ -45,7 +45,7 @@ public class Soldier extends Human {
       // Make the projectile leave the player before adding it, to make sure the Player does not
       // shoot himself by mistake.
       projectile.setPosition(projectile.getDirection()
-          .getSteps().get(0)
+          .getVector()
           .add(getPosition()));
 
       // Add the projectile.

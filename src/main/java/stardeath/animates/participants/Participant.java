@@ -25,6 +25,10 @@ public abstract class Participant extends Animate implements Walker {
     hp -= amount;
   }
 
+  public final Faction getFaction() {
+    return memberOf;
+  }
+
   @Override
   public boolean shouldRemove() {
     return super.shouldRemove() || hp < 0;

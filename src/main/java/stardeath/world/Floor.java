@@ -84,7 +84,6 @@ public final class Floor {
     private final List<Tile> tiles = new ArrayList<>();
     private final List<Participant> participants = new ArrayList<>();
 
-
     public Builder addTile(Tile tile) {
       tiles.add(tile);
       return this;

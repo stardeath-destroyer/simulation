@@ -6,6 +6,7 @@ import stardeath.world.tiles.Dump;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Start;
+import stardeath.world.tiles.Terminal;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.tiles.Wall;
 
@@ -17,6 +18,7 @@ public interface TileVisitor {
   void visitTile(Hole hole);
   void visitTile(Regular regular);
   void visitTile(Start start);
+  void visitTile(Terminal terminal);
   void visitTile(UpwardElevator elevator);
   void visitTile(Wall wall);
 }

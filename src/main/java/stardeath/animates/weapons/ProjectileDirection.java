@@ -41,4 +41,22 @@ public enum ProjectileDirection {
   public List<Vector> getSteps() {
     return steps;
   }
+
+  public Vector getVector() {
+    return steps.stream().reduce(Vector.EMPTY, Vector::add);
+  }
+
+  public static ProjectileDirection getDirectionsFrom(Vector vector) {
+    Vector clamped = vector
+        .clampX(-2, 2)
+        .clampY(-2, 2);
+
+    for (ProjectileDirection direction : ProjectileDirection.values()) {
+      if (clamped.equals(direction.getVector())) {
+        return direction;
+      }
+    }
+    
+    return ZERO;
+  }
 }

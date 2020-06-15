@@ -22,6 +22,7 @@ import stardeath.world.tiles.DownwardElevator;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Start;
+import stardeath.world.tiles.Terminal;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.tiles.Wall;
 
@@ -87,25 +88,6 @@ public class Decoding {
     return builder.build();
   }
 
-  private static Tile tileFromChar(char character, Vector position) {
-    switch (character) {
-      case 'H':
-        return new Hole(position);
-      case '.':
-        return new Regular(position);
-      case 'X':
-        return new Start(position);
-      case 'w':
-        return new Wall(position);
-      case '^':
-        return new UpwardElevator(position);
-      case 'v':
-        return new DownwardElevator(position);
-      default:
-        throw new IllegalArgumentException("Unknown tile of type '" + character + "'.");
-    }
-  }
-
   public static void readTiles(InputStream input, Floor.Builder builder) throws IOException {
     BufferedReader reader = new BufferedReader(new InputStreamReader(input));
     String line;
@@ -118,6 +100,36 @@ public class Decoding {
       }
       position = position.add(Vector.SOUTH).withX(0);
     }
+  }
+
+  private static Tile tileFromChar(char character, Vector position) {
+    Tile tile;
+    switch (character) {
+      case 'H':
+        tile = new Hole(position);
+        break;
+      case '.':
+        tile =  new Regular(position);
+        break;
+      case 'X':
+        tile =  new Start(position);
+        break;
+      case 'w':
+        tile =  new Wall(position);
+        break;
+      case '^':
+        tile =  new UpwardElevator(position);
+        break;
+      case 'v':
+        tile =  new DownwardElevator(position);
+        break;
+      case '@':
+        tile =  new Terminal(position);
+        break;
+      default:
+        throw new IllegalArgumentException("Unknown tile of type '" + character + "'.");
+    }
+    return tile;
   }
 
   public static void readEnemies(InputStream input, Floor.Builder builder) throws IOException {

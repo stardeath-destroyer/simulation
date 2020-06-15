@@ -1,32 +1,18 @@
-package stardeath.controller.visitors;
+package stardeath.animates.participants;
 
-import stardeath.animates.Animate;
-import stardeath.animates.actions.Action;
 import stardeath.animates.participants.entities.FlameTrooper;
-import stardeath.animates.participants.entities.Trooper;
-import stardeath.animates.visitors.AnimateVisitor;
-import stardeath.animates.participants.entities.Soldier;
-import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.participants.entities.JumpTrooper;
 import stardeath.animates.participants.entities.Player;
+import stardeath.animates.participants.entities.Soldier;
+import stardeath.animates.participants.entities.Trooper;
+import stardeath.animates.participants.entities.Wookie;
+import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
-import stardeath.world.World;
 
-public class ExecuteActions implements AnimateVisitor {
+public abstract class ParticipantVisitor implements AnimateVisitor {
 
-  private final World world;
-
-  public ExecuteActions(World world) {
-    this.world = world;
-  }
-
-  private void visit(Animate animate) {
-    for (Action action : animate.getActions()) {
-      action.execute(world);
-    }
-    animate.clearActions();
-  }
+  public abstract void visit(Participant participant);
 
   @Override
   public void visitParticipant(Player player) {
@@ -60,11 +46,11 @@ public class ExecuteActions implements AnimateVisitor {
 
   @Override
   public void visitProjectile(LaserBeam projectile) {
-    visit(projectile);
+    // Ignored.
   }
 
   @Override
   public void visitProjectile(Grenade grenade) {
-    visit(grenade);
+    // Ignored.
   }
 }

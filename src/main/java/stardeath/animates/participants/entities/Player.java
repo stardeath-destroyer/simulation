@@ -9,18 +9,15 @@ import stardeath.world.Tile;
 import stardeath.world.Vector;
 import stardeath.world.World;
 import stardeath.world.tiles.DownwardElevator;
-import stardeath.world.tiles.Hole;
+import stardeath.world.tiles.Terminal;
 import stardeath.world.tiles.UpwardElevator;
-import stardeath.world.visibility.RayCasting;
 import stardeath.world.visitors.DefaultTileVisitor;
 import stardeath.world.visitors.NoOpTileVisitor;
 import stardeath.world.visitors.TileVisitor;
 
 public class Player extends Soldier {
 
-  private static final int DEFAULT_VISIBILITY_RANGE = 13;
-
-
+  private static final int DEFAULT_VISIBILITY_RANGE = 8;
 
   public Player(Vector position) {
     super(position, Faction.Rebels, 100, DEFAULT_VISIBILITY_RANGE);
@@ -60,7 +57,7 @@ public class Player extends Soldier {
     }
   }
 
-  public class TakeLift implements Action {
+  public class Interact implements Action {
 
     @Override
     public void execute(World world) {
@@ -75,6 +72,10 @@ public class Player extends Soldier {
           world.moveUp();
         }
 
+        @Override
+        public void visitTile(Terminal terminal) {
+          terminal.destroy();
+        }
       };
 
       // TODO : Use a Visitor on a tile at a specific index instead.

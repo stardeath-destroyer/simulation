@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public final class Vector {
 
+  public static final Vector EMPTY = new Vector(0, 0);
+
   public static final Vector NORTH = new Vector(0, -1);
   public static final Vector EAST = new Vector(1, 0);
   public static final Vector WEST = new Vector(-1, 0);
@@ -34,6 +36,10 @@ public final class Vector {
     return new Vector(this.x + other.x, this.y + other.y);
   }
 
+  public Vector sub(Vector position) {
+    return add(position.inverse());
+  }
+
   public Vector withX(int x) {
     return new Vector(x, this.y);
   }
@@ -44,6 +50,27 @@ public final class Vector {
 
   public Vector inverse() {
     return new Vector(-this.x, -this.y);
+  }
+
+  /**
+   * Returns a new vector pointing in the direction of other. This vector will be a unit vector
+   * @param other The vector we would like to point towards
+   * @return A new unit vector pointing to other
+   */
+  public Vector directionTo(Vector other) {
+    int deltaX = other.getX() - getX();
+    int deltaY = other.getY() - getY();
+
+    return new Vector(
+        clamp(deltaX, -1, 1),
+        clamp(deltaY, -1, 1)
+    );
+  }
+
+  public int distanceTo(Vector other) {
+    int deltaX = getX() - other.getX();
+    int deltaY = getY() - other.getY();
+    return (int) Math.ceil(Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2)));
   }
 
   @Override
@@ -62,5 +89,23 @@ public final class Vector {
   @Override
   public int hashCode() {
     return Objects.hash(x, y);
+  }
+
+  public Vector clampX(int min, int max) {
+    return new Vector(
+        clamp(this.x, min, max),
+        this.y
+    );
+  }
+
+  public Vector clampY(int min, int max) {
+    return new Vector(
+        this.x,
+        clamp(this.y, min, max)
+    );
+  }
+
+  private static int clamp(int val, int min, int max) {
+    return Math.min(Math.max(val, min), max);
   }
 }

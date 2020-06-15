@@ -31,10 +31,10 @@ public class Main {
 
     Controller controller = new Controller(
         interactions(args),
-        Decoding.loadWorld(new ZipFile("src/main/resources/world.stardeath")
+        Decoding.loadWorld(new ZipFile("src/main/resources/testEnding.stardeath")
         ));
 
-    while (true) {
+    while (!controller.isEndGame()) {
       controller.step();
       controller.draw();
     }

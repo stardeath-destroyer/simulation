@@ -10,6 +10,7 @@ import stardeath.Entity;
 import stardeath.animates.Animate;
 import stardeath.animates.participants.Participant;
 import stardeath.animates.visitors.AnimateVisitor;
+import stardeath.controller.visitors.GameStateVisitor;
 import stardeath.world.visibility.RayCasting;
 import stardeath.world.visitors.DefaultTileVisitor;
 import stardeath.world.visitors.TileVisitor;
@@ -24,14 +25,16 @@ public class World {
 
   private final List<Floor> floors;
   private int current;
+  private State state;
 
   private World(List<Floor> floors) {
     this.floors = floors;
     this.current = 0;
+    state = State.UNDER_ATTACK;
   }
 
   public State getState() {
-    return State.UNDER_ATTACK;
+    return state;
   }
 
   public boolean moveUp() {
@@ -76,6 +79,19 @@ public class World {
     current().spawn();
   }
 
+  public void updateState() {
+    final GameStateVisitor stateVisitor = new GameStateVisitor();
+    floors.forEach(f -> f.visitTiles(stateVisitor));
+    floors.forEach(f -> f.visitAnimates(stateVisitor));
+
+    // Bias towards player, i.e. we accept suicide missions
+    if (stateVisitor.onlineTerminals() == 0) {
+      state = State.DESTROYED;
+    } else if (stateVisitor.isPlayerDead()) {
+      state = State.SAVED;
+    }
+  }
+
   public Optional<Animate> participantAt(Vector position) {
     return current().participantAt(position);
   }
@@ -102,7 +118,7 @@ public class World {
 
   public void visitVisibleTilesFrom(Entity entity, int radius, TileVisitor visitor) {
     RayCasting.compute(entity, radius,
-        (v) -> current().tileAt(v).map(Tile::isOpaque).orElse(false),
+        (v) -> current().tileAt(v).map(t -> t.isOpaque() && (!entity.getPosition().equals(v))).orElse(false),
         (v) -> current().tileAt(v).ifPresent(t -> t.accept(visitor)));
   }
 

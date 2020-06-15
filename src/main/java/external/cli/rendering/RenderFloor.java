@@ -2,6 +2,7 @@ package external.cli.rendering;
 
 import stardeath.world.Tile;
 import stardeath.world.tiles.DownwardElevator;
+import stardeath.world.tiles.Terminal;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.visitors.TileVisitor;
 import stardeath.world.tiles.Armory;
@@ -53,6 +54,11 @@ public class RenderFloor implements TileVisitor {
   @Override
   public void visitTile(Start start) {
     // Ignored.
+  }
+
+  @Override
+  public void visitTile(Terminal terminal) {
+    setGrid(terminal, '@');
   }
 
   @Override

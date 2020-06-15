@@ -3,12 +3,15 @@ package stardeath.animates.weapons.entities;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.weapons.Projectile;
 import stardeath.animates.weapons.ProjectileDirection;
+import stardeath.animates.weapons.visitors.HitDamageVisitor;
 import stardeath.world.Vector;
 
 public class LaserBeam extends Projectile {
 
+  private static final int DAMAGE = 50;
+
   public LaserBeam(Vector position, ProjectileDirection direction) {
-    super(position, 50, direction, 1);
+    super(position, direction, 1);
   }
 
   @Override
@@ -16,8 +19,10 @@ public class LaserBeam extends Projectile {
     visitor.visitProjectile(this);
   }
 
-  @Override
-  protected boolean isDispersed() {
-    return false;
+  public class MoveAndHit extends MoveAndConsume {
+
+    public MoveAndHit() {
+      super(new HitDamageVisitor(LaserBeam.this, DAMAGE));
+    }
   }
 }
