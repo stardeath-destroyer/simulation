@@ -35,6 +35,6 @@ public abstract class Participant extends Animate implements Walker {
 
   @Override
   public boolean shouldRemove() {
-    return super.shouldRemove() || hp < 0;
+    return super.shouldRemove() || hp <= 0;
   }
 }
