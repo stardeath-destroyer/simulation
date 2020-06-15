@@ -17,6 +17,10 @@ public abstract class Participant extends Animate implements Walker {
     this.visibilityRange = visibilityRange;
   }
 
+  public int getHealthPoints() {
+    return hp;
+  }
+
   public int getVisibilityRange() {
     return this.visibilityRange;
   }

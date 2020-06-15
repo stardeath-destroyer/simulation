@@ -17,10 +17,11 @@ import stardeath.world.visitors.TileVisitor;
 
 public class Player extends Soldier {
 
+  public static final int MAX_HEALTH_POINTS = 100;
   private static final int DEFAULT_VISIBILITY_RANGE = 8;
 
   public Player(Vector position) {
-    super(position, Faction.Rebels, 100, DEFAULT_VISIBILITY_RANGE);
+    super(position, Faction.Rebels, MAX_HEALTH_POINTS, DEFAULT_VISIBILITY_RANGE);
   }
 
   @Override
