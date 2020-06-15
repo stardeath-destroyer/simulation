@@ -125,14 +125,14 @@ public class ChooseMove extends MovementVisitor {
 
     if (! enemyVisitor.getEnemies().isEmpty()) {
       reducer.add(new Pair<>(20, attackRandomFromList(trooper, enemyVisitor.getEnemies())));
+      reducer.add(new Pair<>(5, getRandomMove(trooper, detectionVisitor)));
     }
 
-    if (! enemyVisitor.getFriends().isEmpty()) {
+    if (! enemyVisitor.getFriends().isEmpty() && ! enemyVisitor.getEnemies().isEmpty()) {
       reducer.add(new Pair<>(1, attackRandomFromList(trooper, enemyVisitor.getFriends())));
-      reducer.add(new Pair<>(10, getRandomMove(trooper, detectionVisitor)));
     }
 
-    reducer.add(new Pair<>(2, getRandomMove(trooper, detectionVisitor)));
+    reducer.add(new Pair<>(5, getRandomMove(trooper, detectionVisitor)));
     return reducer;
   }
 
