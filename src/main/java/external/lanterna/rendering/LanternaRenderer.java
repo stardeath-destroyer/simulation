@@ -10,6 +10,7 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.Terminal;
 import external.lanterna.rendering.lighting.LightingLevel;
 import external.lanterna.rendering.lighting.LightingShader;
+import external.lanterna.rendering.overlays.HealthOverlay;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class LanternaRenderer implements GetDirections, Renderer {
 
   private final Screen screen;
   private final List<OnRenderRequestListener> listeners = new ArrayList<>();
+  private final List<RenderingOverlay> overlays = new ArrayList<>();
   private TerminalSize currentSize;
   private boolean displayOverlay;
 
@@ -31,6 +33,8 @@ public class LanternaRenderer implements GetDirections, Renderer {
     this.screen.startScreen();
     this.currentSize = terminal.getTerminalSize();
     this.displayOverlay = false;
+
+    this.overlays.add(new HealthOverlay());
 
     terminal.addResizeListener((t, size) -> {
       LanternaRenderer.this.currentSize = size;
@@ -156,6 +160,10 @@ public class LanternaRenderer implements GetDirections, Renderer {
         renderPlayerOverlay(
             player.getPosition().getX() - offsetX,
             player.getPosition().getY() - offsetY);
+      }
+
+      for (RenderingOverlay overlay : overlays) {
+        overlay.render(screen, world);
       }
 
       screen.refresh();
