@@ -1,52 +1,71 @@
 package external.lanterna.rendering;
 
-import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.Terminal;
-import external.lanterna.rendering.lighting.LightingLevel;
-import external.lanterna.rendering.lighting.LightingShader;
 import external.lanterna.rendering.overlays.AimingOverlay;
+import external.lanterna.rendering.overlays.DrawWorldOverlay;
 import external.lanterna.rendering.overlays.EndingTextOverlay;
 import external.lanterna.rendering.overlays.HealthOverlay;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import stardeath.animates.participants.entities.Player;
 import stardeath.animates.weapons.ProjectileDirection;
 import stardeath.controller.interactions.GetDirections;
 import stardeath.controller.interactions.Renderer;
-import stardeath.world.Vector;
 import stardeath.world.World;
 
+/**
+ * An implementation of a {@link Renderer} that provides a way to {@link GetDirections}. Internally,
+ * it makes use of a {@link List} of {@link RenderingOverlay} instances, displayed on top of each
+ * other.
+ */
 public class LanternaRenderer implements GetDirections, AimingOverlay.Aiming, Renderer {
 
+  /**
+   * Th {@link Screen} to which content is rendered.
+   */
   private final Screen screen;
+
+  /**
+   * Thee {@link stardeath.controller.interactions.Renderer.OnRenderRequestListener} that we are
+   * interested in notifying.
+   */
   private final List<OnRenderRequestListener> listeners = new ArrayList<>();
+
+  /**
+   * The {@link RenderingOverlay}s that are used.
+   */
   private final List<RenderingOverlay> overlays = new ArrayList<>();
-  private TerminalSize currentSize;
+
+  /**
+   * True if the player is currently aiming at something.
+   */
   private boolean isAiming;
 
   public LanternaRenderer(Terminal terminal, Screen screen) throws IOException {
     this.screen = screen;
     this.screen.startScreen();
-    this.currentSize = terminal.getTerminalSize();
     this.isAiming = false;
 
-    this.overlays.add(new AimingOverlay(this));
-    this.overlays.add(new HealthOverlay());
-    this.overlays.add(new EndingTextOverlay());
-
+    // Ensure we're notified on resizes.
     terminal.addResizeListener((t, size) -> {
-      LanternaRenderer.this.currentSize = size;
       screen.doResizeIfNecessary();
       for (OnRenderRequestListener listener : listeners) {
         listener.requestRender();
       }
     });
+
+    // Setup all the overlays
+    this.overlays.add(new DrawWorldOverlay());
+    this.overlays.add(new AimingOverlay(this));
+    this.overlays.add(new HealthOverlay());
+    this.overlays.add(new EndingTextOverlay());
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ProjectileDirection requestDirectionsFromPlayer() {
     isAiming = true;
@@ -55,9 +74,12 @@ public class LanternaRenderer implements GetDirections, AimingOverlay.Aiming, Re
     try {
       while (true) {
         KeyStroke stroke = screen.readInput();
-        Character character = stroke != null ? stroke.getCharacter() : null;
-        ProjectileDirection direction =
-            character != null ? ProjectileDirection.fromCharacter(character) : null;
+        Character character = stroke != null
+            ? stroke.getCharacter()
+            : null;
+        ProjectileDirection direction = character != null
+            ? ProjectileDirection.fromCharacter(character)
+            : null;
         if (direction != null) {
           isAiming = false;
           return direction;
@@ -68,62 +90,27 @@ public class LanternaRenderer implements GetDirections, AimingOverlay.Aiming, Re
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void render(World world) {
-
-    RenderingVisitor render = new RenderingVisitor(world.getWidth(), world.getHeight());
-    LightingShader shader = new LightingShader(world);
-
-    // Render the floor and the participants.
-    world.visitTiles(render);
-    world.visitAnimates(render);
-
-    // Light the level.
-    world.visitAnimates(shader);
-
-    // We MUST have at least one player. Otherwise, default to a player at (0, 0) for shade
-    // computations.
-    Player player = render.getPlayer().orElse(new Player(Vector.EMPTY));
-
-    // Calculate the lighting.
-    LightingLevel[][] lighting = shader.getLevels();
-
-    // Offset the screen appropriately.
-    int offsetX = player.getPosition().getX() - currentSize.getColumns() / 2;
-    int offsetY = player.getPosition().getY() - currentSize.getRows() / 2;
-
-    // Render the buffer with its offset.
     try {
-      for (int x = 0; x < currentSize.getColumns(); x++) {
-        for (int y = 0; y < currentSize.getRows(); y++) {
-          int bx = offsetX + x;
-          int by = offsetY + y;
 
-          boolean insideBuffer = bx >= 0 && by >= 0 &&
-              bx < world.getWidth() && by < world.getHeight();
-
-          if (insideBuffer && render.getDrawn()[bx][by]) {
-            screen.setCharacter(x, y, new TextCharacter(
-                render.getCharacters()[bx][by],
-                render.getForeground()[bx][by].lighted(lighting[bx][by]),
-                render.getBackground()[bx][by].lighted(lighting[bx][by])
-            ));
-          } else {
-            screen.setCharacter(x, y, TextCharacter.DEFAULT_CHARACTER);
-          }
-        }
-      }
-
+      // Render all the overlays.
       for (RenderingOverlay overlay : overlays) {
         overlay.render(screen, world);
       }
-
       screen.refresh();
+
     } catch (IOException exception) {
       exception.printStackTrace();
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void registerRenderRequestListener(OnRenderRequestListener listener) {
     if (!listeners.contains(listener)) {
@@ -131,6 +118,9 @@ public class LanternaRenderer implements GetDirections, AimingOverlay.Aiming, Re
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void unregisterRenderRequestListener(OnRenderRequestListener listener) {
     if (listeners.contains(listener)) {
@@ -138,6 +128,9 @@ public class LanternaRenderer implements GetDirections, AimingOverlay.Aiming, Re
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean isAiming() {
     return isAiming;

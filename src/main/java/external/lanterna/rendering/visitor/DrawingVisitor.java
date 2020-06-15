@@ -1,38 +1,31 @@
-package external.lanterna.rendering;
+package external.lanterna.rendering.visitor;
 
 import external.lanterna.rendering.texturing.Material;
 import external.lanterna.rendering.texturing.MaterialRenderer;
-import java.util.Optional;
 import stardeath.animates.participants.entities.FlameTrooper;
-import stardeath.animates.participants.entities.Trooper;
-import stardeath.animates.visitors.AnimateVisitor;
-import stardeath.animates.participants.entities.Soldier;
-import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.participants.entities.JumpTrooper;
 import stardeath.animates.participants.entities.Player;
+import stardeath.animates.participants.entities.Soldier;
+import stardeath.animates.participants.entities.Trooper;
+import stardeath.animates.participants.entities.Wookie;
+import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
-import stardeath.world.tiles.DownwardElevator;
-import stardeath.world.tiles.Terminal;
-import stardeath.world.tiles.UpwardElevator;
-import stardeath.world.visitors.TileVisitor;
 import stardeath.world.tiles.Armory;
+import stardeath.world.tiles.DownwardElevator;
 import stardeath.world.tiles.Dump;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Start;
+import stardeath.world.tiles.Terminal;
+import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.tiles.Wall;
+import stardeath.world.visitors.TileVisitor;
 
-public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor, TileVisitor {
+public class DrawingVisitor extends MaterialRenderer implements AnimateVisitor, TileVisitor {
 
-  private Player player;
-
-  public RenderingVisitor(int width, int height) {
+  public DrawingVisitor(int width, int height) {
     super(width, height);
-  }
-
-  public Optional<Player> getPlayer() {
-    return Optional.ofNullable(player);
   }
 
   @Override
@@ -86,7 +79,6 @@ public class RenderingVisitor extends MaterialRenderer implements AnimateVisitor
 
   @Override
   public void visitParticipant(Player player) {
-    this.player = player;
     drawAnimate(player, Material.Player, Material.Void, 'P');
   }
 
