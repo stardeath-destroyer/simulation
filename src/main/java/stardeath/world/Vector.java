@@ -36,6 +36,10 @@ public final class Vector {
     return new Vector(this.x + other.x, this.y + other.y);
   }
 
+  public Vector sub(Vector position) {
+    return add(position.inverse());
+  }
+
   public Vector withX(int x) {
     return new Vector(x, this.y);
   }
@@ -85,6 +89,20 @@ public final class Vector {
   @Override
   public int hashCode() {
     return Objects.hash(x, y);
+  }
+
+  public Vector clampX(int min, int max) {
+    return new Vector(
+        clamp(this.x, min, max),
+        this.y
+    );
+  }
+
+  public Vector clampY(int min, int max) {
+    return new Vector(
+        this.x,
+        clamp(this.y, min, max)
+    );
   }
 
   private static int clamp(int val, int min, int max) {
