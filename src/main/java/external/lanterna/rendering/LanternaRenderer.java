@@ -6,6 +6,7 @@ import com.googlecode.lanterna.terminal.Terminal;
 import external.lanterna.rendering.overlays.AimingOverlay;
 import external.lanterna.rendering.overlays.DrawWorldOverlay;
 import external.lanterna.rendering.overlays.EndingTextOverlay;
+import external.lanterna.rendering.overlays.FloorStatisticsOverlay;
 import external.lanterna.rendering.overlays.HealthOverlay;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,6 +61,7 @@ public class LanternaRenderer implements GetDirections, AimingOverlay.Aiming, Re
     this.overlays.add(new DrawWorldOverlay());
     this.overlays.add(new AimingOverlay(this));
     this.overlays.add(new HealthOverlay());
+    this.overlays.add(new FloorStatisticsOverlay());
     this.overlays.add(new EndingTextOverlay());
   }
 
