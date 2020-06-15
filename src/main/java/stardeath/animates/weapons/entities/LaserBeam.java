@@ -22,13 +22,14 @@ public class LaserBeam extends Projectile {
     visitor.visitProjectile(this);
   }
 
-  @Override
-  protected boolean isDispersed() {
-    return dispersed;
-  }
-
   public class MoveAndHit extends MoveAndConsume {
 
+    public MoveAndHit() {
+      super(new HitDamageVisitor(LaserBeam.this, DAMAGE));
+    }
+
+    /*
+    // TODO: Fix this weird behaviour... does not work on tiles
     public MoveAndHit() {
       super((world, position) -> {
         HitDamageVisitor visitor = new HitDamageVisitor(LaserBeam.DAMAGE);
@@ -44,5 +45,6 @@ public class LaserBeam extends Projectile {
         dispersed = dispersed || visitor.isConsumed();
       });
     }
+     */
   }
 }

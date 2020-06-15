@@ -1,8 +1,8 @@
 package stardeath.animates.weapons;
 
-import java.util.function.BiConsumer;
 import stardeath.animates.Animate;
 import stardeath.animates.actions.Action;
+import stardeath.animates.weapons.visitors.ConsumableVisitor;
 import stardeath.world.Vector;
 import stardeath.world.World;
 
@@ -17,48 +17,44 @@ public abstract class Projectile extends Animate {
     this.speed = speed;
   }
 
-  protected abstract boolean isDispersed();
-
   public ProjectileDirection getDirection() {
     return direction;
   }
 
-  public abstract class MoveAndConsume implements Action {
+  public class MoveAndConsume implements Action {
 
-    private final BiConsumer<World, Vector> hitConsumer;
+    private final ConsumableVisitor consumableVisitor;
 
-    public MoveAndConsume(BiConsumer<World, Vector> hitConsumer) {
-      this.hitConsumer = hitConsumer;
+    public MoveAndConsume(ConsumableVisitor consumableVisitor) {
+      this.consumableVisitor = consumableVisitor;
     }
 
     @Override
     public void execute(World world) {
-      Vector base = getPosition();
       for (int i = 0; i < speed; i++) {
         for (Vector step : direction.getSteps()) {
 
-          // Move by one of the internal direction step vectors.
-          base = base.add(step);
-
-          // Update the position of the head of this projectile.
-          position = base;
-
           // Apply the damage to whatever is on the path of the projectile.
-          world.participantAt(position).ifPresent(animate -> {
-            if (animate != Projectile.this) {
-              hitConsumer.accept(world, animate.getPosition());
-            }
-          });
-          world.tileAt(position).ifPresent(tile -> {
-            if (tile.isOpaque()) {
-              hitConsumer.accept(world, tile.getPosition());
-            }
-          });
+          if (!consumableVisitor.isConsumed()) {
+            world.participantAt(position).ifPresent(animate -> {
+              if (animate != Projectile.this) {
+                animate.accept(consumableVisitor);
+              }
 
-          if (isDispersed() || shouldRemove()) {
-            remove();
+            });
+          }
+          
+          // If the visitor hasn't been consumed yet, continue
+          if (!consumableVisitor.isConsumed()) {
+            world.tileAt(position).ifPresent(tile -> tile.accept(consumableVisitor));
+          }
+
+          if (consumableVisitor.isConsumed()) {
             return;
           }
+
+          // Move by one of the internal direction step vectors.
+          position = getPosition().add(step);
         }
       }
     }

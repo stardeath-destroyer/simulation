@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public final class Vector {
 
+  public static final Vector EMPTY = new Vector(0, 0);
+
   public static final Vector NORTH = new Vector(0, -1);
   public static final Vector EAST = new Vector(1, 0);
   public static final Vector WEST = new Vector(-1, 0);

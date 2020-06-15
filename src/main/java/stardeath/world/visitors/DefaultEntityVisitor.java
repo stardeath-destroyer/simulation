@@ -1,17 +1,15 @@
-package stardeath.animates.weapons.visitors;
+package stardeath.world.visitors;
 
-import java.util.Random;
-import stardeath.animates.participants.Participant;
+import java.util.function.Consumer;
+import stardeath.Entity;
 import stardeath.animates.participants.entities.FlameTrooper;
 import stardeath.animates.participants.entities.JumpTrooper;
 import stardeath.animates.participants.entities.Player;
 import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.entities.Trooper;
 import stardeath.animates.participants.entities.Wookie;
-import stardeath.animates.weapons.Projectile;
 import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
-import stardeath.world.Tile;
 import stardeath.world.tiles.Armory;
 import stardeath.world.tiles.DownwardElevator;
 import stardeath.world.tiles.Dump;
@@ -22,122 +20,96 @@ import stardeath.world.tiles.Terminal;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.tiles.Wall;
 
-public class HitDamageVisitor extends ConsumableVisitor {
+public class DefaultEntityVisitor implements EntityVisitor {
+  private Consumer<Entity> consumer;
 
-  private static final Random random = new Random();
-  private final int force;
-  private final Projectile projectile;
-
-  public HitDamageVisitor(Projectile projectile, int force) {
-    super();
-    this.projectile = projectile;
-    this.force = force;
+  public DefaultEntityVisitor(Consumer<Entity> consumer) {
+    this.consumer = consumer;
   }
 
-  private void hit(Participant participant) {
-    projectile.remove();
-    participant.damage(this.force);
-  }
-
-  private void hit(Tile tile) {
-    if (tile.isOpaque()) {
-      projectile.remove();
-      consumed = true;
-    }
-  }
 
   @Override
   public void visitParticipant(Player player) {
-    hit(player);
-    consumed = true;
+    consumer.accept(player);
   }
 
   @Override
   public void visitParticipant(JumpTrooper trooper) {
-    hit(trooper);
-    consumed = true;
+    consumer.accept(trooper);
   }
 
   @Override
   public void visitParticipant(FlameTrooper trooper) {
-    hit(trooper);
-    consumed = true;
+    consumer.accept(trooper);
   }
 
   @Override
   public void visitParticipant(Trooper trooper) {
-    hit(trooper);
-    consumed = true;
+    consumer.accept(trooper);
   }
 
   @Override
   public void visitParticipant(Soldier soldier) {
-    hit(soldier);
-    consumed = true;
+    consumer.accept(soldier);
   }
 
   @Override
   public void visitParticipant(Wookie wookie) {
-    hit(wookie);
-    consumed = true;
+    consumer.accept(wookie);
   }
 
   @Override
   public void visitProjectile(LaserBeam projectile) {
-    // Standard projectiles do not collide.
+    consumer.accept(projectile);
   }
 
   @Override
   public void visitProjectile(Grenade grenade) {
-    // It's not possible to detonate grenades remotely, sorry.
+    consumer.accept(grenade);
   }
 
   @Override
   public void visitTile(Armory armory) {
-    hit(armory);
+    consumer.accept(armory);
   }
 
   @Override
   public void visitTile(Dump dump) {
-    hit(dump);
+    consumer.accept(dump);
   }
 
   @Override
   public void visitTile(DownwardElevator elevator) {
-    hit(elevator);
+    consumer.accept(elevator);
   }
 
   @Override
   public void visitTile(Hole hole) {
-    hit(hole);
+    consumer.accept(hole);
   }
 
   @Override
   public void visitTile(Regular regular) {
-    hit(regular);
+    consumer.accept(regular);
   }
 
   @Override
   public void visitTile(Start start) {
-    hit(start);
+    consumer.accept(start);
   }
 
   @Override
   public void visitTile(Terminal terminal) {
-    if (random.nextInt(100) < 15) {
-      terminal.destroy();
-    }
-    consumed = true;
-    projectile.remove();
+    consumer.accept(terminal);
   }
 
   @Override
   public void visitTile(UpwardElevator elevator) {
-    hit(elevator);
+    consumer.accept(elevator);
   }
 
   @Override
   public void visitTile(Wall wall) {
-    hit(wall);
+    consumer.accept(wall);
   }
 }

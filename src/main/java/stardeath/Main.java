@@ -38,7 +38,5 @@ public class Main {
       controller.step();
       controller.draw();
     }
-
-    System.out.println("End of game");
   }
 }
