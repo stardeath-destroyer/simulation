@@ -49,14 +49,17 @@ public class ChooseMove extends MovementVisitor {
     EnnemyVisitor ennemyVisitor = new EnnemyVisitor(soldier.getFaction());
     world.visitVisibleAnimatesFrom(soldier, soldier.getVisibilityRange(), ennemyVisitor);
 
-    Vector move;
+    Vector move = null;
 
     if (ennemyVisitor.getPlayerPos().isPresent()) {
       Player player = ennemyVisitor.getPlayerPos().get();
-      move = soldier.getPosition().directionTo(player.getPosition());
-    } else {
-      move = randomMove();
+      if (sRandom.nextDouble() < 0.5d) {
+        move = soldier.getPosition().directionTo(player.getPosition());
+      }
     }
+
+    if (move == null)
+      move = randomMove();
 
     soldier.addAction(soldier.new MoveAction(move));
   }
