@@ -19,7 +19,8 @@ public class Lanterna implements InteractionsFactory {
   private final Renderer renderer;
 
   public Lanterna() throws IOException {
-    DefaultTerminalFactory factory = new DefaultTerminalFactory();
+    DefaultTerminalFactory factory = new DefaultTerminalFactory()
+        .setTerminalEmulatorTitle("Stardeath Destroyer");
 
     // Create and display a terminal screen.
     Terminal terminal = factory.createTerminal();
