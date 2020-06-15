@@ -50,37 +50,66 @@ public class ChooseMove extends MovementVisitor {
   @Override
   public void visitParticipant(Soldier soldier) {
     EnemyVisitor enemyVisitor = new EnemyVisitor(soldier.getFaction());
+    TileDetectionVisitor detectionVisitor = new TileDetectionVisitor();
+
     world.visitVisibleAnimatesFrom(soldier, soldier.getVisibilityRange(), enemyVisitor);
+    world.visitVisibleTilesFrom(soldier, detectionVisitor);
 
     Action actionToSet;
+    double random = Math.random();
 
-    if (enemyVisitor.getPlayerPos().isPresent() && ! enemyVisitor.getEnemies().isEmpty()) {
-      actionToSet = chooseFrom(
-          followPlayer(soldier, enemyVisitor),
-          attackEnemy(soldier, enemyVisitor),
-          0.45
-      );
-    } else if (enemyVisitor.getPlayerPos().isPresent()) {
-      actionToSet = followPlayer(soldier, enemyVisitor);
+    // Choose between following the player, random and attacking
+    if (enemyVisitor.getPlayer().isPresent() && ! enemyVisitor.getEnemies().isEmpty()) {
+      if (random < 0.2) {
+        actionToSet = getRandomMove(soldier, detectionVisitor);
+      } else if (random < 0.45) {
+        actionToSet = followPlayer(soldier, enemyVisitor.getPlayer().get());
+      } else {
+        actionToSet = attackEnemy(soldier, enemyVisitor);
+      }
+      // follow the player or random
+    } else if (enemyVisitor.getPlayer().isPresent()) {
+      if (random < 0.65) {
+        actionToSet = getRandomMove(soldier, detectionVisitor);
+      } else {
+        actionToSet = followPlayer(soldier, enemyVisitor.getPlayer().get());
+      }
+      // attack !
     } else if (! enemyVisitor.getEnemies().isEmpty()) {
       actionToSet = attackEnemy(soldier, enemyVisitor);
+      // default -> random
     } else {
-      actionToSet = soldier.new MoveAction(randomMove());
+      actionToSet = getRandomMove(soldier, detectionVisitor);
     }
 
     soldier.addAction(actionToSet);
   }
 
-  private Action followPlayer(Participant participant, EnemyVisitor visitor) {
-    Player player = visitor.getPlayerPos().get();
-    return chooseFrom(
-        participant.new MoveAction(participant.getPosition().directionTo(player.getPosition())),
-        participant.new MoveAction(randomMove()),
-        0.5
-    );
+  private static Action getRandomMove(Participant participant, TileDetectionVisitor visitor) {
+    Vector move;
+    boolean chooseAgain;
+    int i = 0;
+
+    do {
+      move = randomMove();
+      i++;
+      Vector finalMove = move;
+      chooseAgain = visitor.tilesToAvoid().stream()
+          .anyMatch(tile -> participant.getPosition().add(finalMove).equals(tile.getPosition()));
+    } while (chooseAgain && i < 8);
+
+    if (i >= 8) {
+      move = Vector.EMPTY;
+    }
+
+    return participant.new MoveAction(move);
   }
 
-  private Action attackEnemy(Soldier soldier, EnemyVisitor visitor) {
+  private static Action followPlayer(Participant participant, Player player) {
+    return participant.new MoveAction(participant.getPosition().directionTo(player.getPosition()));
+  }
+
+  private static Action attackEnemy(Soldier soldier, EnemyVisitor visitor) {
     List<Participant> enemies = visitor.getEnemies();
     Participant enemy = enemies.get(random(0, enemies.size() - 1));
 
@@ -140,17 +169,10 @@ public class ChooseMove extends MovementVisitor {
     }
   }
 
-  private Vector randomMove() {
+  private static Vector randomMove() {
     return new Vector(
         random(-1, 1),
         random(-1, 1)
     );
-  }
-
-  private static Action chooseFrom(Action action1, Action action2, double percentage) {
-    if (sRandom.nextDouble() < percentage)
-      return action1;
-    else
-      return action2;
   }
 }

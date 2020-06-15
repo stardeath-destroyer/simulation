@@ -65,7 +65,7 @@ public class EnemyVisitor extends NoOpAnimateVisitor {
     defaultEnemyVerification(wookie);
   }
 
-  public Optional<Player> getPlayerPos() {
+  public Optional<Player> getPlayer() {
     return Optional.ofNullable(player);
   }
 
