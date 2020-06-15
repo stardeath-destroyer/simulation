@@ -4,6 +4,7 @@ import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.TextColor.ANSI;
+import com.googlecode.lanterna.TextColor.Indexed;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.Terminal;
@@ -12,10 +13,10 @@ import external.lanterna.rendering.lighting.LightingShader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import stardeath.controller.interactions.GetDirections;
-import stardeath.controller.interactions.Renderer;
 import stardeath.animates.participants.entities.Player;
 import stardeath.animates.weapons.ProjectileDirection;
+import stardeath.controller.interactions.GetDirections;
+import stardeath.controller.interactions.Renderer;
 import stardeath.world.World;
 
 public class LanternaRenderer implements GetDirections, Renderer {
@@ -49,7 +50,8 @@ public class LanternaRenderer implements GetDirections, Renderer {
       while (true) {
         KeyStroke stroke = screen.readInput();
         Character character = stroke != null ? stroke.getCharacter() : null;
-        ProjectileDirection direction = character != null ? ProjectileDirection.fromCharacter(character) : null;
+        ProjectileDirection direction =
+            character != null ? ProjectileDirection.fromCharacter(character) : null;
         if (direction != null) {
           displayOverlay = false;
           return direction;
@@ -60,8 +62,52 @@ public class LanternaRenderer implements GetDirections, Renderer {
     }
   }
 
+  private void renderText(int[][] text) {
+    boolean[][] data = TextUtils.renderMostlyCentered(
+        text,
+        currentSize.getColumns(),
+        currentSize.getRows());
+
+    for (int x = 0; x < currentSize.getColumns(); x++) {
+      for (int y = 0; y < currentSize.getRows(); y++) {
+        if (data[x][y]) {
+          if ((x + y) % 2 == 0) {
+            screen.setCharacter(x, y, new TextCharacter(' ', new Indexed(190), new Indexed(190)));
+          } else {
+            screen.setCharacter(x, y, new TextCharacter(' ', new Indexed(191) ,new Indexed(191)));
+          }
+        } else {
+          screen.setCharacter(x, y, new TextCharacter(' '));
+        }
+      }
+    }
+
+    try {
+      screen.refresh();
+    } catch (IOException exception) {
+      exception.printStackTrace();
+    }
+  }
+
+  private void renderLost() {
+    renderText(TextUtils.YOU_LOST);
+  }
+
+  private void renderWon() {
+    renderText(TextUtils.YOU_WON);
+  }
+
   @Override
   public void render(World world) {
+
+    switch (world.getState()) {
+      case DESTROYED:
+        renderWon();
+        return;
+      case SAVED:
+        renderLost();
+        return;
+    }
 
     RenderingVisitor render = new RenderingVisitor(world.getWidth(), world.getHeight());
     LightingShader shader = new LightingShader(world);
@@ -138,9 +184,11 @@ public class LanternaRenderer implements GetDirections, Renderer {
         int x = centerX - 2 + j;
         int y = centerY - 2 + i;
         if (overlay[i][j] != null && (i + j) % 2 == 0) {
-          screen.setCharacter(x, y, new TextCharacter(overlay[i][j], new TextColor.Indexed(196), ANSI.DEFAULT));
+          screen.setCharacter(x, y,
+              new TextCharacter(overlay[i][j], new TextColor.Indexed(196), ANSI.DEFAULT));
         } else if (overlay[i][j] != null) {
-          screen.setCharacter(x, y, new TextCharacter(overlay[i][j], new TextColor.Indexed(200), ANSI.DEFAULT));
+          screen.setCharacter(x, y,
+              new TextCharacter(overlay[i][j], new TextColor.Indexed(200), ANSI.DEFAULT));
         }
       }
     }
