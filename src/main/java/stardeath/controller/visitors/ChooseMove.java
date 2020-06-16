@@ -85,15 +85,14 @@ public class ChooseMove extends MovementVisitor {
       Collections.shuffle(enemies);
       Vector enemyPosition = enemies.get(0).getPosition();
 
-      reducer.add(new Pair<>(
-          10,
+      reducer.add(10,
           trooper.new Fire(
               new Grenade(
                   trooper.getPosition(),
                   ProjectileDirection.getDirectionsFrom(enemyPosition.sub(trooper.getPosition()))
               )
           )
-      ));
+      );
     }
 
     trooper.addAction(reducer.resolve());
@@ -119,20 +118,20 @@ public class ChooseMove extends MovementVisitor {
     ActionReducer reducer = new ActionReducer();
 
     if (enemyVisitor.getPlayer().isPresent()) {
-      reducer.add(new Pair<>(20, attackEnemy(trooper, enemyVisitor.getPlayer().get())));
-      reducer.add(new Pair<>(5, getRandomMove(trooper, detectionVisitor)));
+      reducer.add(20, attackEnemy(trooper, enemyVisitor.getPlayer().get()));
+      reducer.add(5, getRandomMove(trooper, detectionVisitor));
     }
 
     if (! enemyVisitor.getEnemies().isEmpty()) {
-      reducer.add(new Pair<>(20, attackRandomFromList(trooper, enemyVisitor.getEnemies())));
-      reducer.add(new Pair<>(5, getRandomMove(trooper, detectionVisitor)));
+      reducer.add(20, attackRandomFromList(trooper, enemyVisitor.getEnemies()));
+      reducer.add(5, getRandomMove(trooper, detectionVisitor));
     }
 
     if (! enemyVisitor.getFriends().isEmpty() && ! enemyVisitor.getEnemies().isEmpty()) {
-      reducer.add(new Pair<>(1, attackRandomFromList(trooper, enemyVisitor.getFriends())));
+      reducer.add(1, attackRandomFromList(trooper, enemyVisitor.getFriends()));
     }
 
-    reducer.add(new Pair<>(5, getRandomMove(trooper, detectionVisitor)));
+    reducer.add(5, getRandomMove(trooper, detectionVisitor));
     return reducer;
   }
 
@@ -144,43 +143,18 @@ public class ChooseMove extends MovementVisitor {
     world.visitVisibleAnimatesFrom(soldier, soldier.getVisibilityRange(), enemyVisitor);
     world.visitVisibleTilesFrom(soldier, detectionVisitor);
 
-    /* Stay there for historic reasons, for now
-    // Choose between following the player, random and attacking
-    if (enemyVisitor.getPlayer().isPresent() && ! enemyVisitor.getEnemies().isEmpty()) {
-      if (random < 0.2) {
-        actionToSet = getRandomMove(soldier, detectionVisitor);
-      } else if (random < 0.45) {
-        actionToSet = followPlayer(soldier, enemyVisitor.getPlayer().get());
-      } else {
-        actionToSet = attackRandomEnemy(soldier, enemyVisitor);
-      }
-      // follow the player or random
-    } else if (enemyVisitor.getPlayer().isPresent()) {
-      if (random < 0.65) {
-        actionToSet = getRandomMove(soldier, detectionVisitor);
-      } else {
-        actionToSet = followPlayer(soldier, enemyVisitor.getPlayer().get());
-      }
-      // attack !
-    } else if (! enemyVisitor.getEnemies().isEmpty()) {
-      actionToSet = attackRandomEnemy(soldier, enemyVisitor);
-      // default -> random
-    } else {
-      actionToSet = getRandomMove(soldier, detectionVisitor);
-    }
-     */
     ActionReducer reducer = new ActionReducer();
 
     if (enemyVisitor.getPlayer().isPresent()) {
-      reducer.add(new Pair<>(10, followPlayer(soldier, enemyVisitor.getPlayer().get())));
-      reducer.add(new Pair<>(6, getRandomMove(soldier, detectionVisitor)));
+      reducer.add(10, followPlayer(soldier, enemyVisitor.getPlayer().get()));
+      reducer.add(6, getRandomMove(soldier, detectionVisitor));
     }
 
     if (! enemyVisitor.getEnemies().isEmpty()) {
-      reducer.add(new Pair<>(20, attackRandomFromList(soldier, enemyVisitor.getEnemies())));
+      reducer.add(20, attackRandomFromList(soldier, enemyVisitor.getEnemies()));
     }
 
-    reducer.add(new Pair<>(2, getRandomMove(soldier, detectionVisitor)));
+    reducer.add(2, getRandomMove(soldier, detectionVisitor));
 
     soldier.addAction(reducer.resolve());
   }
@@ -279,26 +253,26 @@ public class ChooseMove extends MovementVisitor {
   }
 
   private static class ActionReducer {
-    List<Pair<Integer, Action>> actionChoices;
+    List<Choice> actionChoices;
 
     public ActionReducer() {
       actionChoices = new ArrayList<>();
     }
 
-    public void add(Pair<Integer, Action> action) {
-      actionChoices.add(action);
+    public void add(int coefficient, Action action) {
+      actionChoices.add(new Choice(coefficient, action));
     }
 
     public Action resolve() {
       int sum = actionChoices.stream()
-          .map(pair -> pair.fst)
+          .map(choice -> choice.fst)
           .reduce(0, Integer::sum);
 
       List<Action> complete = new ArrayList<>();
-      actionChoices.forEach(pair -> {
-            int i = pair.fst;
+      actionChoices.forEach(choice -> {
+            int i = choice.fst;
             do {
-              complete.add(pair.snd);
+              complete.add(choice.snd);
               i--;
             } while (i > 0);
           });
@@ -306,16 +280,16 @@ public class ChooseMove extends MovementVisitor {
       Collections.shuffle(complete);
       return complete.get(0);
     }
-  }
 
-  // Sorry
-  private static class Pair<A,B> {
-    public A fst;
-    public B snd;
+    // Sorry
+    private static class Choice {
+      public int fst;
+      public Action snd;
 
-    public Pair(A fst, B snd) {
-      this.fst = fst;
-      this.snd = snd;
+      public Choice(int coefficient, Action snd) {
+        this.fst = coefficient;
+        this.snd = snd;
+      }
     }
   }
 }
