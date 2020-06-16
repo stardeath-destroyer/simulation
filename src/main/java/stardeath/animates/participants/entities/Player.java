@@ -79,8 +79,7 @@ public class Player extends Soldier {
         }
       };
 
-      // TODO : Use a Visitor on a tile at a specific index instead.
-      world.tileAt(getPosition()).ifPresent(tile -> tile.accept(visitor));
+      world.visitTileAt(getPosition(), visitor);
     }
   }
 }

@@ -46,7 +46,7 @@ public abstract class Projectile extends Animate {
           
           // If the visitor hasn't been consumed yet, continue
           if (!consumableVisitor.isConsumed()) {
-            world.tileAt(position).ifPresent(tile -> tile.accept(consumableVisitor));
+            world.visitTileAt(position, consumableVisitor);
           }
 
           if (consumableVisitor.isConsumed()) {

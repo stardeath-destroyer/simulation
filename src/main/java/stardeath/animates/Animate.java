@@ -3,11 +3,13 @@ package stardeath.animates;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import stardeath.Entity;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.world.Tile;
 import stardeath.world.Vector;
 import stardeath.world.World;
+import stardeath.world.visitors.DefaultTileVisitor;
 
 public abstract class Animate extends Entity {
 
@@ -71,9 +73,11 @@ public abstract class Animate extends Entity {
     public void execute(World world) {
       Vector newPosition = getPosition().add(delta);
 
-      if (!world.tileAt(newPosition).map(Tile::isOpaque).orElse(false)) {
-        Animate.this.setPosition(newPosition);
-      }
+      world.visitTileAt(newPosition, new DefaultTileVisitor(tile -> {
+        if (!tile.isOpaque()) {
+          Animate.this.setPosition(newPosition);
+        }
+      }));
     }
   }
 }

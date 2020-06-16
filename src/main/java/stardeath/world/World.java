@@ -96,8 +96,8 @@ public class World {
     return current().participantAt(position);
   }
 
-  public Optional<Tile> tileAt(Vector position) {
-    return current().tileAt(position);
+  public void visitTileAt(Vector position, TileVisitor visitor) {
+    current().tileAt(position).ifPresent(t -> t.accept(visitor));
   }
 
   public void visitVisibleAnimatesFrom(Entity entity, int radius, AnimateVisitor visitor) {
