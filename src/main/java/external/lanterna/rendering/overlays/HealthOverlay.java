@@ -31,22 +31,23 @@ public class HealthOverlay implements RenderingOverlay {
     PlayerHealthVisitor visitor = new PlayerHealthVisitor();
     world.visitAnimates(visitor);
 
-    int count = (int) Math.floor(screen.getTerminalSize().getColumns() - 2 * visitor.healthLevel);
+    int count = (int) Math.floor((screen.getTerminalSize().getColumns() - 2) * visitor.healthLevel);
     int row = screen.getTerminalSize().getRows() - 2;
     for (int column = 0; column < count; column++) {
       screen.setCharacter(column + 1, row, HEALTH_BAR_CHARACTER);
     }
 
-    renderSubtitle(screen);
+    renderSubtitle(screen, (int) (100 * visitor.healthLevel));
   }
 
   /**
    * Renders the subtitle that is displayed above the health bar.
    *
    * @param screen The screen to render on.
+   * @param remaining The percentage of HPs remaining.
    */
-  private void renderSubtitle(Screen screen) {
-    final String contents = "Health :";
+  private void renderSubtitle(Screen screen, int remaining) {
+    final String contents = "Health (" + remaining + "%) :";
 
     // We can't draw on screens very small.
     if (screen.getTerminalSize().getRows() < 3 ||

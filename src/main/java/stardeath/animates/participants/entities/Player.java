@@ -17,7 +17,7 @@ import stardeath.world.visitors.TileVisitor;
 
 public class Player extends Soldier {
 
-  public static final int MAX_HEALTH_POINTS = 100;
+  public static final int MAX_HEALTH_POINTS = 600;
   private static final int DEFAULT_VISIBILITY_RANGE = 8;
 
   public Player(Vector position) {
