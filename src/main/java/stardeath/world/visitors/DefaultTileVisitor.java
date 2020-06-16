@@ -2,9 +2,7 @@ package stardeath.world.visitors;
 
 import java.util.function.Consumer;
 import stardeath.world.Tile;
-import stardeath.world.tiles.Armory;
 import stardeath.world.tiles.DownwardElevator;
-import stardeath.world.tiles.Dump;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Start;
@@ -18,16 +16,6 @@ public class DefaultTileVisitor implements TileVisitor {
 
   public DefaultTileVisitor(Consumer<Tile> consumer) {
     this.consumer = consumer;
-  }
-
-  @Override
-  public void visitTile(Armory armory) {
-    consumer.accept(armory);
-  }
-
-  @Override
-  public void visitTile(Dump dump) {
-    consumer.accept(dump);
   }
 
   @Override

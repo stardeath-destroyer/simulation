@@ -11,9 +11,7 @@ import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
-import stardeath.world.tiles.Armory;
 import stardeath.world.tiles.DownwardElevator;
-import stardeath.world.tiles.Dump;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Start;
@@ -26,16 +24,6 @@ public class DrawingVisitor extends MaterialRenderer implements AnimateVisitor, 
 
   public DrawingVisitor(int width, int height) {
     super(width, height);
-  }
-
-  @Override
-  public void visitTile(Armory armory) {
-    throw new IllegalStateException("Armories are not supported yet.");
-  }
-
-  @Override
-  public void visitTile(Dump dump) {
-    throw new IllegalStateException("Dumps are not supported yet.");
   }
 
   @Override

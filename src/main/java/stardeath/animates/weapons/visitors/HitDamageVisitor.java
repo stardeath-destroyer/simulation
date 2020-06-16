@@ -12,9 +12,7 @@ import stardeath.animates.weapons.Projectile;
 import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
 import stardeath.world.Tile;
-import stardeath.world.tiles.Armory;
 import stardeath.world.tiles.DownwardElevator;
-import stardeath.world.tiles.Dump;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Start;
@@ -90,16 +88,6 @@ public class HitDamageVisitor extends ConsumableVisitor {
   @Override
   public void visitProjectile(Grenade grenade) {
     // It's not possible to detonate grenades remotely, sorry.
-  }
-
-  @Override
-  public void visitTile(Armory armory) {
-    hit(armory);
-  }
-
-  @Override
-  public void visitTile(Dump dump) {
-    hit(dump);
   }
 
   @Override

@@ -10,9 +10,7 @@ import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.weapons.Projectile;
 import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
-import stardeath.world.tiles.Armory;
 import stardeath.world.tiles.DownwardElevator;
-import stardeath.world.tiles.Dump;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Start;
@@ -93,16 +91,6 @@ public class FloorStatisticsVisitor implements EntityVisitor {
   @Override
   public void visitProjectile(Grenade grenade) {
     countProjectile(grenade);
-  }
-
-  @Override
-  public void visitTile(Armory armory) {
-    // Ignored.
-  }
-
-  @Override
-  public void visitTile(Dump dump) {
-    // Ignored.
   }
 
   @Override
