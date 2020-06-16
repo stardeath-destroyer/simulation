@@ -22,16 +22,6 @@ public class Soldier extends Human {
     visitor.visitParticipant(this);
   }
 
-  @Override
-  public int getAttackRange() {
-    return 4;
-  }
-
-  @Override
-  public int getAttackDamage() {
-    return 150;
-  }
-
   public class Fire implements Action {
 
     private final Projectile projectile;
