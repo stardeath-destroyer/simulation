@@ -5,9 +5,9 @@ import stardeath.world.Vector;
 
 public abstract class Participant extends Animate {
 
-  private Faction memberOf;
+  private final Faction memberOf;
   private int hp;
-  private int visibilityRange;
+  private final int visibilityRange;
 
   public Participant(Vector position, Faction faction, int hp, int visibilityRange) {
     super(position);
