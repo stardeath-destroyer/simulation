@@ -18,8 +18,8 @@ public class EnemyVisitor extends NoOpAnimateVisitor {
 
   private final Faction faction;
   private Player player;
-  private List<Participant> enemies;
-  private List<Participant> friends;
+  private final List<Participant> enemies;
+  private final List<Participant> friends;
 
   public EnemyVisitor(Faction faction) {
     this.faction = faction;
