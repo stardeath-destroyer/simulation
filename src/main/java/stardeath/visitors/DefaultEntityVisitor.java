@@ -1,4 +1,4 @@
-package stardeath.world.visitors;
+package stardeath.visitors;
 
 import java.util.function.Consumer;
 import stardeath.Entity;
@@ -10,6 +10,7 @@ import stardeath.animates.participants.entities.Trooper;
 import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
+import stardeath.visitors.EntityVisitor;
 import stardeath.world.tiles.DownwardElevator;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.Regular;

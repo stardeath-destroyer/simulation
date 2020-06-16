@@ -17,7 +17,7 @@ import stardeath.world.tiles.Start;
 import stardeath.world.tiles.Terminal;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.tiles.Wall;
-import stardeath.world.visitors.EntityVisitor;
+import stardeath.visitors.EntityVisitor;
 
 /**
  * An implementation of an {@link EntityVisitor} that traverses the structure of elements, and

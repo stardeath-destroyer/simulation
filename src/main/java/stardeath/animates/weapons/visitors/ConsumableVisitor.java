@@ -1,6 +1,6 @@
 package stardeath.animates.weapons.visitors;
 
-import stardeath.world.visitors.NoOpEntityVisitor;
+import stardeath.visitors.NoOpEntityVisitor;
 
 public class ConsumableVisitor extends NoOpEntityVisitor {
 

@@ -2,7 +2,7 @@ package stardeath.controller.visitors;
 
 import stardeath.animates.participants.entities.Player;
 import stardeath.world.tiles.Terminal;
-import stardeath.world.visitors.NoOpEntityVisitor;
+import stardeath.visitors.NoOpEntityVisitor;
 
 public class GameStateVisitor extends NoOpEntityVisitor {
 

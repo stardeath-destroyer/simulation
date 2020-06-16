@@ -1,4 +1,4 @@
-package stardeath.world.visitors;
+package stardeath.visitors;
 
 public class NoOpEntityVisitor extends DefaultEntityVisitor {
 
