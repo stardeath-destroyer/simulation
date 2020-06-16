@@ -66,8 +66,8 @@ public class ChooseMove extends MovementVisitor {
     world.visitVisibleAnimatesFrom(trooper, trooper.getVisibilityRange(), enemyVisitor);
     world.visitVisibleTilesFrom(trooper, detectionVisitor);
 
-    ActionReducer reducer = baseTrooperReducer(trooper, enemyVisitor, detectionVisitor);
-    trooper.addAction(reducer.resolve());
+    ActionPicker reducer = baseTrooperReducer(trooper, enemyVisitor, detectionVisitor);
+    trooper.addAction(reducer.pick());
   }
 
   @Override
@@ -78,7 +78,7 @@ public class ChooseMove extends MovementVisitor {
     world.visitVisibleAnimatesFrom(trooper, trooper.getVisibilityRange(), enemyVisitor);
     world.visitVisibleTilesFrom(trooper, detectionVisitor);
 
-    ActionReducer reducer = baseTrooperReducer(trooper, enemyVisitor, detectionVisitor);
+    ActionPicker reducer = baseTrooperReducer(trooper, enemyVisitor, detectionVisitor);
 
     if (!enemyVisitor.getEnemies().isEmpty()) {
       List<Participant> enemies = new ArrayList<>(enemyVisitor.getEnemies());
@@ -95,7 +95,7 @@ public class ChooseMove extends MovementVisitor {
       );
     }
 
-    trooper.addAction(reducer.resolve());
+    trooper.addAction(reducer.pick());
   }
 
   @Override
@@ -106,16 +106,16 @@ public class ChooseMove extends MovementVisitor {
     world.visitVisibleAnimatesFrom(trooper, trooper.getVisibilityRange(), enemyVisitor);
     world.visitVisibleTilesFrom(trooper, detectionVisitor);
 
-    ActionReducer reducer = baseTrooperReducer(trooper, enemyVisitor, detectionVisitor);
-    trooper.addAction(reducer.resolve());
+    ActionPicker reducer = baseTrooperReducer(trooper, enemyVisitor, detectionVisitor);
+    trooper.addAction(reducer.pick());
   }
 
-  private ActionReducer baseTrooperReducer(
+  private ActionPicker baseTrooperReducer(
       Trooper trooper,
       EnemyVisitor enemyVisitor,
       TileDetectionVisitor detectionVisitor
   ) {
-    ActionReducer reducer = new ActionReducer();
+    ActionPicker reducer = new ActionPicker();
 
     if (enemyVisitor.getPlayer().isPresent()) {
       reducer.add(20, attackEnemy(trooper, enemyVisitor.getPlayer().get()));
@@ -143,7 +143,7 @@ public class ChooseMove extends MovementVisitor {
     world.visitVisibleAnimatesFrom(soldier, soldier.getVisibilityRange(), enemyVisitor);
     world.visitVisibleTilesFrom(soldier, detectionVisitor);
 
-    ActionReducer reducer = new ActionReducer();
+    ActionPicker reducer = new ActionPicker();
 
     if (enemyVisitor.getPlayer().isPresent()) {
       reducer.add(10, followPlayer(soldier, enemyVisitor.getPlayer().get()));
@@ -156,7 +156,7 @@ public class ChooseMove extends MovementVisitor {
 
     reducer.add(2, getRandomMove(soldier, detectionVisitor));
 
-    soldier.addAction(reducer.resolve());
+    soldier.addAction(reducer.pick());
   }
 
   private static Action getRandomMove(Participant participant, TileDetectionVisitor visitor) {
@@ -252,10 +252,10 @@ public class ChooseMove extends MovementVisitor {
     );
   }
 
-  private static class ActionReducer {
+  private static class ActionPicker {
     List<Choice> actionChoices;
 
-    public ActionReducer() {
+    public ActionPicker() {
       actionChoices = new ArrayList<>();
     }
 
@@ -263,22 +263,23 @@ public class ChooseMove extends MovementVisitor {
       actionChoices.add(new Choice(coefficient, action));
     }
 
-    public Action resolve() {
+    public Action pick() {
       int sum = actionChoices.stream()
           .map(choice -> choice.fst)
           .reduce(0, Integer::sum);
 
-      List<Action> complete = new ArrayList<>();
-      actionChoices.forEach(choice -> {
-            int i = choice.fst;
-            do {
-              complete.add(choice.snd);
-              i--;
-            } while (i > 0);
-          });
+      int random = sRandom.nextInt(sum);
 
-      Collections.shuffle(complete);
-      return complete.get(0);
+      Action value = actionChoices.stream()
+          .reduce((choice, choice2) -> {
+            if (choice.fst > random) {
+              return choice;
+            } else {
+              choice2.fst += choice.fst;
+              return choice2;
+            }
+          }).get().snd;
+      return value;
     }
 
     // Sorry
