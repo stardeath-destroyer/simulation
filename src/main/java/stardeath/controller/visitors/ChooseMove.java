@@ -66,8 +66,8 @@ public class ChooseMove extends MovementVisitor {
     world.visitVisibleAnimatesFrom(trooper, trooper.getVisibilityRange(), enemyVisitor);
     world.visitVisibleTilesFrom(trooper, detectionVisitor);
 
-    ActionReducer reducer = baseTrooperReducer(trooper, enemyVisitor, detectionVisitor);
-    trooper.addAction(reducer.resolve());
+    ActionPicker reducer = baseTrooperReducer(trooper, enemyVisitor, detectionVisitor);
+    trooper.addAction(reducer.pick());
   }
 
   @Override
@@ -78,25 +78,24 @@ public class ChooseMove extends MovementVisitor {
     world.visitVisibleAnimatesFrom(trooper, trooper.getVisibilityRange(), enemyVisitor);
     world.visitVisibleTilesFrom(trooper, detectionVisitor);
 
-    ActionReducer reducer = baseTrooperReducer(trooper, enemyVisitor, detectionVisitor);
+    ActionPicker reducer = baseTrooperReducer(trooper, enemyVisitor, detectionVisitor);
 
     if (!enemyVisitor.getEnemies().isEmpty()) {
       List<Participant> enemies = new ArrayList<>(enemyVisitor.getEnemies());
       Collections.shuffle(enemies);
       Vector enemyPosition = enemies.get(0).getPosition();
 
-      reducer.add(new Pair<>(
-          10,
+      reducer.add(10,
           trooper.new Fire(
               new Grenade(
                   trooper.getPosition(),
                   ProjectileDirection.getDirectionsFrom(enemyPosition.sub(trooper.getPosition()))
               )
           )
-      ));
+      );
     }
 
-    trooper.addAction(reducer.resolve());
+    trooper.addAction(reducer.pick());
   }
 
   @Override
@@ -107,32 +106,32 @@ public class ChooseMove extends MovementVisitor {
     world.visitVisibleAnimatesFrom(trooper, trooper.getVisibilityRange(), enemyVisitor);
     world.visitVisibleTilesFrom(trooper, detectionVisitor);
 
-    ActionReducer reducer = baseTrooperReducer(trooper, enemyVisitor, detectionVisitor);
-    trooper.addAction(reducer.resolve());
+    ActionPicker reducer = baseTrooperReducer(trooper, enemyVisitor, detectionVisitor);
+    trooper.addAction(reducer.pick());
   }
 
-  private ActionReducer baseTrooperReducer(
+  private ActionPicker baseTrooperReducer(
       Trooper trooper,
       EnemyVisitor enemyVisitor,
       TileDetectionVisitor detectionVisitor
   ) {
-    ActionReducer reducer = new ActionReducer();
+    ActionPicker reducer = new ActionPicker();
 
     if (enemyVisitor.getPlayer().isPresent()) {
-      reducer.add(new Pair<>(20, attackEnemy(trooper, enemyVisitor.getPlayer().get())));
-      reducer.add(new Pair<>(5, getRandomMove(trooper, detectionVisitor)));
+      reducer.add(20, attackEnemy(trooper, enemyVisitor.getPlayer().get()));
+      reducer.add(5, getRandomMove(trooper, detectionVisitor));
     }
 
     if (! enemyVisitor.getEnemies().isEmpty()) {
-      reducer.add(new Pair<>(20, attackRandomFromList(trooper, enemyVisitor.getEnemies())));
-      reducer.add(new Pair<>(5, getRandomMove(trooper, detectionVisitor)));
+      reducer.add(20, attackRandomFromList(trooper, enemyVisitor.getEnemies()));
+      reducer.add(5, getRandomMove(trooper, detectionVisitor));
     }
 
     if (! enemyVisitor.getFriends().isEmpty() && ! enemyVisitor.getEnemies().isEmpty()) {
-      reducer.add(new Pair<>(1, attackRandomFromList(trooper, enemyVisitor.getFriends())));
+      reducer.add(1, attackRandomFromList(trooper, enemyVisitor.getFriends()));
     }
 
-    reducer.add(new Pair<>(5, getRandomMove(trooper, detectionVisitor)));
+    reducer.add(5, getRandomMove(trooper, detectionVisitor));
     return reducer;
   }
 
@@ -144,45 +143,20 @@ public class ChooseMove extends MovementVisitor {
     world.visitVisibleAnimatesFrom(soldier, soldier.getVisibilityRange(), enemyVisitor);
     world.visitVisibleTilesFrom(soldier, detectionVisitor);
 
-    /* Stay there for historic reasons, for now
-    // Choose between following the player, random and attacking
-    if (enemyVisitor.getPlayer().isPresent() && ! enemyVisitor.getEnemies().isEmpty()) {
-      if (random < 0.2) {
-        actionToSet = getRandomMove(soldier, detectionVisitor);
-      } else if (random < 0.45) {
-        actionToSet = followPlayer(soldier, enemyVisitor.getPlayer().get());
-      } else {
-        actionToSet = attackRandomEnemy(soldier, enemyVisitor);
-      }
-      // follow the player or random
-    } else if (enemyVisitor.getPlayer().isPresent()) {
-      if (random < 0.65) {
-        actionToSet = getRandomMove(soldier, detectionVisitor);
-      } else {
-        actionToSet = followPlayer(soldier, enemyVisitor.getPlayer().get());
-      }
-      // attack !
-    } else if (! enemyVisitor.getEnemies().isEmpty()) {
-      actionToSet = attackRandomEnemy(soldier, enemyVisitor);
-      // default -> random
-    } else {
-      actionToSet = getRandomMove(soldier, detectionVisitor);
-    }
-     */
-    ActionReducer reducer = new ActionReducer();
+    ActionPicker reducer = new ActionPicker();
 
     if (enemyVisitor.getPlayer().isPresent()) {
-      reducer.add(new Pair<>(10, followPlayer(soldier, enemyVisitor.getPlayer().get())));
-      reducer.add(new Pair<>(6, getRandomMove(soldier, detectionVisitor)));
+      reducer.add(10, followPlayer(soldier, enemyVisitor.getPlayer().get()));
+      reducer.add(6, getRandomMove(soldier, detectionVisitor));
     }
 
     if (! enemyVisitor.getEnemies().isEmpty()) {
-      reducer.add(new Pair<>(20, attackRandomFromList(soldier, enemyVisitor.getEnemies())));
+      reducer.add(20, attackRandomFromList(soldier, enemyVisitor.getEnemies()));
     }
 
-    reducer.add(new Pair<>(2, getRandomMove(soldier, detectionVisitor)));
+    reducer.add(2, getRandomMove(soldier, detectionVisitor));
 
-    soldier.addAction(reducer.resolve());
+    soldier.addAction(reducer.pick());
   }
 
   private static Action getRandomMove(Participant participant, TileDetectionVisitor visitor) {
@@ -278,44 +252,44 @@ public class ChooseMove extends MovementVisitor {
     );
   }
 
-  private static class ActionReducer {
-    List<Pair<Integer, Action>> actionChoices;
+  private static class ActionPicker {
+    List<Choice> actionChoices;
 
-    public ActionReducer() {
+    public ActionPicker() {
       actionChoices = new ArrayList<>();
     }
 
-    public void add(Pair<Integer, Action> action) {
-      actionChoices.add(action);
+    public void add(int coefficient, Action action) {
+      actionChoices.add(new Choice(coefficient, action));
     }
 
-    public Action resolve() {
+    public Action pick() {
       int sum = actionChoices.stream()
-          .map(pair -> pair.fst)
+          .map(choice -> choice.coefficient)
           .reduce(0, Integer::sum);
 
-      List<Action> complete = new ArrayList<>();
-      actionChoices.forEach(pair -> {
-            int i = pair.fst;
-            do {
-              complete.add(pair.snd);
-              i--;
-            } while (i > 0);
-          });
+      int random = sRandom.nextInt(sum);
 
-      Collections.shuffle(complete);
-      return complete.get(0);
+      Action value = actionChoices.stream()
+          .reduce((choice, choice2) -> {
+            if (choice.coefficient > random) {
+              return choice;
+            } else {
+              choice2.coefficient += choice.coefficient;
+              return choice2;
+            }
+          }).get().action;
+      return value;
     }
-  }
 
-  // Sorry
-  private static class Pair<A,B> {
-    public A fst;
-    public B snd;
+    private static class Choice {
+      public int coefficient;
+      public Action action;
 
-    public Pair(A fst, B snd) {
-      this.fst = fst;
-      this.snd = snd;
+      public Choice(int coefficient, Action action) {
+        this.coefficient = coefficient;
+        this.action = action;
+      }
     }
   }
 }

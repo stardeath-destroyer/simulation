@@ -574,8 +574,8 @@
       <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="DeallocMethod"/>
     </class>
     <extensions>
-      <pair source="cc" header="h"/>
-      <pair source="c" header="h"/>
+      <choice source="cc" header="h"/>
+      <choice source="c" header="h"/>
     </extensions>
   </Objective-C-extensions>
   <codeStyleSettings language="ObjectiveC">
