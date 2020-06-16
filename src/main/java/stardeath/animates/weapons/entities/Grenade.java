@@ -1,6 +1,6 @@
 package stardeath.animates.weapons.entities;
 
-import stardeath.animates.actions.Action;
+import stardeath.animates.Action;
 import stardeath.animates.participants.Participant;
 import stardeath.animates.participants.ParticipantVisitor;
 import stardeath.animates.visitors.AnimateVisitor;

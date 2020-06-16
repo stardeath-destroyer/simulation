@@ -1,7 +1,7 @@
 package stardeath.animates.participants.entities;
 
 import stardeath.animates.visitors.AnimateVisitor;
-import stardeath.animates.actions.Action;
+import stardeath.animates.Action;
 import stardeath.animates.participants.Faction;
 import stardeath.animates.weapons.Projectile;
 import stardeath.world.Vector;

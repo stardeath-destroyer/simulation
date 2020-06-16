@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import stardeath.animates.actions.Action;
+import stardeath.animates.Action;
 import stardeath.animates.participants.Participant;
 import stardeath.animates.participants.entities.FlameTrooper;
 import stardeath.animates.participants.entities.JumpTrooper;

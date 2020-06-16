@@ -1,7 +1,7 @@
 package stardeath.animates.weapons;
 
 import stardeath.animates.Animate;
-import stardeath.animates.actions.Action;
+import stardeath.animates.Action;
 import stardeath.animates.weapons.visitors.ConsumableVisitor;
 import stardeath.world.Vector;
 import stardeath.world.World;

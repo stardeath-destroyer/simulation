@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import stardeath.Entity;
-import stardeath.animates.actions.Action;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.world.Tile;
 import stardeath.world.Vector;

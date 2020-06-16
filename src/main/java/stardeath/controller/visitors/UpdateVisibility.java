@@ -1,7 +1,7 @@
 package stardeath.controller.visitors;
 
 import stardeath.animates.visitors.NoOpAnimateVisitor;
-import stardeath.animates.actions.Action;
+import stardeath.animates.Action;
 import stardeath.animates.participants.entities.Player;
 
 public class UpdateVisibility extends NoOpAnimateVisitor {

@@ -1,7 +1,7 @@
 package stardeath.controller.visitors;
 
 import stardeath.animates.Animate;
-import stardeath.animates.actions.Action;
+import stardeath.animates.Action;
 import stardeath.animates.participants.entities.FlameTrooper;
 import stardeath.animates.participants.entities.Trooper;
 import stardeath.animates.visitors.AnimateVisitor;
