@@ -265,31 +265,30 @@ public class ChooseMove extends MovementVisitor {
 
     public Action pick() {
       int sum = actionChoices.stream()
-          .map(choice -> choice.fst)
+          .map(choice -> choice.coefficient)
           .reduce(0, Integer::sum);
 
       int random = sRandom.nextInt(sum);
 
       Action value = actionChoices.stream()
           .reduce((choice, choice2) -> {
-            if (choice.fst > random) {
+            if (choice.coefficient > random) {
               return choice;
             } else {
-              choice2.fst += choice.fst;
+              choice2.coefficient += choice.coefficient;
               return choice2;
             }
-          }).get().snd;
+          }).get().action;
       return value;
     }
 
-    // Sorry
     private static class Choice {
-      public int fst;
-      public Action snd;
+      public int coefficient;
+      public Action action;
 
-      public Choice(int coefficient, Action snd) {
-        this.fst = coefficient;
-        this.snd = snd;
+      public Choice(int coefficient, Action action) {
+        this.coefficient = coefficient;
+        this.action = action;
       }
     }
   }
