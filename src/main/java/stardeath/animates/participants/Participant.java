@@ -1,10 +1,9 @@
 package stardeath.animates.participants;
 
 import stardeath.animates.Animate;
-import stardeath.animates.participants.movements.Walker;
 import stardeath.world.Vector;
 
-public abstract class Participant extends Animate implements Walker {
+public abstract class Participant extends Animate {
 
   private Faction memberOf;
   private int hp;

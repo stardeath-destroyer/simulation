@@ -11,9 +11,8 @@ import stardeath.animates.participants.entities.JumpTrooper;
 import stardeath.animates.participants.entities.Player;
 import stardeath.animates.participants.entities.Soldier;
 import stardeath.animates.participants.entities.Trooper;
-import stardeath.animates.participants.movements.Jumper;
-import stardeath.animates.participants.movements.MovementVisitor;
-import stardeath.animates.participants.movements.Walker;
+import stardeath.animates.participants.entities.Wookie;
+import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.weapons.ProjectileDirection;
 import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
@@ -23,7 +22,7 @@ import stardeath.world.Vector;
 import stardeath.world.World;
 import stardeath.world.tiles.Hole;
 
-public class ChooseMove extends MovementVisitor {
+public class ChooseMove implements AnimateVisitor {
 
   private static final Random sRandom = new Random();
   private final World world;
@@ -41,16 +40,8 @@ public class ChooseMove extends MovementVisitor {
   }
 
   @Override
-  public <J extends Participant & Jumper> void visitJumper(J jumper) {
-    jumper.addAction(jumper.new MoveAction(new Vector(
-        random(-jumper.getRange(), jumper.getRange()),
-        random(-jumper.getRange(), jumper.getRange())
-    )));
-  }
-
-  @Override
-  public <W extends Participant & Walker> void visitWalker(W walker) {
-    walker.addAction(walker.new MoveAction(randomMove()));
+  public void visitParticipant(Wookie wookie) {
+    wookie.addAction(wookie.new MoveAction(randomMove()));
   }
 
   @Override
@@ -198,7 +189,7 @@ public class ChooseMove extends MovementVisitor {
   }
 
   @Override
-  public <P extends Player> void visitPlayer(P player) {
+  public void visitParticipant(Player player) {
     switch (interactions.requestMovement()) {
       case UP:
         player.addAction(player.new MoveAction(Vector.NORTH));
