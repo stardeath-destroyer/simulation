@@ -1,7 +1,9 @@
 package stardeath.animates.weapons;
 
+import java.util.function.Consumer;
 import stardeath.animates.Animate;
 import stardeath.animates.Action;
+import stardeath.animates.visitors.DefaultAnimateVisitor;
 import stardeath.animates.weapons.visitors.ConsumableVisitor;
 import stardeath.world.Vector;
 import stardeath.world.World;
@@ -36,12 +38,10 @@ public abstract class Projectile extends Animate {
 
           // Apply the damage to whatever is on the path of the projectile.
           if (!consumableVisitor.isConsumed()) {
-            world.participantAt(position).ifPresent(animate -> {
-              if (animate != Projectile.this) {
+            world.visitAnimateAt(position, new DefaultAnimateVisitor(animate -> {
+              if (animate != Projectile.this)
                 animate.accept(consumableVisitor);
-              }
-
-            });
+            }));
           }
           
           // If the visitor hasn't been consumed yet, continue
