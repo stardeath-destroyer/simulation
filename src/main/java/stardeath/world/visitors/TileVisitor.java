@@ -8,6 +8,9 @@ import stardeath.world.tiles.Terminal;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.tiles.Wall;
 
+/**
+ * Base Tile visitor
+ */
 public interface TileVisitor {
 
   void visitTile(DownwardElevator elevator);

@@ -10,6 +10,9 @@ import stardeath.world.tiles.Terminal;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.tiles.Wall;
 
+/**
+ * Default visitor for tiles. All tiles will be applied the same Consumer
+ */
 public class DefaultTileVisitor implements TileVisitor {
 
   private Consumer<Tile> consumer;
