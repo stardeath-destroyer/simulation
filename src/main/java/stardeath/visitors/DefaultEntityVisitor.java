@@ -10,7 +10,6 @@ import stardeath.animates.participants.entities.Trooper;
 import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
-import stardeath.visitors.EntityVisitor;
 import stardeath.world.tiles.DownwardElevator;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.Regular;
@@ -19,6 +18,9 @@ import stardeath.world.tiles.Terminal;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.tiles.Wall;
 
+/**
+ * A Default entity visitor will apply the same Consumer on every kind of Entity
+ */
 public class DefaultEntityVisitor implements EntityVisitor {
   private Consumer<Entity> consumer;
 
