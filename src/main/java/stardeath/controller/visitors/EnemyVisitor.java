@@ -14,6 +14,9 @@ import stardeath.animates.participants.entities.Trooper;
 import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.visitors.NoOpAnimateVisitor;
 
+/**
+ * This visitor will visit animates and classify them according to their faction
+ */
 public class EnemyVisitor extends NoOpAnimateVisitor {
 
   private final Faction faction;
@@ -66,14 +69,26 @@ public class EnemyVisitor extends NoOpAnimateVisitor {
     defaultEnemyVerification(wookie);
   }
 
+  /**
+   * Get the player if he was found
+   * @return An optional player or empty if the player was not found
+   */
   public Optional<Player> getPlayer() {
     return Optional.ofNullable(player);
   }
 
+  /**
+   * Get the list of enemies that were visited.
+   * @return An unmodifiable list of enemies
+   */
   public List<Participant> getEnemies() {
     return Collections.unmodifiableList(enemies);
   }
 
+  /**
+   * Get the list of friends that were visited.
+   * @return An unmodifiable list of friends
+   */
   public List<Participant> getFriends() {
     return Collections.unmodifiableList(friends);
   }

@@ -7,6 +7,9 @@ import stardeath.world.Tile;
 import stardeath.world.tiles.Hole;
 import stardeath.world.visitors.NoOpTileVisitor;
 
+/**
+ * Visits tiles and mark some of them as "to avoid".
+ */
 public class TileDetectionVisitor extends NoOpTileVisitor {
   List<Tile> avoid = new ArrayList<>();
 

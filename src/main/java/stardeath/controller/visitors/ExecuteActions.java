@@ -13,6 +13,9 @@ import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
 import stardeath.world.World;
 
+/**
+ * Execute stored animates actions
+ */
 public class ExecuteActions implements AnimateVisitor {
 
   private final World world;
