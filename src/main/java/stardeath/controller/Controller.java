@@ -53,12 +53,18 @@ public class Controller {
     world.spawn();
   }
 
+  /**
+   * Executes one "round" of the game
+   */
   public void step() {
     move();
     turn();
     world.updateState();
   }
 
+  /**
+   * Draws the current state of the game
+   */
   public void draw() {
     // Draw the contents.
     world.visitAnimates(new UpdateVisibility());
@@ -66,6 +72,10 @@ public class Controller {
     renderer.render(world);
   }
 
+  /**
+   * Checks if the game is at an end
+   * @return True if the game is over
+   */
   public boolean isEndGame() {
     return world.getState() != State.UNDER_ATTACK;
   }
