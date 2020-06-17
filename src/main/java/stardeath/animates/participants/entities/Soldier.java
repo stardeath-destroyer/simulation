@@ -1,7 +1,7 @@
 package stardeath.animates.participants.entities;
 
 import stardeath.animates.visitors.AnimateVisitor;
-import stardeath.animates.actions.Action;
+import stardeath.animates.Action;
 import stardeath.animates.participants.Faction;
 import stardeath.animates.weapons.Projectile;
 import stardeath.world.Vector;
@@ -20,16 +20,6 @@ public class Soldier extends Human {
   @Override
   public void accept(AnimateVisitor visitor) {
     visitor.visitParticipant(this);
-  }
-
-  @Override
-  public int getAttackRange() {
-    return 4;
-  }
-
-  @Override
-  public int getAttackDamage() {
-    return 150;
   }
 
   public class Fire implements Action {

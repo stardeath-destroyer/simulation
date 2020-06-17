@@ -5,8 +5,6 @@ import stardeath.world.tiles.DownwardElevator;
 import stardeath.world.tiles.Terminal;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.visitors.TileVisitor;
-import stardeath.world.tiles.Armory;
-import stardeath.world.tiles.Dump;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Start;
@@ -24,16 +22,6 @@ public class RenderFloor implements TileVisitor {
     if (tile.isDiscovered()) {
       buffer[tile.getPosition().getY()][tile.getPosition().getX()] = symbol;
     }
-  }
-
-  @Override
-  public void visitTile(Armory armory) {
-    setGrid(armory, 'A');
-  }
-
-  @Override
-  public void visitTile(Dump dump) {
-    setGrid(dump, 'D');
   }
 
   @Override

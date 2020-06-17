@@ -92,12 +92,12 @@ public class World {
     }
   }
 
-  public Optional<Animate> participantAt(Vector position) {
-    return current().participantAt(position);
+  public void visitAnimateAt(Vector position, AnimateVisitor visitor) {
+    current().participantAt(position).ifPresent(p -> p.accept(visitor));
   }
 
-  public Optional<Tile> tileAt(Vector position) {
-    return current().tileAt(position);
+  public void visitTileAt(Vector position, TileVisitor visitor) {
+    current().tileAt(position).ifPresent(t -> t.accept(visitor));
   }
 
   public void visitVisibleAnimatesFrom(Entity entity, int radius, AnimateVisitor visitor) {

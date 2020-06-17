@@ -1,4 +1,4 @@
-package stardeath.animates.actions;
+package stardeath.animates;
 
 import stardeath.world.World;
 

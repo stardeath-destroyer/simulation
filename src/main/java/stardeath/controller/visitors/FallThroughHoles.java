@@ -19,15 +19,13 @@ public class FallThroughHoles extends NoOpTileVisitor {
 
   @Override
   public void visitTile(Hole hole) {
-    world.participantAt(hole.getPosition()).ifPresent(animate -> {
-      AnimateVisitor visitor = new NoOpAnimateVisitor() {
-        @Override
-        public void visitParticipant(Player player) {
-          player.damage((int) (FALL_DAMAGE_RATIO * player.getHealthPoints()));
-          world.moveDown();
-        }
-      };
-      animate.accept(visitor);
+    world.visitAnimateAt(hole.getPosition(), new NoOpAnimateVisitor() {
+
+      @Override
+      public void visitParticipant(Player player) {
+        player.damage((int) (FALL_DAMAGE_RATIO * player.getHealthPoints()));
+        world.moveDown();
+      }
     });
   }
 }
