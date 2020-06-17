@@ -50,6 +50,11 @@ public abstract class MaterialRenderer {
     return characters;
   }
 
+  /**
+   * Returns a bi-demensionnal array of booleans.
+   * Each boolean will be set at true if the element needs to be drawn.
+   * @return A bi-demensionnal array of booleans
+   */
   public boolean[][] getDrawn() {
     return drawn;
   }
