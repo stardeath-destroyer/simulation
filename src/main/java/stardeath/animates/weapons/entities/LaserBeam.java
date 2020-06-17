@@ -6,6 +6,9 @@ import stardeath.animates.weapons.ProjectileDirection;
 import stardeath.animates.weapons.visitors.HitDamageVisitor;
 import stardeath.world.Vector;
 
+/**
+ * Represents a laser beam
+ */
 public class LaserBeam extends Projectile {
 
   private static final int DAMAGE = 50;
@@ -14,11 +17,17 @@ public class LaserBeam extends Projectile {
     super(position, direction, 1);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void accept(AnimateVisitor visitor) {
     visitor.visitProjectile(this);
   }
 
+  /**
+   * Hits a target and then is consumed
+   */
   public class MoveAndHit extends MoveAndConsume {
 
     public MoveAndHit() {

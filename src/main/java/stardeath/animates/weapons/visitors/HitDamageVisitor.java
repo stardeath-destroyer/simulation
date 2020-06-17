@@ -20,6 +20,9 @@ import stardeath.world.tiles.Terminal;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.tiles.Wall;
 
+/**
+ * This class is used to make blasters hit Entities
+ */
 public class HitDamageVisitor extends ConsumableVisitor {
 
   private static final Random random = new Random();
@@ -44,72 +47,111 @@ public class HitDamageVisitor extends ConsumableVisitor {
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitParticipant(Player player) {
     hit(player);
     consumed = true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitParticipant(JumpTrooper trooper) {
     hit(trooper);
     consumed = true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitParticipant(FlameTrooper trooper) {
     hit(trooper);
     consumed = true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitParticipant(Trooper trooper) {
     hit(trooper);
     consumed = true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitParticipant(Soldier soldier) {
     hit(soldier);
     consumed = true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitParticipant(Wookie wookie) {
     hit(wookie);
     consumed = true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitProjectile(LaserBeam projectile) {
     // Standard projectiles do not collide.
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitProjectile(Grenade grenade) {
     // It's not possible to detonate grenades remotely, sorry.
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitTile(DownwardElevator elevator) {
     hit(elevator);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitTile(Hole hole) {
     hit(hole);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitTile(Regular regular) {
     hit(regular);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitTile(Start start) {
     hit(start);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitTile(Terminal terminal) {
     if (random.nextInt(100) < 15) {
@@ -119,11 +161,17 @@ public class HitDamageVisitor extends ConsumableVisitor {
     projectile.remove();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitTile(UpwardElevator elevator) {
     hit(elevator);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitTile(Wall wall) {
     hit(wall);

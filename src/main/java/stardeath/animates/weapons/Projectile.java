@@ -1,13 +1,15 @@
 package stardeath.animates.weapons;
 
-import java.util.function.Consumer;
-import stardeath.animates.Animate;
 import stardeath.animates.Action;
+import stardeath.animates.Animate;
 import stardeath.animates.visitors.DefaultAnimateVisitor;
 import stardeath.animates.weapons.visitors.ConsumableVisitor;
 import stardeath.world.Vector;
 import stardeath.world.World;
 
+/**
+ * This class represents a projectile
+ */
 public abstract class Projectile extends Animate {
 
   private final ProjectileDirection direction;
@@ -19,10 +21,17 @@ public abstract class Projectile extends Animate {
     this.speed = speed;
   }
 
+  /**
+   * Get the direction in which the projectile is going
+   * @return the direction in which the projectile is going
+   */
   public ProjectileDirection getDirection() {
     return direction;
   }
 
+  /**
+   * An Action that will move a projectile and consume it on certain circumstances
+   */
   public class MoveAndConsume implements Action {
 
     private final ConsumableVisitor consumableVisitor;
@@ -31,6 +40,9 @@ public abstract class Projectile extends Animate {
       this.consumableVisitor = consumableVisitor;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void execute(World world) {
       for (int i = 0; i < speed; i++) {
