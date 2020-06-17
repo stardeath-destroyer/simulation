@@ -8,6 +8,9 @@ import java.util.Objects;
 import stardeath.controller.interactions.Movement;
 import stardeath.controller.interactions.GetMovements;
 
+/**
+ * {@inheritDoc}
+ */
 public class LanternaGetMovements implements GetMovements {
 
   private final Screen screen;
@@ -16,6 +19,9 @@ public class LanternaGetMovements implements GetMovements {
     this.screen = screen;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Movement requestMovement() {
     Movement movement = null;
