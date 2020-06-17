@@ -11,6 +11,7 @@ import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
+import stardeath.visitors.EntityVisitor;
 import stardeath.world.tiles.DownwardElevator;
 import stardeath.world.tiles.Hole;
 import stardeath.world.tiles.Regular;
@@ -24,7 +25,7 @@ import stardeath.world.visitors.TileVisitor;
  * This visitor will visit Tiles and Animates to assign them a foreground, a background,
  * using {@link Material}, and a {@link Character}
  */
-public class DrawingVisitor extends MaterialRenderer implements AnimateVisitor, TileVisitor {
+public class DrawingVisitor extends MaterialRenderer implements EntityVisitor {
 
   public DrawingVisitor(int width, int height) {
     super(width, height);
