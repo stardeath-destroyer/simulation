@@ -3,6 +3,9 @@ package stardeath.animates.weapons;
 import java.util.List;
 import stardeath.world.Vector;
 
+/**
+ * Represents the direction of a projectile
+ */
 public enum ProjectileDirection {
   ZERO('0', List.of(Vector.EAST, Vector.EAST)),
   ONE('1', List.of(Vector.EAST, Vector.NORTH, Vector.EAST)),
@@ -29,6 +32,11 @@ public enum ProjectileDirection {
     this.steps = steps;
   }
 
+  /**
+   * Returns a ProjectileDirection matching the given character
+   * @param character The character to match to a ProjectileDirection
+   * @return a ProjectileDirection matching the given character
+   */
   public static ProjectileDirection fromCharacter(char character) {
     for (ProjectileDirection direction : values()) {
       if (direction.character == Character.toLowerCase(character)) {
@@ -38,14 +46,27 @@ public enum ProjectileDirection {
     return null;
   }
 
+  /**
+   * Get the steps that compose a ProjectileDirection as movement Vectors
+   * @return A list of vectors
+   */
   public List<Vector> getSteps() {
     return steps;
   }
 
+  /**
+   * Sums all the steps to one vector
+   * @return A vector representing all the steps
+   */
   public Vector getVector() {
     return steps.stream().reduce(Vector.EMPTY, Vector::add);
   }
 
+  /**
+   * Maps a vector to a ProjectileDirection
+   * @param vector The vector to translate to ProjectileDirection
+   * @return The projectileDirection matching the given vector
+   */
   public static ProjectileDirection getDirectionsFrom(Vector vector) {
     Vector clamped = vector
         .clampX(-2, 2)
