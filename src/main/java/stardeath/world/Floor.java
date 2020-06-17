@@ -8,6 +8,9 @@ import stardeath.animates.participants.Participant;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.world.visitors.TileVisitor;
 
+/**
+ * A floor of the stardeath
+ */
 public final class Floor {
 
   private final Tile[][] tiles;
@@ -32,14 +35,26 @@ public final class Floor {
     }
   }
 
+  /**
+   * Returns the width of the floor
+   * @return the width of the floor
+   */
   public final int getWidth() {
     return width;
   }
 
+  /**
+   * Returns the height of the floor
+   * @return the height of the floor
+   */
   public final int getHeight() {
     return height;
   }
 
+  /**
+   * Adds an animate on the floor
+   * @param animate The animate to add
+   */
   public void addAnimate(Animate animate) {
     spawned.add(animate);
   }
@@ -53,12 +68,22 @@ public final class Floor {
     animates.removeIf(Animate::shouldRemove);
   }
 
+  /**
+   * Returns the animate at the given position if it exists
+   * @param position The position to search
+   * @return An optional value. The animate at the position or empty
+   */
   public Optional<Animate> participantAt(Vector position) {
     return animates.stream()
         .filter(p -> p.getPosition().equals(position))
         .findFirst();
   }
 
+  /**
+   * Returns the tile at the given position if the position is in the floors boundaries
+   * @param position The position to search
+   * @return An optional value. The tile at the position or empty
+   */
   public Optional<Tile> tileAt(Vector position) {
     if (position.getX() >= 0 && position.getY() >= 0 &&
         position.getX() < tiles.length && position.getY() < tiles[position.getX()].length) {
@@ -68,10 +93,18 @@ public final class Floor {
     }
   }
 
+  /**
+   * Visits all the animates on the floor
+   * @param visitor The visitor to visit the animates with
+   */
   public void visitAnimates(AnimateVisitor visitor) {
     animates.forEach(a -> a.accept(visitor));
   }
 
+  /**
+   * Visits all the tiles on the floor
+   * @param visitor The visitor to visit the tiles with
+   */
   public void visitTiles(TileVisitor visitor) {
     for (Tile[] row : tiles) {
       for (Tile tile : row) {
