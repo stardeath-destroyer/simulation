@@ -20,6 +20,10 @@ import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.tiles.Wall;
 import stardeath.world.visitors.TileVisitor;
 
+/**
+ * This visitor will visit Tiles and Animates to assign them a foreground, a background,
+ * using {@link Material}, and a {@link Character}
+ */
 public class DrawingVisitor extends MaterialRenderer implements AnimateVisitor, TileVisitor {
 
   public DrawingVisitor(int width, int height) {

@@ -34,16 +34,25 @@ public class Lanterna implements InteractionsFactory {
     this.renderer = lanternaRenderer;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public GetDirections direction() {
     return getDirections;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public GetMovements movement() {
     return getMovements;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Renderer renderer() {
     return renderer;

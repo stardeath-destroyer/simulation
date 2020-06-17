@@ -4,6 +4,10 @@ import stardeath.animates.Animate;
 import stardeath.world.Tile;
 import stardeath.world.Vector;
 
+/**
+ * This abstract class represents a way to render different materials. It is a way to abstract
+ * different ways of representing an Entity.
+ */
 public abstract class MaterialRenderer {
 
   private final Material[][] foreground;
@@ -22,14 +26,26 @@ public abstract class MaterialRenderer {
     return value >= includedMin && value < excludedMax;
   }
 
+  /**
+   * Gets the background to draw
+   * @return A bi-demensionnal array of {@link Material}
+   */
   public Material[][] getBackground() {
     return background;
   }
 
+  /**
+   * Gets the foreground to draw
+   * @return A bi-demensionnal array of {@link Material}
+   */
   public Material[][] getForeground() {
     return foreground;
   }
 
+  /**
+   * Gets the characters to draw
+   * @return A bi-demensionnal array of {@link Character}
+   */
   public Character[][] getCharacters() {
     return characters;
   }
