@@ -26,11 +26,5 @@ public abstract class Tile extends Entity {
     return opaque;
   }
 
-  public int distanceTo(int x, int y) {
-    int deltaX = this.getPosition().getX() - x;
-    int deltaY = this.getPosition().getY() - y;
-    return (int) Math.ceil(Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2)));
-  }
-
   public abstract void accept(TileVisitor visitor);
 }
