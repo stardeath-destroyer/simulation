@@ -43,28 +43,26 @@ public class Decoding {
 
       while (entries.hasMoreElements()) {
         ZipEntry entry = entries.nextElement();
-        String name = entry.getName();
-        String type = entry.isDirectory() ? "DIR" : "FILE";
-        System.out.println(type + " " + name);
+        final String name = entry.getName();
 
-        if (entry.isDirectory()) {
-          System.out.println("name: " + entry.getName());
-          if (!entry.getName().equals("world/")) {
-            levelNb = Integer.parseInt(entry.getName()
-                .substring(entry.getName().length() - 2, entry.getName().length() - 1));
-            System.out.println(levelNb);
-          }
+        if (entry.isDirectory() && ! name.equals("world/")) {
+          String levelString = name
+              .replaceAll("world/level-", "")
+              .replaceAll("/", "");
+          levelNb = Integer.parseInt(levelString);
         } else {
-          if (entry.getName().endsWith(".floor")) {
+          if (name.endsWith(".floor")) {
             floorFile = worldFile.getInputStream(entry);
-          } else if (entry.getName().endsWith(".enemies")) {
+          } else if (name.endsWith(".enemies")) {
             enemiesFile = worldFile.getInputStream(entry);
           }
+
           if (enemiesFile != null && floorFile != null) {
             builder.addFloor(levelNb, readFloor(floorFile, enemiesFile));
             floorFile.close();
-            floorFile = null;
             enemiesFile.close();
+
+            floorFile = null;
             enemiesFile = null;
           }
         }
