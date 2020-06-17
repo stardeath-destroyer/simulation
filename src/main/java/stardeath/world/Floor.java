@@ -44,6 +44,9 @@ public final class Floor {
     spawned.add(animate);
   }
 
+  /**
+   * Updates the animates that are on the floor
+   */
   public void spawn() {
     animates.addAll(spawned);
     spawned.clear();
