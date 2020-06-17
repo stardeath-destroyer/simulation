@@ -10,6 +10,9 @@ import stardeath.world.tiles.Regular;
 import stardeath.world.tiles.Start;
 import stardeath.world.tiles.Wall;
 
+/**
+ * A visitor that will render all the tiles that are visited
+ */
 public class RenderFloor implements TileVisitor {
 
   private final char[][] buffer;

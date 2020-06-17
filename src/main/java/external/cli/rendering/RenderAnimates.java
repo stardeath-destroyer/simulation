@@ -11,6 +11,9 @@ import stardeath.animates.participants.entities.Player;
 import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
 
+/**
+ * A visitor that will render all the animates that are visited
+ */
 public class RenderAnimates implements AnimateVisitor {
 
   private final char[][] buffer;

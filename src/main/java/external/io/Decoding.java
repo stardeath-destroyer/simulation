@@ -26,6 +26,9 @@ import stardeath.world.tiles.Terminal;
 import stardeath.world.tiles.UpwardElevator;
 import stardeath.world.tiles.Wall;
 
+/**
+ * A class that will read our map format and setup the game
+ */
 public class Decoding {
 
   private Decoding() {}

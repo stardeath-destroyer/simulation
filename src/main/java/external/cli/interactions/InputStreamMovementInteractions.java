@@ -9,6 +9,9 @@ import stardeath.controller.interactions.GetMovements;
 import stardeath.controller.interactions.Movement;
 import stardeath.animates.weapons.ProjectileDirection;
 
+/**
+ * {@inheritDoc}
+ */
 public class InputStreamMovementInteractions implements GetDirections, GetMovements {
 
   private final InputStream stream;
@@ -17,6 +20,9 @@ public class InputStreamMovementInteractions implements GetDirections, GetMoveme
     this.stream = stream;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Movement requestMovement() {
     System.out.print("Enter your move (w, a, s, d, [f]ire, [e]levator) : ");
@@ -58,6 +64,9 @@ public class InputStreamMovementInteractions implements GetDirections, GetMoveme
     return movement;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public ProjectileDirection requestDirectionsFromPlayer() {
     System.out.println("Enter a direction (0-9A-F) :");
