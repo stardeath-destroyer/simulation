@@ -28,7 +28,7 @@ public abstract class MaterialRenderer {
 
   /**
    * Gets the background to draw
-   * @return A bi-demensionnal array of {@link Material}
+   * @return A bi-dimensional array of {@link Material}
    */
   public Material[][] getBackground() {
     return background;
@@ -36,7 +36,7 @@ public abstract class MaterialRenderer {
 
   /**
    * Gets the foreground to draw
-   * @return A bi-demensionnal array of {@link Material}
+   * @return A bi-dimensional array of {@link Material}
    */
   public Material[][] getForeground() {
     return foreground;
@@ -44,16 +44,16 @@ public abstract class MaterialRenderer {
 
   /**
    * Gets the characters to draw
-   * @return A bi-demensionnal array of {@link Character}
+   * @return A bi-dimensional array of {@link Character}
    */
   public Character[][] getCharacters() {
     return characters;
   }
 
   /**
-   * Returns a bi-demensionnal array of booleans.
+   * Returns a bi-dimensional array of booleans.
    * Each boolean will be set at true if the element needs to be drawn.
-   * @return A bi-demensionnal array of booleans
+   * @return A bi-dimensional array of booleans
    */
   public boolean[][] getDrawn() {
     return drawn;
