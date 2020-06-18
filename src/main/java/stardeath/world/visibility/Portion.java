@@ -2,6 +2,9 @@ package stardeath.world.visibility;
 
 import stardeath.world.Vector;
 
+/**
+ * A simple data structure that contains information about a column portion.
+ */
 /* package */ class Portion {
 
   private final int x;
