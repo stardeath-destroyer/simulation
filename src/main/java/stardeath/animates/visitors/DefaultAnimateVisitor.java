@@ -22,41 +22,65 @@ public class DefaultAnimateVisitor implements AnimateVisitor {
     this.consumer = consumer;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitParticipant(Player player) {
     consumer.accept(player);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitParticipant(JumpTrooper trooper) {
     consumer.accept(trooper);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitParticipant(FlameTrooper trooper) {
     consumer.accept(trooper);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitParticipant(Trooper trooper) {
     consumer.accept(trooper);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitParticipant(Soldier soldier) {
     consumer.accept(soldier);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitParticipant(Wookie wookie) {
     consumer.accept(wookie);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitProjectile(LaserBeam projectile) {
     consumer.accept(projectile);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitProjectile(Grenade grenade) {
     consumer.accept(grenade);

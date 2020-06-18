@@ -21,36 +21,57 @@ public class DefaultTileVisitor implements TileVisitor {
     this.consumer = consumer;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitTile(DownwardElevator elevator) {
     consumer.accept(elevator);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitTile(Hole hole) {
     consumer.accept(hole);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitTile(Regular regular) {
     consumer.accept(regular);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitTile(Start start) {
     consumer.accept(start);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitTile(Terminal terminal) {
     consumer.accept(terminal);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitTile(UpwardElevator elevator) {
     consumer.accept(elevator);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void visitTile(Wall wall) {
     consumer.accept(wall);
