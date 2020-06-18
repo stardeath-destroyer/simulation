@@ -27,7 +27,7 @@ public class Main {
     return new Lanterna();
   }
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException, InterruptedException {
 
     Controller controller = new Controller(
         interactions(args),
@@ -38,5 +38,8 @@ public class Main {
       controller.step();
       controller.draw();
     }
+
+    // Display the splash screen.
+    Thread.sleep(5);
   }
 }
