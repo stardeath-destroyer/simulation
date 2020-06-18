@@ -10,6 +10,9 @@ import stardeath.animates.weapons.visitors.WillExplodeVisitor;
 import stardeath.world.Vector;
 import stardeath.world.World;
 
+/**
+ * Represents a grenade that can be thrown and explode.
+ */
 public class Grenade extends Projectile {
 
   private static final int RANGE = 3;
@@ -23,28 +26,48 @@ public class Grenade extends Projectile {
     super(position, direction, SPEED_FACTOR);
   }
 
+  /**
+   * Get the range of the grenade
+   * @return The range of the grenade
+   */
   public int getRange() {
     return RANGE;
   }
 
+  /**
+   * Will make the grenade explode on the next turn
+   */
   public void trigger() {
     willExplode = true;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public boolean shouldRemove() {
     return exploding;
   }
 
+  /**
+   * Is the grenade about to explode
+   * @return True if the grenade will explode during the round
+   */
   public boolean willExplode() {
     return willExplode;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void accept(AnimateVisitor visitor) {
     visitor.visitProjectile(this);
   }
 
+  /**
+   * Moves the grenade and makes it explode
+   */
   public class MoveAndTrigger extends MoveAndConsume {
 
     public MoveAndTrigger() {
@@ -52,6 +75,9 @@ public class Grenade extends Projectile {
     }
   }
 
+  /**
+   * Action class representing the explosion of the grenade
+   */
   public class Explode implements Action {
 
     @Override
