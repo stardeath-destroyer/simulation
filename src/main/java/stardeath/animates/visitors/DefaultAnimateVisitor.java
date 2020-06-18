@@ -11,6 +11,9 @@ import stardeath.animates.participants.entities.Wookie;
 import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
 
+/**
+ * Applies a default Consumer to all kind of Animates
+ */
 public class DefaultAnimateVisitor implements AnimateVisitor {
 
   private final Consumer<Animate> consumer;

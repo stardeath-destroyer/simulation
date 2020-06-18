@@ -9,6 +9,9 @@ import stardeath.animates.participants.entities.Player;
 import stardeath.animates.weapons.entities.Grenade;
 import stardeath.animates.weapons.entities.LaserBeam;
 
+/**
+ * Main interface to visit animates
+ */
 public interface AnimateVisitor {
 
   void visitParticipant(Player player);
