@@ -4,6 +4,9 @@ import stardeath.animates.participants.Faction;
 import stardeath.animates.visitors.AnimateVisitor;
 import stardeath.world.Vector;
 
+/**
+ * Basic trooper
+ */
 public class Trooper extends Soldier {
 
   protected Trooper(Vector position, int hp, int visibilityRange) {
@@ -14,6 +17,9 @@ public class Trooper extends Soldier {
     super(position, Faction.Empire, 20, 5);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void accept(AnimateVisitor visitor) {
     visitor.visitParticipant(this);

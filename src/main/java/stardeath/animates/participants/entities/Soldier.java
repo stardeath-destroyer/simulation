@@ -7,6 +7,9 @@ import stardeath.animates.weapons.Projectile;
 import stardeath.world.Vector;
 import stardeath.world.World;
 
+/**
+ * A basic soldier. Can shoot projectiles
+ */
 public class Soldier extends Human {
 
   protected Soldier(Vector position, Faction faction, int hp, int visibilityRange) {
@@ -22,6 +25,9 @@ public class Soldier extends Human {
     visitor.visitParticipant(this);
   }
 
+  /**
+   * This action allows the soldier to shoot a projectile
+   */
   public class Fire implements Action {
 
     private final Projectile projectile;
