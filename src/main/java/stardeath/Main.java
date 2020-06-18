@@ -40,6 +40,6 @@ public class Main {
     }
 
     // Display the splash screen.
-    Thread.sleep(5);
+    Thread.sleep(5 * 1000);
   }
 }
